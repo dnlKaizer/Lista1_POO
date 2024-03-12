@@ -69,11 +69,13 @@ public class Ex1 {
             } 
         }
         
-        System.out.println("\nDados do Aluno Mais Novo:\n");
-        System.out.println("Nome: " + alunoMaisNovo.nome);
-        System.out.println("Idade: " + alunoMaisNovo.idade);
-        System.out.println("Endereço: " + alunoMaisNovo.endereco);
-        System.out.println("Data de Inscrição: " + alunoMaisNovo.dataInscricao);
-        System.out.println("Data de Obtenção: " + alunoMaisNovo.dataObtencao);
+        if(alunoMaisNovo.dataObtencao != null) {
+            System.out.println("\nDados do Aluno Mais Novo:\n");
+            System.out.println("Nome: " + alunoMaisNovo.nome);
+            System.out.println("Idade: " + alunoMaisNovo.idade);
+            System.out.println("Endereço: " + alunoMaisNovo.endereco);
+            System.out.println("Data de Inscrição: " + alunoMaisNovo.dataInscricao);
+            System.out.println("Data de Obtenção: " + alunoMaisNovo.dataObtencao);
+        }
     }
 }
