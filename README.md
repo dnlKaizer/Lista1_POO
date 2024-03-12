@@ -1,3 +1,3 @@
-# Lista de Exercícios 1 - POO
+# Matéria Programação Orientada a Objetos
 
-Resolução dos exercícios de revisão de POO.
+Resolução dos exercícios de POO e outras atividades relacionadas.
