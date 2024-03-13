@@ -1,7 +1,8 @@
+@SuppressWarnings("unused")
 public class Ex2 {
     
     public void EncontrarFuncionarios() throws Exception {
-
+        
         TFuncionario[] funcionarios = new TFuncionario[50];
         TEmpresa[] empresas = new TEmpresa[15];
 
