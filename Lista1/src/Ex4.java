@@ -8,13 +8,29 @@ public class Ex4 {
         TAluno[] alunos = new TAluno[100];
         gerarAlunos(alunos);
         for (int i = 0; i < alunos.length; i++) {
-            System.out.println(alunos[i].nome);
-            System.out.println(alunos[i].numero);
-            for (int j = 0; j < 10; j++) {
-                System.out.println(alunos[i].notas[j]);
+            for (int j = i + 1; j < alunos.length; j++) {
+                if(alunos[i].media < alunos[j].media) {
+                    TAluno var = alunos[i];
+                    alunos[i] = alunos[j];
+                    alunos[j] = var;
+                }
             }
-            System.out.println();
         }
+        for (int i = 0; i < 3; i++) {
+            imprimirAluno(alunos[i]);
+        }
+
+    }
+
+    private void imprimirAluno(TAluno aluno) {
+        System.out.println();
+        System.out.println("Aluno: " + aluno.nome);
+        System.out.println("Número: " + aluno.numero);
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Nota " + (i + 1) + ": " + aluno.notas[i]);
+        }
+        System.out.println("Média: " + aluno.media);
+        System.out.println();
     }
 
     private TAluno[] gerarAlunos(TAluno[] alunos) {
@@ -24,6 +40,7 @@ public class Ex4 {
 
         for (int i = 0; i < alunos.length; i++) {
             alunos[i] = new TAluno();
+            float media = 0;
             if(lastName + i > 90) {
                 lastName -= 26;
                 name += 1;
@@ -36,7 +53,10 @@ public class Ex4 {
             }
             for (int j = 0; j < 10; j++) {
                 alunos[i].notas[j] = random.nextInt(11);
+                media += alunos[i].notas[j];
             }
+            media /= 10f;
+            alunos[i].media = media;
         }
 
         return alunos;
@@ -46,14 +66,7 @@ public class Ex4 {
         String nome;
         String numero;
         int[] notas = new int[10];
-    }
-
-    private String limitaString(String texto, int maximo){
-       if (texto.length() <= maximo){
-            return texto;
-       } else {
-            return texto.substring(0, maximo);
-       }
+        float media;
     }
 }
 
