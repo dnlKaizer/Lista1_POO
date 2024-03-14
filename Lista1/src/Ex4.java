@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Ex4 {
 
-    public void AlunosMaiorMedia() {
+    public void alunosMaiorMedia() {
         TAluno[] alunos = new TAluno[100];
         gerarAlunos(alunos);
         for (int i = 0; i < alunos.length; i++) {

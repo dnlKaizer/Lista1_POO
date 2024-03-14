@@ -9,7 +9,7 @@ public class Ex1 {
         String dataObtencao;
     }
 
-    public void CadastroAlunosAutoescola() throws Exception {
+    public void cadastroAlunosAutoescola() throws Exception {
         Scanner sc = new Scanner(System.in);
         TAluno[] alunos = new TAluno[50];
         um: {

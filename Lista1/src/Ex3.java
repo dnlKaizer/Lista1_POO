@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Ex3 {
     
-    public void ImprimirInformacoes() {
+    public void imprimirInformacoes() {
         TPessoa[] pessoas = gerarPessoas();
         int nMasc = 0;
         int tamanho = pessoas.length;
