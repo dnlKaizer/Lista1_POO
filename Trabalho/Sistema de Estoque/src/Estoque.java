@@ -87,7 +87,7 @@ public class Estoque {
 
         for (int i = 0; i < nProdutos; i++) {
             for (int j = i + 1; j < nProdutos; j++) {
-                if ((vetAux[i].lerNome()).compareTo(vetAux[j].lerNome()) > 0) {
+                if ((vetAux[i].lerNome()).compareToIgnoreCase(vetAux[j].lerNome()) > 0) {
                     auxP = vetAux[i];
                     vetAux[i] = vetAux[j];
                     vetAux[j] = auxP;
