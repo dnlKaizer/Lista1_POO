@@ -61,6 +61,16 @@ public class Estoque {
         return nProdutos;
     }
 
+    /* Busca produto no estoque pelo código */
+    Produto buscar(int codigo) {
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].lerCodigo() == codigo) {
+                return produtos[i];
+            }
+        }
+        return null;
+    }
+
     /* Verifica se existe produto com mesmo nome */
     private boolean verificaNome(Produto novoProduto) {
         for (int i = 0; i < nProdutos; i++) {
