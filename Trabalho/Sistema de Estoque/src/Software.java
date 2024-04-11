@@ -28,7 +28,7 @@ public class Software {
         }
     }
     
-    /* Listar todos os produtos cadatrados */
+    /* Listar todos os produtos cadatrados por código */
     static void listar(Estoque estoque) {
         
         System.out.println();
@@ -38,13 +38,14 @@ public class Software {
         int ordem = sc.nextInt();
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
-        Produto[] produtos = estoque.listar();
         int nProdutos = estoque.lerNProdutos();
+        Produto[] produtos;
         String linhaMenu = "----------------------------------------------------";
-
+        
         switch (ordem) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
+                produtos = estoque.listarTodos();
 
                 linhaMenu += "---------------";
                 System.out.println();
@@ -67,8 +68,7 @@ public class Software {
 
             /* Ordem alfabética (nome, código, preço) */
             case 2:
-
-                produtos = ordenarProdutos(produtos);
+                produtos = estoque.listarPorNome();
 
                 System.out.println();
                 System.out.println(linhaMenu);
@@ -93,22 +93,6 @@ public class Software {
                 System.out.println("\nERRO\n");
                 break;
         }
-    }
-
-    static Produto[] ordenarProdutos(Produto[] produtos) {
-        Produto auxP = new Produto();
-        int nProdutos = produtos.length;
-        for (int i = 0; i < nProdutos; i++) {
-            for (int j = i + 1; j < nProdutos; j++) {
-                if ((produtos[i].lerNome()).compareTo(produtos[j].lerNome()) > 0) {
-                    auxP = produtos[i];
-                    produtos[i] = produtos[j];
-                    produtos[j] = auxP;
-                }
-            }
-        }
-
-        return produtos;
     }
 
     static void imprimirVetor(Produto[] vetor) {

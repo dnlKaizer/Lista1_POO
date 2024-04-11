@@ -36,8 +36,8 @@ public class Estoque {
         return false;
     }
 
-    /* Retorna cópia da lista de produtos, sem os espaços nulos */
-    Produto[] listar() {
+    /* Retorna cópia da lista de produtos em ordem por código */
+    Produto[] listarTodos() {
         Produto[] vetAux = new Produto[nProdutos];
         for (int i = 0; i < nProdutos; i++) {
             vetAux[i] = new Produto();
@@ -50,6 +50,13 @@ public class Estoque {
         return vetAux;
     }
 
+    /* Retorna cópia da lista de produtos em ordem alfabética */
+    Produto[] listarPorNome() {
+        Produto[] vetAux = ordenarProdutos();
+        return vetAux;
+    }    
+
+    /* Retorna a quantidade de produtos cadastrados */
     int lerNProdutos() {
         return nProdutos;
     }
@@ -64,4 +71,20 @@ public class Estoque {
         return false;
     }
 
+    private Produto[] ordenarProdutos() {
+        Produto auxP = new Produto();
+        Produto[] vetAux = listarTodos();
+
+        for (int i = 0; i < nProdutos; i++) {
+            for (int j = i + 1; j < nProdutos; j++) {
+                if ((vetAux[i].lerNome()).compareTo(vetAux[j].lerNome()) > 0) {
+                    auxP = vetAux[i];
+                    vetAux[i] = vetAux[j];
+                    vetAux[j] = auxP;
+                }
+            }
+        }
+
+        return vetAux;
+    }
 }
