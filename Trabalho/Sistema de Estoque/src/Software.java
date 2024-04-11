@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Software {
@@ -36,22 +37,29 @@ public class Software {
         System.out.print("\nDigite a ordem: ");
         int ordem = sc.nextInt();
 
+        DecimalFormat moeda = new DecimalFormat("#,##0.00");
         Produto[] produtos = estoque.listar();
 
         switch (ordem) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
+                String linhaMenu = "-------------------------------------------------------------------";
                 System.out.println();
-                System.out.printf("%6s \t %20s \t %8s \t %s", "CÓDIGO", "NOME", "PREÇO", "QUANTIDADE");
+                System.out.println(linhaMenu);
+                System.out.printf("|  %-6s  |  %-20s  |  %-8s    |  %-10s  |", 
+                "CÓDIGO", "NOME", "PREÇO", "QUANTIDADE");
                 System.out.println();
-
+                System.out.println(linhaMenu);
+                
                 for (int i = 0; i < estoque.lerNProdutos(); i++) {
                     System.out.printf(
-                        "%6d \t %20s \t %8f \t %d",
-                        produtos[i].lerCodigo(), produtos[i].lerNome(), produtos[i].lerPreco(), produtos[i].lerQuantidade());
+                        "|  %-6d  |  %-20s  |  R$%8s  |  %-10d  |",
+                        produtos[i].lerCodigo(), produtos[i].lerNome(),
+                        moeda.format(produtos[i].lerPreco()),produtos[i].lerQuantidade());
                         System.out.println();
                 }
-                break;
+                    System.out.println(linhaMenu);
+                    break;
 
             /* Ordem alfabética (nome, código, preço) */
             case 2:
