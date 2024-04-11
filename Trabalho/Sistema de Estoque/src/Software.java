@@ -39,11 +39,14 @@ public class Software {
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         Produto[] produtos = estoque.listar();
+        int nProdutos = estoque.lerNProdutos();
+        String linhaMenu = "----------------------------------------------------";
 
         switch (ordem) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
-                String linhaMenu = "-------------------------------------------------------------------";
+
+                linhaMenu += "---------------";
                 System.out.println();
                 System.out.println(linhaMenu);
                 System.out.printf("|  %-6s  |  %-20s  |  %-8s    |  %-10s  |", 
@@ -51,25 +54,61 @@ public class Software {
                 System.out.println();
                 System.out.println(linhaMenu);
                 
-                for (int i = 0; i < estoque.lerNProdutos(); i++) {
+                for (int i = 0; i < nProdutos; i++) {
                     System.out.printf(
                         "|  %-6d  |  %-20s  |  R$%8s  |  %-10d  |",
                         produtos[i].lerCodigo(), produtos[i].lerNome(),
                         moeda.format(produtos[i].lerPreco()),produtos[i].lerQuantidade());
                         System.out.println();
                 }
-                    System.out.println(linhaMenu);
-                    break;
+
+                System.out.println(linhaMenu);
+                break;
 
             /* Ordem alfabética (nome, código, preço) */
             case 2:
+
+                produtos = ordenarProdutos(produtos);
+
+                System.out.println();
+                System.out.println(linhaMenu);
+                System.out.printf("|  %-20s  |  %-6s  |  %-8s    |", 
+                "NOME", "CÓDIGO", "PREÇO");
+                System.out.println();
+                System.out.println(linhaMenu);
                 
+                for (int i = 0; i < nProdutos; i++) {
+                    System.out.printf(
+                        "|  %-20s  |  %-6d  |  R$%8s  |",
+                        produtos[i].lerNome(), produtos[i].lerCodigo(),
+                        moeda.format(produtos[i].lerPreco()));
+                        System.out.println();
+                }
+
+                System.out.println(linhaMenu);
                 break;
         
             default:
-                System.out.println("Erro.");
+
+                System.out.println("\nERRO\n");
                 break;
         }
+    }
+
+    static Produto[] ordenarProdutos(Produto[] produtos) {
+        Produto auxP = new Produto();
+        int nProdutos = produtos.length;
+        for (int i = 0; i < nProdutos; i++) {
+            for (int j = i + 1; j < nProdutos; j++) {
+                if ((produtos[i].lerNome()).compareTo(produtos[j].lerNome()) > 0) {
+                    auxP = produtos[i];
+                    produtos[i] = produtos[j];
+                    produtos[j] = auxP;
+                }
+            }
+        }
+
+        return produtos;
     }
 
     static void imprimirVetor(Produto[] vetor) {

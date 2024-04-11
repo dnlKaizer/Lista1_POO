@@ -36,7 +36,7 @@ public class Estoque {
         return false;
     }
 
-    /* Retorna cópia da lista de produtos */
+    /* Retorna cópia da lista de produtos, sem os espaços nulos */
     Produto[] listar() {
         Produto[] vetAux = new Produto[nProdutos];
         for (int i = 0; i < nProdutos; i++) {
