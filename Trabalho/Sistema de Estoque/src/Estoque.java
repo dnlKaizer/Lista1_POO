@@ -36,17 +36,8 @@ public class Estoque {
         return false;
     }
 
-    /* Verifica se existe produto com mesmo nome */
-    private boolean verificaNome(Produto novoProduto) {
-        for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].nome.equalsIgnoreCase(novoProduto.nome)) {
-                return true;
-            } 
-        }
-        return false;
-    }
-
-    Produto[] lerProdutos() {
+    /* Retorna cópia da lista de produtos */
+    Produto[] listar() {
         Produto[] vetAux = new Produto[nProdutos];
         for (int i = 0; i < nProdutos; i++) {
             vetAux[i] = new Produto();
@@ -58,4 +49,19 @@ public class Estoque {
         }
         return vetAux;
     }
+
+    int lerNProdutos() {
+        return nProdutos;
+    }
+
+    /* Verifica se existe produto com mesmo nome */
+    private boolean verificaNome(Produto novoProduto) {
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].nome.equalsIgnoreCase(novoProduto.nome)) {
+                return true;
+            } 
+        }
+        return false;
+    }
+
 }
