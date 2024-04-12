@@ -27,6 +27,28 @@ public class Software {
             estoque.inserir(p);
         }
     }
+
+    /* Cadastrar produto */
+    static void cadastrar(Estoque estoque) {
+        Produto p = new Produto();
+        
+        System.out.println("\nDigite as informações do produto a seguir:\n");
+        System.out.print("Nome: ");
+        p.addNome(sc.nextLine());
+        System.out.print("Marca: ");
+        p.addMarca(sc.nextLine());
+        System.out.print("Preço: ");
+        p.addPreco(sc.nextFloat());
+        System.out.print("Quantidade: ");
+        p.addQuantidade(sc.nextInt());
+        sc.nextLine();
+        
+        if (estoque.inserir(p)) {
+            System.out.println("\n" + p.lerNome() + " cadastrado com sucesso.");
+        } else {
+            System.out.println("\nFalha ao cadastrar.");
+        }
+    }
     
     /* Listar todos os produtos cadatrados por código */
     static void listar(Estoque estoque) {
