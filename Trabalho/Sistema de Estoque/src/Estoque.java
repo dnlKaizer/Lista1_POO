@@ -98,10 +98,10 @@ public class Estoque {
         return false;
     }
 
+    /* Retorna cópia da lista de produtos ordenada lexicograficamente */
     private Produto[] ordenarProdutos() {
         Produto auxP = new Produto();
         Produto[] vetAux = listarTodos();
-
         for (int i = 0; i < nProdutos; i++) {
             for (int j = i + 1; j < nProdutos; j++) {
                 if ((vetAux[i].lerNome()).compareToIgnoreCase(vetAux[j].lerNome()) > 0) {
@@ -111,7 +111,6 @@ public class Estoque {
                 }
             }
         }
-
         return vetAux;
     }
 }

@@ -7,8 +7,50 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         Estoque estoque = new Estoque();
+        int comando;
         init(estoque);
-        listar(estoque);
+
+        Menu:
+        while (true) {
+            System.out.println("\nO que deseja fazer?");
+            System.out.println("0. Sair");
+            System.out.println("1. Cadastrar produto");
+            System.out.println("2. Excluir produto");
+            System.out.println("3. Alterar produto");
+            System.out.println("4. Listar produtos");
+            System.out.print("\nDigite o comando: ");
+            comando = sc.nextInt();
+
+            switch (comando) {
+                case 0: 
+                    System.out.println("\nPrograma finalizado.");
+                    Thread.sleep(1000);
+                    break Menu;
+
+                case 1:
+                    cadastrar(estoque);
+                    Thread.sleep(1000);
+                    break;
+
+                case 2:
+                    // excluir(estoque);
+                    break;
+
+                case 3:
+                    // alterar(estoque);
+                    break;
+
+                case 4:
+                    listar(estoque);
+                    Thread.sleep(2000);
+                    break;
+            
+                default:
+                    System.out.println("\nComando inválido. Tente novamente.");
+                    Thread.sleep(1000);
+                    break;
+            }
+        }
     }
     
     /* Cadastra 5 produtos automaticamente */
@@ -31,6 +73,7 @@ public class Software {
     /* Cadastrar produto */
     static void cadastrar(Estoque estoque) {
         Produto p = new Produto();
+        sc.nextLine();
         
         System.out.println("\nDigite as informações do produto a seguir:\n");
         System.out.print("Nome: ");
@@ -41,7 +84,6 @@ public class Software {
         p.addPreco(sc.nextFloat());
         System.out.print("Quantidade: ");
         p.addQuantidade(sc.nextInt());
-        sc.nextLine();
         
         if (estoque.inserir(p)) {
             System.out.println("\n" + p.lerNome() + " cadastrado com sucesso.");
@@ -114,16 +156,6 @@ public class Software {
 
                 System.out.println("\nERRO\n");
                 break;
-        }
-    }
-
-    static void imprimirVetor(Produto[] vetor) {
-        for (int i = 0; i < vetor.length; i++) {
-            try {
-                System.out.println(vetor[i].nome);
-            } catch (Exception e) {
-
-            }
         }
     }
 }
