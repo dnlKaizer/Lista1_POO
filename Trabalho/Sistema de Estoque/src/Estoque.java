@@ -36,6 +36,23 @@ public class Estoque {
         return false;
     }
 
+    /* Método para excluir um produto */
+    boolean excluir(int codigo) {
+        if (codigo > 0) {
+            for (int i = 0; i < nProdutos; i++) {
+                if (produtos[i].lerCodigo() == codigo) {
+                    for (int j = i; j < produtos.length - 1; j++) {
+                        produtos[j] = produtos[j + 1];
+                    }
+                    nProdutos--;
+                    produtos[nProdutos] = null;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /* Retorna cópia da lista de produtos em ordem por código */
     Produto[] listarTodos() {
         Produto[] vetAux = new Produto[nProdutos];
