@@ -113,4 +113,17 @@ public class Estoque {
         }
         return vetAux;
     }
+
+    boolean alterar(int codigo, Produto produtoAlterado) {
+        if (produtoAlterado != null) {
+            for (int i = 0; i < nProdutos; i++) {
+                if (produtos[i].lerCodigo() == codigo) {
+                    produtos[i] = produtoAlterado;
+                    return true;
+                }
+            }
+        } 
+        return false;
+    }
+
 }
