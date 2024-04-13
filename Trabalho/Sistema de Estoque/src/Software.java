@@ -35,11 +35,11 @@ public class Software {
                 case 2:
                     excluir(estoque);
                     Thread.sleep(1000);
-
                     break;
-
+                    
                 case 3:
-                    // alterar(estoque);
+                    alterar(estoque);
+                    Thread.sleep(1000);
                     break;
 
                 case 4:
@@ -95,7 +95,7 @@ public class Software {
         }
     }
     
-    /* Listar todos os produtos cadatrados por código */
+    /* Listar todos os produtos cadatrados */
     static void listar(Estoque estoque) {
         
         System.out.println();
@@ -127,19 +127,20 @@ public class Software {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         Produto[] produtos = estoque.listarTodos();
         int nProdutos = estoque.lerNProdutos();
-        String linhaMenu = "-------------------------------------------------------------------";
+        String linhaMenu = "-------------------------------------------------------" + 
+        "-------------------------------";
 
         System.out.println();
         System.out.println(linhaMenu);
-        System.out.printf("|  %-6s  |  %-20s  |  %-8s    |  %-10s  |", 
-            "CÓDIGO", "NOME", "PREÇO", "QUANTIDADE");
+        System.out.printf("|  %-6s  |  %-20s  |  %-14s  |  %-8s    |  %-10s  |", 
+            "CÓDIGO", "NOME", "MARCA", "PREÇO", "QUANTIDADE");
         System.out.println();
         System.out.println(linhaMenu);
             
         for (int i = 0; i < nProdutos; i++) {
             System.out.printf(
-                "|  %-6d  |  %-20s  |  R$%8s  |  %-10d  |",
-                produtos[i].lerCodigo(), produtos[i].lerNome(),
+                "|  %-6d  |  %-20s  |  %-14s  |  R$%8s  |  %-10d  |",
+                produtos[i].lerCodigo(), produtos[i].lerNome(), produtos[i].lerMarca(),
                 moeda.format(produtos[i].lerPreco()),produtos[i].lerQuantidade());
             System.out.println();
         }
@@ -152,26 +153,28 @@ public class Software {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         Produto[] produtos = estoque.listarPorNome();
         int nProdutos = estoque.lerNProdutos();
-        String linhaMenu = "----------------------------------------------------";
+        String linhaMenu = "-------------------------------------------------------" + 
+        "-------------------------------";
 
         System.out.println();
         System.out.println(linhaMenu);
-        System.out.printf("|  %-20s  |  %-6s  |  %-8s    |", 
-            "NOME", "CÓDIGO", "PREÇO");
+        System.out.printf("|  %-20s  |  %-6s  |  %-14s  |  %-8s    |  %-10s  |", 
+            "NOME", "CÓDIGO", "MARCA","PREÇO", "QUANTIDADE");
         System.out.println();
         System.out.println(linhaMenu);
                 
         for (int i = 0; i < nProdutos; i++) {
             System.out.printf(
-                "|  %-20s  |  %-6d  |  R$%8s  |",
-                produtos[i].lerNome(), produtos[i].lerCodigo(),
-                moeda.format(produtos[i].lerPreco()));
+                "|  %-20s  |  %-6d  |  %-14s  |  R$%8s  |  %-10s  |",
+                produtos[i].lerNome(), produtos[i].lerCodigo(), produtos[i].lerMarca(),
+                moeda.format(produtos[i].lerPreco()), produtos[i].lerQuantidade());
             System.out.println();
         }
 
         System.out.println(linhaMenu);
     }
 
+    /* Excluir produto */
     static void excluir(Estoque estoque) {
         listarTodos(estoque);
         System.out.print("\nDigite o código do produto que deseja excluir: ");
@@ -179,21 +182,80 @@ public class Software {
         Produto produto = estoque.buscar(codigo);
         
         System.out.println();
-        if (produto != null) {
-            System.out.println("Tem certeza que deseja excluir " + produto.lerNome() + "?\n");
-            System.out.println("0. Não");
-            System.out.println("1. Sim");
-            System.out.print("\nConfirmar: ");
-            if (sc.nextInt() == 1) {
-                System.out.println();
-                if (estoque.excluir(codigo)) {
-                    System.out.println(produto.lerNome() + " excluído com sucesso.");
-                } else {
-                    System.out.println("Falha ao escluir.");
-                }
+        if (produto == null) {
+            System.out.println("Não foi possível encontrar um produto com esse código.");
+            return;
+        }
+        System.out.println("Tem certeza que deseja excluir " + produto.lerNome() + "?\n");
+        System.out.println("0. Não");
+        System.out.println("1. Sim");
+        System.out.print("\nConfirmar: ");
+        if (sc.nextInt() == 1) {
+            System.out.println();
+            if (estoque.excluir(codigo)) {
+                System.out.println(produto.lerNome() + " excluído com sucesso.");
+            } else {
+                System.out.println("Falha ao escluir.");
             }
+        }
+    }
+
+    /* Altera um atributo escolhido de um produto */
+    static void alterar(Estoque estoque) {
+        listarTodos(estoque);
+        System.out.print("\nDigite o código do produto que deseja alterar: ");
+        int codigo = sc.nextInt();
+        Produto produto = estoque.buscar(codigo);
+
+        System.out.println();
+    
+        if (produto == null) {
+            System.out.println("Não foi possível encontrar um produto com esse código.");
+            return;
+        }
+
+        /* Sub-Menu */
+        System.out.println("Qual informação deseja alterar?\n");
+        System.out.println("0. Cancelar alteração");
+        System.out.println("1. Nome");
+        System.out.println("2. Marca");
+        System.out.println("3. Preço");
+        System.out.println("4. Quantidade");
+        System.out.print("\nDigite o comando: ");
+        int caso = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println();
+        switch (caso) {
+            case 0:
+                System.out.println("Alteração cancelada.");
+                return;
+            case 1:
+                System.out.print("Digite o novo nome: ");
+                produto.addNome(sc.nextLine());
+                break;
+            case 2:
+                System.out.print("Digite a nova marca: ");
+                produto.addMarca(sc.nextLine());
+                break;
+            case 3:
+                System.out.print("Digite o novo preço: ");
+                produto.addPreco(sc.nextFloat());
+                break;
+            case 4:
+                System.out.print("Digite a nova quantidade: ");
+                produto.addQuantidade(sc.nextInt());
+                break;
+        
+            default:
+                System.out.println("Falha ao alterar.");
+                return;
+        }
+        System.out.println();
+        if (estoque.alterar(codigo, produto)) {
+            System.out.println(produto.lerNome() + " alterado com sucesso.");
         } else {
-            System.out.println("Não foi possível encontrar um produto com código " + codigo + ".");
+            System.out.println("Falha ao alterar.");
         }
     }
 }
