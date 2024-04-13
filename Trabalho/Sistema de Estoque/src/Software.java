@@ -33,7 +33,9 @@ public class Software {
                     break;
 
                 case 2:
-                    // excluir(estoque);
+                    excluir(estoque);
+                    Thread.sleep(1000);
+
                     break;
 
                 case 3:
@@ -85,10 +87,11 @@ public class Software {
         System.out.print("Quantidade: ");
         p.addQuantidade(sc.nextInt());
         
+        System.out.println();
         if (estoque.inserir(p)) {
-            System.out.println("\n" + p.lerNome() + " cadastrado com sucesso.");
+            System.out.println(p.lerNome() + " cadastrado com sucesso.");
         } else {
-            System.out.println("\nFalha ao cadastrar.");
+            System.out.println("Falha ao cadastrar.");
         }
     }
     
@@ -118,6 +121,7 @@ public class Software {
         }
     }
 
+    /* Imprime tabela dos produtos (código, nome, preço e quantidade) */
     static void listarTodos(Estoque estoque) {
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
@@ -142,6 +146,7 @@ public class Software {
         System.out.println(linhaMenu);
     }
 
+    /* Imprime tabela dos produtos (nome, código, preço) */
     static void listarPorNome(Estoque estoque) {
         
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
@@ -167,7 +172,28 @@ public class Software {
         System.out.println(linhaMenu);
     }
 
-    // static excluir(Estoque estoque) {
-    //     listar(estoque);
-    // }
+    static void excluir(Estoque estoque) {
+        listarTodos(estoque);
+        System.out.print("\nDigite o código do produto que deseja excluir: ");
+        int codigo = sc.nextInt();
+        Produto produto = estoque.buscar(codigo);
+        
+        System.out.println();
+        if (produto != null) {
+            System.out.println("Tem certeza que deseja excluir " + produto.lerNome() + "?\n");
+            System.out.println("0. Não");
+            System.out.println("1. Sim");
+            System.out.print("\nConfirmar: ");
+            if (sc.nextInt() == 1) {
+                System.out.println();
+                if (estoque.excluir(codigo)) {
+                    System.out.println(produto.lerNome() + " excluído com sucesso.");
+                } else {
+                    System.out.println("Falha ao escluir.");
+                }
+            }
+        } else {
+            System.out.println("Não foi possível encontrar um produto com código " + codigo + ".");
+        }
+    }
 }
