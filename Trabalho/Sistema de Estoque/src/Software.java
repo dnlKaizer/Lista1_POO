@@ -212,7 +212,7 @@ public class Software {
 
             /* Ordem alfabética (nome, código, preço) */
             case 2:
-                listarPorNome(estoque.listarPorNome());
+                listarTodos(estoque.listarPorNome());
                 break;
         
             default:
@@ -221,7 +221,7 @@ public class Software {
         }
     }
 
-    /* Imprime tabela dos produtos (código, nome, preço e quantidade) */
+    /* Imprime tabela com todos os produtos */
     static void listarTodos(Produto[] produtos) {
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
@@ -243,32 +243,6 @@ public class Software {
                 moeda.format(produtos[i].lerPreco()),produtos[i].lerQuantidade());
             System.out.println();
         }
-        System.out.println(linhaMenu);
-    }
-
-    /* Imprime tabela dos produtos (nome, código, preço) */
-    static void listarPorNome(Produto[] produtos) {
-        
-        DecimalFormat moeda = new DecimalFormat("#,##0.00");
-        int nProdutos = produtos.length;
-        String linhaMenu = "-------------------------------------------------------" + 
-        "-------------------------------";
-
-        System.out.println();
-        System.out.println(linhaMenu);
-        System.out.printf("|  %-20s  |  %-6s  |  %-14s  |  %-8s    |  %-10s  |", 
-            "NOME", "CÓDIGO", "MARCA","PREÇO", "QUANTIDADE");
-        System.out.println();
-        System.out.println(linhaMenu);
-                
-        for (int i = 0; i < nProdutos; i++) {
-            System.out.printf(
-                "|  %-20s  |  %-6d  |  %-14s  |  R$%8s  |  %-10s  |",
-                produtos[i].lerNome(), produtos[i].lerCodigo(), produtos[i].lerMarca(),
-                moeda.format(produtos[i].lerPreco()), produtos[i].lerQuantidade());
-            System.out.println();
-        }
-
         System.out.println(linhaMenu);
     }
 
