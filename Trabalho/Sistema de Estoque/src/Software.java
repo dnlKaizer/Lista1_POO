@@ -12,7 +12,7 @@ public class Software {
 
         Menu:
         while (true) {
-            System.out.println("\nO que deseja fazer?");
+            System.out.println("\nO que deseja fazer?\n");
             System.out.println("0. Sair");
             System.out.println("1. Cadastrar produto");
             System.out.println("2. Excluir produto");
