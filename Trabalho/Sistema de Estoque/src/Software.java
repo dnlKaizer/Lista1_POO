@@ -63,39 +63,48 @@ public class Software {
     
     /* Cadastra 5 produtos automaticamente */
     static void init(Estoque estoque) {
-        Produto p = new Produto();
+        Produto produto = new Produto();
         
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
         String marcas[] = {"PratoFino", "Camil", "BemBrasil", "Saudali", "Del Valle"};
         float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
-            p.addNome(nomes[i]);
-            p.addMarca(marcas[i]);
-            p.addPreco(precos[i]);
-            p.addQuantidade(20);
-            estoque.inserir(p);
+            produto.addNome(nomes[i]);
+            produto.addMarca(marcas[i]);
+            produto.addPreco(precos[i]);
+            produto.addQuantidade(20);
+            estoque.inserir(produto);
         }
     }
 
     /* Cadastrar produto */
     static void cadastrar(Estoque estoque) {
-        Produto p = new Produto();
+        Produto produto = new Produto();
+        String nome;
+        int m = 0;
         sc.nextLine();
         
         System.out.println("\nDigite as informações do produto a seguir:\n");
-        System.out.print("Nome: ");
-        p.addNome(sc.nextLine());
+        do {
+            if (m != 0) {
+                System.out.println("\nEste nome já existe. Tente novamente.\n");
+            }
+            System.out.print("Nome: ");
+            nome = sc.nextLine();
+            m++;
+        } while (estoque.verificaNome(nome));
+        produto.addNome(nome);
         System.out.print("Marca: ");
-        p.addMarca(sc.nextLine());
+        produto.addMarca(sc.nextLine());
         System.out.print("Preço: ");
-        p.addPreco(sc.nextFloat());
+        produto.addPreco(sc.nextFloat());
         System.out.print("Quantidade: ");
-        p.addQuantidade(sc.nextInt());
+        produto.addQuantidade(sc.nextInt());
         
         System.out.println();
-        if (estoque.inserir(p)) {
-            System.out.println(p.lerNome() + " cadastrado com sucesso.");
+        if (estoque.inserir(produto)) {
+            System.out.println(produto.lerNome() + " cadastrado com sucesso.");
         } else {
             System.out.println("Falha ao cadastrar.");
         }

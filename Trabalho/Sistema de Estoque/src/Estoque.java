@@ -14,21 +14,19 @@ public class Estoque {
                 }
                 produtos = vetAux;
             }
-            if (!verificaNome(novoProduto)) {
-                for (int i = 0; i < produtos.length; i++) {
-                    if (produtos[i] == null) {
-                        produtos[i] = new Produto();
+            for (int i = 0; i < produtos.length; i++) {
+                if (produtos[i] == null) {
+                    produtos[i] = new Produto();
 
-                        produtos[i].addCodigo(codigo);
-                        produtos[i].addNome(novoProduto.lerNome());
-                        produtos[i].addMarca(novoProduto.lerMarca());
-                        produtos[i].addPreco(novoProduto.lerPreco());
-                        produtos[i].addQuantidade(novoProduto.lerQuantidade());
+                    produtos[i].addCodigo(codigo);
+                    produtos[i].addNome(novoProduto.lerNome());
+                    produtos[i].addMarca(novoProduto.lerMarca());
+                    produtos[i].addPreco(novoProduto.lerPreco());
+                    produtos[i].addQuantidade(novoProduto.lerQuantidade());
 
-                        codigo++;
-                        nProdutos++;
-                        return true;
-                    }
+                    codigo++;
+                    nProdutos++;
+                    return true;
                 }
             }
             return false;
@@ -99,9 +97,9 @@ public class Estoque {
     }
 
     /* Verifica se existe produto com mesmo nome */
-    private boolean verificaNome(Produto novoProduto) {
+    boolean verificaNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].nome.equalsIgnoreCase(novoProduto.nome)) {
+            if (produtos[i].nome.equalsIgnoreCase(nome)) {
                 return true;
             } 
         }
