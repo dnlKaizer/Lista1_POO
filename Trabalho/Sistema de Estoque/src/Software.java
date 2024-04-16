@@ -67,7 +67,7 @@ public class Software {
         
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
         String marcas[] = {"PratoFino", "Camil", "BemBrasil", "Saudali", "Del Valle"};
-        float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
+        float precos[] = {1100.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
             produto.addNome(nomes[i]);
@@ -223,22 +223,22 @@ public class Software {
 
     /* Imprime tabela com todos os produtos */
     static void listarTodos(Produto[] produtos) {
+        int[] tamColuna = acharTamanhoColuna(produtos);
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         int nProdutos = produtos.length;
-        String linhaMenu = "-------------------------------------------------------" + 
-        "-------------------------------";
+        String linhaMenu = gerarLinha(tamColuna[5]);
 
         System.out.println();
         System.out.println(linhaMenu);
-        System.out.printf("|  %-6s  |  %-20s  |  %-14s  |  %-8s    |  %-10s  |", 
+        System.out.printf("|  %-" + tamColuna[0] + "s  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s  |  %-" + tamColuna[3] + "s     |  %-" + tamColuna[4] + "s  |", 
             "CÓDIGO", "NOME", "MARCA", "PREÇO", "QUANTIDADE");
         System.out.println();
         System.out.println(linhaMenu);
             
         for (int i = 0; i < nProdutos; i++) {
             System.out.printf(
-                "|  %-6d  |  %-20s  |  %-14s  |  R$%8s  |  %-10d  |",
+                "|  %-" + tamColuna[0] + "d  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s  |  R$ %" + tamColuna[3] + "s  |  %-" + tamColuna[4] + "d  |",
                 produtos[i].lerCodigo(), produtos[i].lerNome(), produtos[i].lerMarca(),
                 moeda.format(produtos[i].lerPreco()),produtos[i].lerQuantidade());
             System.out.println();
@@ -246,6 +246,7 @@ public class Software {
         System.out.println(linhaMenu);
     }
 
+    /* Detalha um único produto */
     static void detalhar(Estoque estoque) {
 
         System.out.println("\nComo deseja detalhar?\n");
@@ -282,5 +283,47 @@ public class Software {
         } else {
             System.out.println("\nProduto não encontrado.");
         }
+    }
+
+    static String gerarLinha(int n) {
+        String linha = "";
+        for (int i = 0; i < n; i++) {
+            linha += "-";
+        }
+        return linha;
+    }
+
+    /* Algoritmo que encontra o tamanho necessário para cada coluna da tabela */
+    static int[] acharTamanhoColuna(Produto[] produtos) {
+        int[] tamColuna = new int[6];
+        tamColuna[0] = 6;
+        tamColuna[1] = 4;
+        tamColuna[2] = 5;
+        tamColuna[3] = 5;
+        tamColuna[4] = 10;
+
+        DecimalFormat moeda = new DecimalFormat("#,##0.00");
+        
+        if ((produtos[produtos.length - 1].lerCodigo() + "").length() > tamColuna[0]) {
+            tamColuna[0] = (produtos[produtos.length - 1].lerCodigo() + "").length();
+        }
+
+        for (int i = 0; i < produtos.length; i++) {
+            if (produtos[i].lerNome().length() > tamColuna[1]) {
+                tamColuna[1] = produtos[i].lerNome().length();
+            }
+            if (produtos[i].lerMarca().length() > tamColuna[2]) {
+                tamColuna[2] = produtos[i].lerMarca().length();
+            }
+            if (moeda.format(produtos[i].lerPreco()).length() > tamColuna[3]) {
+                tamColuna[3] = moeda.format(produtos[i].lerPreco()).length();
+            }
+            if ((produtos[i].lerQuantidade() + "").length() > tamColuna[4]) {
+                tamColuna[4] = (produtos[i].lerQuantidade() + "").length();
+            }
+        }
+
+        tamColuna[5] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + tamColuna[4] + 29;
+        return tamColuna;
     }
 }
