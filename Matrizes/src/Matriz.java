@@ -81,16 +81,68 @@ public class Matriz {
     }
 
     /**
-     * Retorna se a matriz é triangualr ou não
-     * @return <code>true</code> se for triangular, e <code>false</code> caso não seja
+     * Retorna se a matriz é triangualar inferior ou não
+     * @return <code>true</code> se for triangular inferior, e <code>false</code> caso não seja
       */
-    boolean isTriangular() {
+    boolean isTriangularInferior() {
         if(isQuadrada()) {
             for (int i = 0; i < nLinhas; i++) {
                 for (int j = i + 1; j < nColunas; j++) {
                     if (indice[i][j] != 0) {
                         return false;
                     }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Retorna se a matriz é triangualar superior ou não
+     * @return <code>true</code> se for triangular superior, e <code>false</code> caso não seja
+      */
+    boolean isTriangularSuperior() {
+        if(isQuadrada()) {
+            for (int i = nColunas - 1; i >= 0; i--) {
+                for (int j = i - 1; j >= 0; j--) {
+                    if (indice[i][j] != 0) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Retorna se a matriz é triangular ou não
+     * @return <code>true</code> se for triangular, e <code>false</code> caso não seja
+      */
+    boolean isTriangular() {
+        if(isTriangularSuperior() || isTriangularInferior()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Retorna se a matriz é diagonal ou não
+     * @return <code>true</code> se for diagonal, e <code>false</code> caso não seja
+      */
+    boolean isDiagonal() {
+        if(isTriangularSuperior() && isTriangularInferior()) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean isIdentidade() {
+        if(isDiagonal()) {
+            for (int i = 0; i < nLinhas; i++) {
+                if (indice[i][i] != 1) {
+                    return false;
                 }
             }
             return true;
