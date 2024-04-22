@@ -138,6 +138,10 @@ public class Matriz {
         return false;
     }
 
+    /**
+     * Retorna se a matriz é identidade ou não
+     * @return <code>true</code> se for identidade, e <code>false</code> caso não seja
+      */
     boolean isIdentidade() {
         if(isDiagonal()) {
             for (int i = 0; i < nLinhas; i++) {
