@@ -68,4 +68,33 @@ public class Matriz {
         }
         return vetAux;
     }
+
+    /**
+     * Retorna se a matriz é quadrada ou não
+     * @return <code>true</code> se for quadrada, e <code>false</code> caso não seja
+     */
+    boolean isQuadrada() {
+        if(nLinhas == nColunas) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Retorna se a matriz é triangualr ou não
+     * @return <code>true</code> se for triangular, e <code>false</code> caso não seja
+      */
+    boolean isTriangular() {
+        if(isQuadrada()) {
+            for (int i = 0; i < nLinhas; i++) {
+                for (int j = i + 1; j < nColunas; j++) {
+                    if (indice[i][j] != 0) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }
