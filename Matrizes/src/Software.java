@@ -4,11 +4,14 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         Matriz matriz = new Matriz();
-        double[][] matAux = {{1, 0, 0}, {0, 0.5, 0}, {0, 0, 1}};
+        double[][] matAux = {{1, 0, 0}, {0, 2, 4}, {0, 0, 2}};
         matriz.inserirMatriz(matAux);
 
-        imprimirMatriz(matriz.lerMatriz());
-        somarMultiplo(matriz, 0, 1, 2);
+        System.out.println();
+        imprimirMatriz(matriz);
+        multiplicarEscalar(matriz, 1, 0.5);
+        multiplicarEscalar(matriz, 2, 0.5);
+        somarMultiplo(matriz, 1, 2, -2);
     }
 
     static DecimalFormat df = new DecimalFormat("#,##0.##");
@@ -50,31 +53,6 @@ public class Software {
         }
         return null;
     }
-
-    static void trocarLinhas(Matriz matriz, int index1, int index2) {
-        System.out.println("\nL" + (index1 + 1) + " <-> L" + (index2 + 1) + "\n");
-        matriz.trocarLinhas(index1, index2);
-        imprimirMatriz(matriz.lerMatriz());
-    }
-
-    static void multiplicarEscalar(Matriz matriz, int index, int k) {
-        System.out.println("\nL" + (index + 1) + " -> " + df.format(k) + " x L" + (index + 1) + "\n");
-        matriz.multiplicarEscalar(index, k);
-        imprimirMatriz(matriz.lerMatriz());
-    }
-
-    static void somarLinha(Matriz matriz, int index1, int index2) {
-        System.out.println("\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1) + "\n");
-        matriz.somarLinha(index1, index2);
-        imprimirMatriz(matriz.lerMatriz());
-    }
-
-    static void somarMultiplo(Matriz matriz, int index1, int index2, double k) {
-        System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1) + "\n");
-        matriz.somarMultiplo(index1, index2, k);
-        imprimirMatriz(matriz.lerMatriz());
-    }
-
     static double multiplicaVetor(double[] vet1, double[] vet2) {
         int tamanho = vet1.length;
         double result = 0;
@@ -83,23 +61,36 @@ public class Software {
         }
         return result;
     }
-
-    static void imprimirVetor(double vetor[]) {
-        System.out.print("[");
-        for(int i = 0; i < vetor.length; i++) {
-            System.out.print(vetor[i]);
-            if(i != vetor.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
+    
+    static void trocarLinhas(Matriz matriz, int index1, int index2) {
+        System.out.println("\nL" + (index1 + 1) + " <-> L" + (index2 + 1) + "\n");
+        matriz.trocarLinhas(index1, index2);
+        imprimirMatriz(matriz);
     }
 
-    static void imprimirMatriz(double matriz[][]) {
-        for(int i = 0; i < matriz.length; i++) {
-            for(int j = 0; j < matriz[0].length; j++) {
-                System.out.print(df.format(matriz[i][j]));
-                if(j != matriz[0].length - 1) {
+    static void multiplicarEscalar(Matriz matriz, int index, double k) {
+        System.out.println("\nL" + (index + 1) + " -> " + df.format(k) + " x L" + (index + 1) + "\n");
+        matriz.multiplicarEscalar(index, k);
+        imprimirMatriz(matriz);
+    }
+
+    static void somarLinha(Matriz matriz, int index1, int index2) {
+        System.out.println("\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1) + "\n");
+        matriz.somarLinha(index1, index2);
+        imprimirMatriz(matriz);
+    }
+
+    static void somarMultiplo(Matriz matriz, int index1, int index2, double k) {
+        System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1) + "\n");
+        matriz.somarMultiplo(index1, index2, k);
+        imprimirMatriz(matriz);
+    }
+
+    static void imprimirMatriz(Matriz matriz) {
+        for(int i = 0; i < matriz.lerNLinhas(); i++) {
+            for(int j = 0; j < matriz.lerNColunas(); j++) {
+                System.out.print(df.format(matriz.lerIndice(i, j)));
+                if(j != matriz.lerNColunas() - 1) {
                     System.out.print("\t");
                 }
             }
