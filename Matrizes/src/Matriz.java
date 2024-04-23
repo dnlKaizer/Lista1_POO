@@ -80,6 +80,22 @@ public class Matriz {
     }
 
     /**
+     * Insere o número de linhas da matriz
+     * @param nLinhas
+      */
+    void inserirNLinhas(int nLinhas) {
+        this.nLinhas = nLinhas;
+    }
+
+    /**
+     * Insere o número de colunas da matriz
+     * @param nColunas
+      */
+    void inserirNColunas(int nColunas) {
+        this.nColunas = nColunas;
+    }
+
+    /**
      * Método que retorna o número <code>int</code> de linhas da matriz
      * @return número de linhas da matriz
       */
