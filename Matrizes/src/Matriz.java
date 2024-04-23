@@ -14,7 +14,7 @@ public class Matriz {
 
         for (int i = 0; i < nLinhas; i++) {
             for (int j = 0; j < nColunas; j++) {
-                indice[i][j] = matriz[i][j];
+                inserirValor(matriz[i][j], i, j);
             }
         }
     }
@@ -77,6 +77,22 @@ public class Matriz {
             vetAux[i] = indice[i][j];
         }
         return vetAux;
+    }
+
+    /**
+     * Método que retorna o número <code>int</code> de linhas da matriz
+     * @return número de linhas da matriz
+      */
+      int lerNLinhas() {
+        return nLinhas;
+    }
+    
+    /**
+     * Método que retorna o número <code>int</code> de colunas da matriz
+     * @return número de colunas da matriz
+      */
+    int lerNColunas() {
+        return nColunas;
     }
 
     /**
