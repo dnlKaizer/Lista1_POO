@@ -80,19 +80,14 @@ public class Matriz {
     }
 
     /**
-     * Insere o número de linhas da matriz
+     * Declara o tamanho da matriz de índices
      * @param nLinhas
-      */
-    void inserirNLinhas(int nLinhas) {
-        this.nLinhas = nLinhas;
-    }
-
-    /**
-     * Insere o número de colunas da matriz
      * @param nColunas
       */
-    void inserirNColunas(int nColunas) {
+    void inserirTamanho(int nLinhas, int nColunas) {
+        this.nLinhas = nLinhas;
         this.nColunas = nColunas;
+        indice = new double[nLinhas][nColunas];
     }
 
     /**
