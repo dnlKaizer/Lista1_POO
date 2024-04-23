@@ -210,4 +210,65 @@ public class Matriz {
         }
         return false;
     }
+
+    /**
+     * Operação elementar de troca de linhas
+     * @param index1 index da linha 1
+     * @param index2 index da linha 2
+      */
+    void trocarLinhas(int index1, int index2) {
+        double[] linhaM = lerLinha(index1);
+        indice[index1] = lerLinha(index2);
+        indice[index2] = linhaM;
+    }
+
+    /**
+     * Operação elementar de multiplicar por escalar
+     * @param index da linha que será multiplicada
+     * @param k escalar
+      */
+    void multiplicarEscalar(int index, double k) {
+        inserirLinha(
+            retornaMultiploLinha(index, k),
+            index);
+    }
+
+    /**
+     * Operação elementar de soma de linhas
+     * @param index1 index da linha 1 (linha que será alterada)
+     * @param index2 index da linha 2
+      */
+    void somarLinha(int index1, int index2) {
+        inserirLinha(
+            retornaSomaLinhas(index1, lerLinha(index2)),
+            index1);
+    }
+
+    /**
+     * Operação elementar de soma pelo múltiplo de uma linha
+     * @param index1 index da linha 1 (linha que será alterada)
+     * @param index2 index da linha 2
+     * @param k múltiplo
+      */
+    void somarMultiplo(int index1, int index2, double k) {
+        inserirLinha(
+            retornaSomaLinhas(index1, retornaMultiploLinha(index2, k)),
+            index1);
+    }
+
+    private double[] retornaSomaLinhas(int index1, double[] linha2) {
+        double[] linha1 = lerLinha(index1);
+        for (int i = 0; i < nColunas; i++) {
+            linha1[i] += linha2[i];
+        }
+        return linha1;
+    }
+
+    private double[] retornaMultiploLinha(int index, double k) {
+        double[] linha = lerLinha(index);
+        for (int i = 0; i < nColunas; i++) {
+            linha[i] *= k;
+        }
+        return linha;
+    }
 }
