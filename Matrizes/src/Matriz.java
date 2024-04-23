@@ -30,6 +30,26 @@ public class Matriz {
     }
 
     /**
+     * Insere uma linha inteira na matriz
+     * @param linha que será inserida
+     * @param i index da linha
+      */
+    void inserirLinha(double[] linha, int i) {
+        indice[i] = linha;
+    }
+
+    /**
+     * Insere uma coluna inteira na matriz
+     * @param coluna que será inserida
+     * @param j index da coluna
+      */
+    void inserirColuna(double[] coluna, int j) {
+        for (int i = 0; i < nLinhas; i++) {
+            indice[i][j] = coluna[i];
+        }
+    }
+
+    /**
      * Retorna uma <em>cópia</em> da matriz do Objeto
      * @return matriz de índices
       */
