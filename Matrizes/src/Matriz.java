@@ -20,6 +20,16 @@ public class Matriz {
     }
 
     /**
+     * Insere um valor do tipo <code>double</code> ao índice i, j da matriz
+     * @param valor a ser inserido
+     * @param i índice da linha
+     * @param j índice da coluna
+      */
+    void inserirValor(double valor, int i, int j) {
+        indice[i][j] = valor;
+    }
+
+    /**
      * Retorna uma <em>cópia</em> da matriz do Objeto
      * @return matriz de índices
       */
