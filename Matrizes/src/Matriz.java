@@ -256,6 +256,11 @@ public class Matriz {
             index1);
     }
 
+    /**
+     * Adiciona uma nova coluna na matriz
+     * @param coluna a ser inserida
+     * @param index onde será inserida a coluna. Caso seja <code>-1</code>, é inserida automaticamente ao final da matriz
+      */
     void adicionarNovaColuna(double[] coluna, int index) {
         if (index == -1) {
             index = nColunas;
@@ -272,6 +277,33 @@ public class Matriz {
         if (index <= nColunas) {
             for (int j = index + 1; j < nColunas + 1; j++) {
                 matAux.inserirColuna(lerColuna(j - 1), j);
+            }
+        }
+
+        inserirMatriz(matAux.lerMatriz());
+    }
+
+    /**
+     * Adiciona uma nova linha na matriz
+     * @param linha a ser inserida
+     * @param index onde será inserida a linha. Caso seja <code>-1</code>, é inserida automaticamente ao final da matriz
+      */
+    void adicionarNovaLinha(double[] linha, int index) {
+        if (index == -1) {
+            index = nLinhas;
+        }
+
+        Matriz matAux = new Matriz();
+        matAux.inserirTamanho(nLinhas + 1, nColunas);
+
+        matAux.inserirLinha(linha, index);
+        for (int i = index - 1; i >= 0; i--) {
+            matAux.inserirLinha(lerLinha(i), i);
+        }
+
+        if (index <= nLinhas) {
+            for (int i = index + 1; i < nLinhas + 1; i++) {
+                matAux.inserirLinha(lerLinha(i - 1), i);
             }
         }
 
