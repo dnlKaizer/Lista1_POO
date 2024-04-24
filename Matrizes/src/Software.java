@@ -4,14 +4,12 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         Matriz matriz = new Matriz();
-        double[][] matAux = {{1, 0, 0}, {0, 2, 4}, {0, 0, 2}};
+        double[][] matAux = {{0, 2, 2}, {0, 5, 4}, {0, 8, 5}, {0, 3, 11}};
         matriz.inserirMatriz(matAux);
 
-        System.out.println();
         imprimirMatriz(matriz);
-        multiplicarEscalar(matriz, 1, 0.5);
-        multiplicarEscalar(matriz, 2, 0.5);
-        somarMultiplo(matriz, 1, 2, -2);
+        escalonar(matriz);
+
     }
 
     static DecimalFormat df = new DecimalFormat("#,##0.##");
@@ -61,35 +59,95 @@ public class Software {
         }
         return result;
     }
+
+    static void escalonar(Matriz matrizOriginal) {
+        Matriz matriz = new Matriz();
+        matriz.inserirMatriz(matrizOriginal.lerMatriz());
+        int nLinhas = matriz.lerNLinhas();
+        int nColunas = matriz.lerNColunas();
+        int indexPivo = 0;
+        int nPivos = 0;
+        boolean temNaoNulo;
+        
+        VerificarColuna:
+        for (int j = 0; j < nColunas; j++) {
+            temNaoNulo = false;
+
+            // Achar Pivô
+            indexPivo = nPivos;
+            for (int i = nPivos; i < nLinhas; i++) {
+                if (matriz.lerColuna(j)[i] == 1) {
+                    indexPivo = i;
+                    if (nPivos != indexPivo) {
+                        trocarLinhas(matriz, indexPivo, nPivos);
+                        indexPivo = nPivos;
+                    }
+                    nPivos++;
+                    break;
+                } else {
+                    if (!temNaoNulo) {
+                        if (matriz.lerColuna(j)[i] != 0) {
+                            temNaoNulo = true;
+                            indexPivo = i;
+                        }
+                    }
+                }
+
+                if (i == nLinhas - 1) {
+                    if (temNaoNulo) {
+                        multiplicarLinhaPorEscalar(matriz, indexPivo, (1 / matriz.lerColuna(j)[indexPivo]));
+                        if (nPivos != indexPivo) {
+                            trocarLinhas(matriz, indexPivo, nPivos);
+                            indexPivo = nPivos;
+                        }
+                        nPivos++;
+                    } else {
+                        continue VerificarColuna;
+                    }
+                }
+            }
+
+            // Zerar entradas abaixo do pivô
+            for (int i = nPivos; i < nLinhas; i++) {
+                somarMultiploLinha(matriz, i, indexPivo, (matriz.lerColuna(j)[i]) * (-1));
+            }
+        }
+    }   
     
     static void trocarLinhas(Matriz matriz, int index1, int index2) {
-        System.out.println("\nL" + (index1 + 1) + " <-> L" + (index2 + 1) + "\n");
+        System.out.println("\nL" + (index1 + 1) + " <-> L" + (index2 + 1));
         matriz.trocarLinhas(index1, index2);
         imprimirMatriz(matriz);
     }
 
-    static void multiplicarEscalar(Matriz matriz, int index, double k) {
-        System.out.println("\nL" + (index + 1) + " -> " + df.format(k) + " x L" + (index + 1) + "\n");
+    static void multiplicarLinhaPorEscalar(Matriz matriz, int index, double k) {
+        System.out.println("\nL" + (index + 1) + " -> " + df.format(k) + " x L" + (index + 1));
         matriz.multiplicarEscalar(index, k);
         imprimirMatriz(matriz);
     }
 
-    static void somarLinha(Matriz matriz, int index1, int index2) {
-        System.out.println("\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1) + "\n");
+    static void somarLinhas(Matriz matriz, int index1, int index2) {
+        System.out.println("\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1));
         matriz.somarLinha(index1, index2);
         imprimirMatriz(matriz);
     }
 
-    static void somarMultiplo(Matriz matriz, int index1, int index2, double k) {
-        System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1) + "\n");
+    static void somarMultiploLinha(Matriz matriz, int index1, int index2, double k) {
+        System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1));
         matriz.somarMultiplo(index1, index2, k);
         imprimirMatriz(matriz);
     }
 
     static void imprimirMatriz(Matriz matriz) {
+        System.out.println();
+        double number;
         for(int i = 0; i < matriz.lerNLinhas(); i++) {
             for(int j = 0; j < matriz.lerNColunas(); j++) {
-                System.out.print(df.format(matriz.lerIndice(i, j)));
+                number = matriz.lerIndice(i, j);
+                if (number == 0) {
+                    number = Math.abs(number);
+                } 
+                System.out.print(df.format(number));
                 if(j != matriz.lerNColunas() - 1) {
                     System.out.print("\t");
                 }
