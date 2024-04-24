@@ -8,11 +8,16 @@ public class Software {
         // double[][] matAux = {{1, 3, 2, 5}, {6, 5, 4, 8}, {1, 8, 5, 3}};
         // matriz.inserirMatriz(matAux);
         Matriz matriz = gerarMatrizInvertivel();
-        metodoGaussJordan(matriz);
+        double[] coluna = geraVetor(matriz.lerNLinhas());
 
+        matriz.adicionarNovaColuna(coluna, -1);
+        metodoGaussJordan(matriz);
     }
 
     static DecimalFormat df = new DecimalFormat("#,##0.##");
+
+    static Random random = new Random();
+
 
     /**
      * Soma duas matrizes do tipo <code>Matriz</code>.
@@ -220,8 +225,11 @@ public class Software {
         imprimirMatriz(matriz);
     }
 
+    /**
+     * Gera uma matriz invertível, de tamanho entre 2 e 5.
+     * @return matriz invertível
+      */
     static Matriz gerarMatrizInvertivel() {
-        Random random = new Random();
         int tamanho = 2 + random.nextInt(4);
         Matriz matriz = gerarIdentidade(tamanho);
         int nLinhas = matriz.lerNLinhas();
@@ -258,6 +266,11 @@ public class Software {
         return matriz;
     }
 
+    /**
+     * Gera uma matriz identidade
+     * @param tamanho da matriz
+     * @return matriz identidade
+      */
     static Matriz gerarIdentidade(int tamanho) {
         Matriz matriz = new Matriz();
         matriz.inserirTamanho(tamanho, tamanho);
@@ -273,6 +286,19 @@ public class Software {
         }
 
         return matriz;
+    }
+
+    /**
+     * Gera vetor com entradas no intervalo [-10, 10]
+     * @param tamanho do vetor
+     * @return vetor gerado
+      */
+    static double[] geraVetor(int tamanho) {
+        double[] vetor = new double[tamanho];
+        for (int i = 0; i < tamanho; i++) {
+            vetor[i] = random.nextInt(21) - 10;
+        }
+        return vetor;
     }
 
     static void imprimirMatriz(Matriz matriz) {
