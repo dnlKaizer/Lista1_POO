@@ -256,6 +256,28 @@ public class Matriz {
             index1);
     }
 
+    void adicionarNovaColuna(double[] coluna, int index) {
+        if (index == -1) {
+            index = nColunas;
+        }
+
+        Matriz matAux = new Matriz();
+        matAux.inserirTamanho(nLinhas, nColunas + 1);
+
+        matAux.inserirColuna(coluna, index);
+        for (int j = index - 1; j >= 0; j--) {
+            matAux.inserirColuna(lerColuna(j), j);
+        }
+
+        if (index <= nColunas) {
+            for (int j = index + 1; j < nColunas + 1; j++) {
+                matAux.inserirColuna(lerColuna(j - 1), j);
+            }
+        }
+
+        inserirMatriz(matAux.lerMatriz());
+    }
+
     private double[] retornaSomaLinhas(int index1, double[] linha2) {
         double[] linha1 = lerLinha(index1);
         for (int i = 0; i < nColunas; i++) {
