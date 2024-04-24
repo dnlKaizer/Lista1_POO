@@ -1,11 +1,13 @@
 import java.text.DecimalFormat;
+import java.util.Random;
 
 public class Software {
     public static void main(String[] args) throws Exception {
         
-        Matriz matriz = new Matriz();
-        double[][] matAux = {{1, 3, 2, 5}, {6, 5, 4, 8}, {1, 8, 5, 3}};
-        matriz.inserirMatriz(matAux);
+        // Matriz matriz = new Matriz();
+        // double[][] matAux = {{1, 3, 2, 5}, {6, 5, 4, 8}, {1, 8, 5, 3}};
+        // matriz.inserirMatriz(matAux);
+        Matriz matriz = gerarMatrizInvertivel();
         metodoGaussJordan(matriz);
 
     }
@@ -99,8 +101,11 @@ public class Software {
             // Achar Pivô
             indexPivo = nPivos;
             for (int i = nPivos; i < nLinhas; i++) {
-                if (matriz.lerIndice(i, j) == 1) {
+                if (Math.abs(matriz.lerIndice(i, j)) == 1) {
                     indexPivo = i;
+                    if (matriz.lerIndice(i, j) == -1) {
+                        multiplicarLinhaPorEscalar(matriz, indexPivo, -1);
+                    }
                     if (nPivos != indexPivo) {
                         trocarLinhas(matriz, indexPivo, nPivos);
                         indexPivo = nPivos;
@@ -213,6 +218,61 @@ public class Software {
         System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1));
         matriz.somarMultiplo(index1, index2, k);
         imprimirMatriz(matriz);
+    }
+
+    static Matriz gerarMatrizInvertivel() {
+        Random random = new Random();
+        int tamanho = 2 + random.nextInt(4);
+        Matriz matriz = gerarIdentidade(tamanho);
+        int nLinhas = matriz.lerNLinhas();
+        int caso;
+
+        for (int i = 0; i < (random.nextInt(12) + 4) * tamanho; i++) {
+            caso = random.nextInt(3);
+            int linha1 = random.nextInt(nLinhas);
+            int linha2;
+            do {
+                linha2 = random.nextInt(nLinhas);
+            } while (linha1 == linha2);
+
+            int escalar;
+            do {
+                escalar = -3 + random.nextInt(7);
+            } while (escalar == 0);
+
+            switch (caso) {
+                case 0:
+                    matriz.multiplicarEscalar(linha1, escalar);
+                break;
+    
+                case 1:
+                    matriz.trocarLinhas(linha1, linha2);
+                break;
+    
+                case 2:
+                    matriz.somarMultiplo(linha1, linha2, escalar);
+                break;
+            }
+        }
+
+        return matriz;
+    }
+
+    static Matriz gerarIdentidade(int tamanho) {
+        Matriz matriz = new Matriz();
+        matriz.inserirTamanho(tamanho, tamanho);
+
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                if(i == j) {
+                    matriz.inserirValor(1, i, j);
+                } else {
+                    matriz.inserirValor(0, i, j);
+                }
+            }
+        }
+
+        return matriz;
     }
 
     static void imprimirMatriz(Matriz matriz) {
