@@ -4,10 +4,9 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         Matriz matriz = new Matriz();
-        double[][] matAux = {{0, 2, 2}, {0, 5, 4}, {0, 8, 5}, {0, 3, 11}};
+        double[][] matAux = {{1, 3, 2, 5}, {6, 5, 4, 8}, {1, 8, 5, 3}};
         matriz.inserirMatriz(matAux);
-        imprimirMatriz(matriz);
-        escalonar(matriz);
+        metodoGaussJordan(matriz);
 
     }
 
@@ -80,8 +79,9 @@ public class Software {
     /**
      * Imprime os processos para eliminação gaussiana da matriz. <strong>Não altera</strong> a matriz original.
      * @param matrizOriginal matriz a ser escalonada
+     * @return matriz resultante da eliminação
       */
-    static void escalonar(Matriz matrizOriginal) {
+    static Matriz eliminacaoGaussiana(Matriz matrizOriginal) {
         Matriz matriz = new Matriz();
         matriz.inserirMatriz(matrizOriginal.lerMatriz());
         int nLinhas = matriz.lerNLinhas();
@@ -90,6 +90,8 @@ public class Software {
         int nPivos = 0;
         boolean temNaoNulo;
         
+        imprimirMatriz(matriz);
+
         VerificarColuna:
         for (int j = 0; j < nColunas; j++) {
             temNaoNulo = false;
@@ -97,7 +99,7 @@ public class Software {
             // Achar Pivô
             indexPivo = nPivos;
             for (int i = nPivos; i < nLinhas; i++) {
-                if (matriz.lerColuna(j)[i] == 1) {
+                if (matriz.lerIndice(i, j) == 1) {
                     indexPivo = i;
                     if (nPivos != indexPivo) {
                         trocarLinhas(matriz, indexPivo, nPivos);
@@ -107,7 +109,7 @@ public class Software {
                     break;
                 } else {
                     if (!temNaoNulo) {
-                        if (matriz.lerColuna(j)[i] != 0) {
+                        if (matriz.lerIndice(i, j) != 0) {
                             temNaoNulo = true;
                             indexPivo = i;
                         }
@@ -116,7 +118,7 @@ public class Software {
 
                 if (i == nLinhas - 1) {
                     if (temNaoNulo) {
-                        multiplicarLinhaPorEscalar(matriz, indexPivo, (1 / matriz.lerColuna(j)[indexPivo]));
+                        multiplicarLinhaPorEscalar(matriz, indexPivo, (1 / matriz.lerIndice(indexPivo, j)));
                         if (nPivos != indexPivo) {
                             trocarLinhas(matriz, indexPivo, nPivos);
                             indexPivo = nPivos;
@@ -130,10 +132,38 @@ public class Software {
 
             // Zerar entradas abaixo do pivô
             for (int i = nPivos; i < nLinhas; i++) {
-                somarMultiploLinha(matriz, i, indexPivo, (matriz.lerColuna(j)[i]) * (-1));
+                if (matriz.lerIndice(i, j) != 0) {
+                    somarMultiploLinha(matriz, i, indexPivo, (matriz.lerIndice(i, j)) * (-1));
+                }
             }
         }
+
+        return matriz;
     }   
+
+    /**
+     * Imprime os processos para eliminação de Gauss-Jordan da matriz. <strong>Não altera</strong> a matriz original.
+     * @param matrizOriginal matriz a ser escalonada reduzida por linhas
+      */
+    static void metodoGaussJordan(Matriz matrizOriginal) {
+        Matriz matriz = eliminacaoGaussiana(matrizOriginal);
+        int nLinhas = matriz.lerNLinhas();
+        int nColunas = matriz.lerNColunas();
+
+        AcharPivo:
+        for (int i = nLinhas - 1; i >= 0; i--) {
+            for (int j = 0; j < nColunas; j++) {
+                if (matriz.lerIndice(i, j) == 1) {
+                    for (int index = i - 1; index >= 0; index--) {
+                        if (matriz.lerIndice(index, j) != 0) {
+                            somarMultiploLinha(matriz, index, i, (matriz.lerIndice(index, j)) * (-1));
+                        }
+                    }
+                    continue AcharPivo;
+                }
+            }
+        }
+    }
     
     /**
      * Imprime o processo de troca de linha da matriz
