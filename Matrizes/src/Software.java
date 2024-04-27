@@ -297,9 +297,26 @@ public class Software {
     
     static void imprimirProcessos(Matriz[] processos) {
         for (int i = 0; i < processos.length; i++) {
-            System.out.println(processos[i].lerOperacao());
+            imprimirOperacaoElementar(processos[i].lerOperacao());
             imprimirMatriz(processos[i]);
         }
+    }
+
+    static void imprimirOperacaoElementar(double[] operacao) {
+        int index1 = (int)operacao[0];
+        int index2 = (int)operacao[1];
+        double k = operacao[2];
+        if (operacao[0] != -1) {
+            if(operacao[2] == 0) {
+                System.out.println("\nL" + (index1 + 1) + " <-> L" + (index2 + 1));
+            } else if (index2 == -1) {
+                System.out.println("\n" + df.format(k) + " x L" + (index1 + 1) + " -> " + " L" + (index1 + 1));
+            } else if (k == 1) {
+                System.out.println("\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1));
+            } else {
+                System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1));
+            }
+        } 
     }
 }
 
