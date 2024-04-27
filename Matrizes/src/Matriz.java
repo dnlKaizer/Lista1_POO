@@ -1,8 +1,12 @@
+import java.text.DecimalFormat;
+
 public class Matriz {
     
     int nColunas;
     int nLinhas;
     double[][] indice;
+    String operacao = "";
+    DecimalFormat df = new DecimalFormat("#,##0.##");
 
     /**
      * Insere uma matriz ao objeto <code>Matriz</code>. Salva o tamanho das linhas em <em>nLinhas</em> e das colunas em <em>nColunas</em>. 
@@ -71,6 +75,13 @@ public class Matriz {
       */
     double lerIndice(int i, int j) {
         return indice[i][j];
+    }
+
+    String lerOperacao() {
+        return operacao;
+    }
+    void inserirOperacao(String operacao) {
+        this.operacao = operacao;
     }
 
     /**
@@ -154,7 +165,7 @@ public class Matriz {
         }
         return false;
     }
-
+    
     /**
      * Retorna se a matriz é triangualar superior ou não
      * @return <code>true</code> se for triangular superior, e <code>false</code> caso não seja
@@ -220,6 +231,7 @@ public class Matriz {
         double[] linhaM = lerLinha(index1);
         indice[index1] = lerLinha(index2);
         indice[index2] = linhaM;
+        operacao = "\nL" + (index1 + 1) + " <-> L" + (index2 + 1);
     }
 
     /**
@@ -231,6 +243,7 @@ public class Matriz {
         inserirLinha(
             retornaMultiploLinha(index, k),
             index);
+        operacao = "\n" + df.format(k) + " x L" + (index + 1) + " -> " + " L" + (index + 1);
     }
 
     /**
@@ -242,6 +255,7 @@ public class Matriz {
         inserirLinha(
             retornaSomaLinhas(index1, lerLinha(index2)),
             index1);
+        operacao = "\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1);
     }
 
     /**
@@ -254,6 +268,7 @@ public class Matriz {
         inserirLinha(
             retornaSomaLinhas(index1, retornaMultiploLinha(index2, k)),
             index1);
+        operacao = "\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1);
     }
 
     /**
