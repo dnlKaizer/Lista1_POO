@@ -5,10 +5,10 @@ public class Matriz {
     int nColunas;
     int nLinhas;
     double[][] indice;
-    String operacao = "";
+    double[] operacao = {-1, -1, 0};
     DecimalFormat df = new DecimalFormat("#,##0.##");
 
-    /**
+    /**,
      * Insere uma matriz ao objeto <code>Matriz</code>. Salva o tamanho das linhas em <em>nLinhas</em> e das colunas em <em>nColunas</em>. 
      * @param matriz de índices */
     void inserirMatriz(double matriz[][]) {
@@ -77,11 +77,13 @@ public class Matriz {
         return indice[i][j];
     }
 
-    String lerOperacao() {
+    double[] lerOperacao() {
         return operacao;
     }
-    void inserirOperacao(String operacao) {
-        this.operacao = operacao;
+    void inserirOperacao(double[] operacao) {
+        for (int i = 0; i < operacao.length; i++) {
+            this.operacao[i] = operacao[i];
+        }
     }
 
     /**
@@ -231,7 +233,8 @@ public class Matriz {
         double[] linhaM = lerLinha(index1);
         indice[index1] = lerLinha(index2);
         indice[index2] = linhaM;
-        operacao = "\nL" + (index1 + 1) + " <-> L" + (index2 + 1);
+        double[] operacao = {index1, index2, -1};
+        inserirOperacao(operacao);
     }
 
     /**
@@ -243,7 +246,8 @@ public class Matriz {
         inserirLinha(
             retornaMultiploLinha(index, k),
             index);
-        operacao = "\n" + df.format(k) + " x L" + (index + 1) + " -> " + " L" + (index + 1);
+        double[] operacao = {index, -1, k};
+        inserirOperacao(operacao);
     }
 
     /**
@@ -255,7 +259,8 @@ public class Matriz {
         inserirLinha(
             retornaSomaLinhas(index1, lerLinha(index2)),
             index1);
-        operacao = "\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1);
+        double[] operacao = {index1, index2, 1};
+        inserirOperacao(operacao);
     }
 
     /**
@@ -268,7 +273,8 @@ public class Matriz {
         inserirLinha(
             retornaSomaLinhas(index1, retornaMultiploLinha(index2, k)),
             index1);
-        operacao = "\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1);
+        double[] operacao = {index1, index2, k};
+        inserirOperacao(operacao);
     }
 
     /**
