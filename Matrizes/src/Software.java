@@ -11,13 +11,12 @@ public class Software {
         double[] coluna = geraVetor(matriz.lerNLinhas());
 
         matriz.adicionarNovaColuna(coluna, -1);
-        metodoGaussJordan(matriz);
+        imprimirProcessos(metodoGaussJordan(matriz));
     }
 
     static DecimalFormat df = new DecimalFormat("#,##0.##");
 
     static Random random = new Random();
-
 
     /**
      * Soma duas matrizes do tipo <code>Matriz</code>.
@@ -25,7 +24,7 @@ public class Software {
      * @param m2 matriz 2
      * @return <code>null</code> se não podem ser somadas, ou a <code>Matriz</code> resultante
       */
-    static Matriz somaMatriz(Matriz m1, Matriz m2) {
+      Matriz somaMatriz(Matriz m1, Matriz m2) {
         int nLinhas = m1.lerNLinhas();
         int nColunas = m1.lerNColunas();
         if (nLinhas == m2.lerNLinhas() && nColunas == m2.lerNColunas()) {
@@ -44,13 +43,13 @@ public class Software {
         return null;
     }
 
-    /**
+     /**
      * Multiplica duas matrizes do tipo <code>Matriz</code>
      * @param m1 matriz 1
      * @param m2 matriz 2
      * @return <code>null</code> se não podem ser multplicadas, ou a <code>Matriz</code> resultante
       */
-    static Matriz multiplicaMatriz(Matriz m1, Matriz m2) {
+    Matriz multiplicaMatriz(Matriz m1, Matriz m2) {
         if(m1.lerNColunas() == m2.lerNLinhas()) {
             int nLinhas = m1.lerNLinhas();
             int nColunas = m2.lerNColunas();
@@ -74,7 +73,7 @@ public class Software {
      * @param vet2 vetor 2
      * @return resultado <code>double</code>
       */
-    static double multiplicaVetor(double[] vet1, double[] vet2) {
+    double multiplicaVetor(double[] vet1, double[] vet2) {
         int tamanho = vet1.length;
         double result = 0;
         for (int i = 0; i < tamanho; i++) {
@@ -83,12 +82,8 @@ public class Software {
         return result;
     }
 
-    /**
-     * Imprime os processos para eliminação gaussiana da matriz. <strong>Não altera</strong> a matriz original.
-     * @param matrizOriginal matriz a ser escalonada
-     * @return matriz resultante da eliminação
-      */
-    static Matriz eliminacaoGaussiana(Matriz matrizOriginal) {
+    static Matriz[] eliminacaoGaussiana(Matriz matrizOriginal) {
+        Matriz[] processos = new Matriz[0];
         Matriz matriz = new Matriz();
         matriz.inserirMatriz(matrizOriginal.lerMatriz());
         int nLinhas = matriz.lerNLinhas();
@@ -96,8 +91,11 @@ public class Software {
         int indexPivo = 0;
         int nPivos = 0;
         boolean temNaoNulo;
+        int index1;
+        int index2;
+        double k;
         
-        imprimirMatriz(matriz);
+        processos = adicionaVetor(processos, matriz);
 
         VerificarColuna:
         for (int j = 0; j < nColunas; j++) {
@@ -109,10 +107,16 @@ public class Software {
                 if (Math.abs(matriz.lerIndice(i, j)) == 1) {
                     indexPivo = i;
                     if (matriz.lerIndice(i, j) == -1) {
-                        multiplicarLinhaPorEscalar(matriz, indexPivo, -1);
+                        index1 = indexPivo;
+                        k = -1;
+                        matriz.multiplicarEscalar(index1, k);
+                        processos = adicionaVetor(processos, matriz);
                     }
                     if (nPivos != indexPivo) {
-                        trocarLinhas(matriz, indexPivo, nPivos);
+                        index1 = indexPivo;
+                        index2 = nPivos;
+                        matriz.trocarLinhas(index1, index2);
+                        processos = adicionaVetor(processos, matriz);
                         indexPivo = nPivos;
                     }
                     nPivos++;
@@ -128,9 +132,15 @@ public class Software {
 
                 if (i == nLinhas - 1) {
                     if (temNaoNulo) {
-                        multiplicarLinhaPorEscalar(matriz, indexPivo, (1 / matriz.lerIndice(indexPivo, j)));
+                        index1 = indexPivo;
+                        k = 1 / matriz.lerIndice(indexPivo, j);
+                        matriz.multiplicarEscalar(index1, k);
+                        processos = adicionaVetor(processos, matriz);
                         if (nPivos != indexPivo) {
-                            trocarLinhas(matriz, indexPivo, nPivos);
+                            index1 = indexPivo;
+                            index2 = nPivos;
+                            matriz.trocarLinhas(index1, index2);
+                            processos = adicionaVetor(processos, matriz);
                             indexPivo = nPivos;
                         }
                         nPivos++;
@@ -139,24 +149,25 @@ public class Software {
                     }
                 }
             }
-
+            
             // Zerar entradas abaixo do pivô
             for (int i = nPivos; i < nLinhas; i++) {
                 if (matriz.lerIndice(i, j) != 0) {
-                    somarMultiploLinha(matriz, i, indexPivo, (matriz.lerIndice(i, j)) * (-1));
+                    index1 = i;
+                    index2 = indexPivo;
+                    k =  (matriz.lerIndice(i, j)) * (-1);
+                    matriz.somarMultiplo(index1, index2, k);
+                    processos = adicionaVetor(processos, matriz);
                 }
             }
         }
-
-        return matriz;
+        return processos;
     }   
 
-    /**
-     * Imprime os processos para eliminação de Gauss-Jordan da matriz. <strong>Não altera</strong> a matriz original.
-     * @param matrizOriginal matriz a ser escalonada reduzida por linhas
-      */
-    static void metodoGaussJordan(Matriz matrizOriginal) {
-        Matriz matriz = eliminacaoGaussiana(matrizOriginal);
+    static Matriz[] metodoGaussJordan(Matriz matrizOriginal) {
+        Matriz[] processos = eliminacaoGaussiana(matrizOriginal);
+        Matriz matriz = new Matriz();
+        matriz.inserirMatriz(processos[processos.length - 1].lerMatriz());
         int nLinhas = matriz.lerNLinhas();
         int nColunas = matriz.lerNColunas();
 
@@ -166,65 +177,17 @@ public class Software {
                 if (matriz.lerIndice(i, j) == 1) {
                     for (int index = i - 1; index >= 0; index--) {
                         if (matriz.lerIndice(index, j) != 0) {
-                            somarMultiploLinha(matriz, index, i, (matriz.lerIndice(index, j)) * (-1));
+                            matriz.somarMultiplo(index, i, (matriz.lerIndice(index, j)) * (-1));
+                            processos = adicionaVetor(processos, matriz);
                         }
                     }
                     continue AcharPivo;
                 }
             }
         }
+        return processos;
     }
     
-    /**
-     * Imprime o processo de troca de linha da matriz
-     * @param matriz
-     * @param index1 index da primeira linha
-     * @param index2 index da segunda linha
-      */
-    static void trocarLinhas(Matriz matriz, int index1, int index2) {
-        System.out.println("\nL" + (index1 + 1) + " <-> L" + (index2 + 1));
-        matriz.trocarLinhas(index1, index2);
-        imprimirMatriz(matriz);
-    }
-
-    /**
-     * Imprime o processo de multiplicar linha por escalar de uma matriz
-     * @param matriz
-     * @param index index da linha
-     * @param k escalar
-      */
-    static void multiplicarLinhaPorEscalar(Matriz matriz, int index, double k) {
-        System.out.println("\nL" + (index + 1) + " -> " + df.format(k) + " x L" + (index + 1));
-        matriz.multiplicarEscalar(index, k);
-        imprimirMatriz(matriz);
-    }
-
-    /**
-     * Imprime o processo de soma de duas linhas da matriz
-     * @param matriz
-     * @param index1 index da linha que será alterada
-     * @param index2 index da linha que será somada
-      */
-    static void somarLinhas(Matriz matriz, int index1, int index2) {
-        System.out.println("\nL" + (index1 + 1) + " + L" + (index2 + 1) + " -> L" + (index1 + 1));
-        matriz.somarLinha(index1, index2);
-        imprimirMatriz(matriz);
-    }
-
-
-    /**
-     * Imprime o processo de somar uma linha com múltiplo de outra
-     * @param matriz
-     * @param index1 index da linha que será alterada 
-     * @param index2 index da linha que será somada
-     * @param k escalar
-      */
-    static void somarMultiploLinha(Matriz matriz, int index1, int index2, double k) {
-        System.out.println("\nL" + (index1 + 1) + " + " + df.format(k) + " x L" + (index2 + 1) + " -> L" + (index1 + 1));
-        matriz.somarMultiplo(index1, index2, k);
-        imprimirMatriz(matriz);
-    }
-
     /**
      * Gera uma matriz invertível, de tamanho entre 2 e 5.
      * @return matriz invertível
@@ -301,6 +264,19 @@ public class Software {
         return vetor;
     }
 
+    static Matriz[] adicionaVetor(Matriz[] vetor, Matriz matriz) {
+        int tamanho = vetor.length;
+        Matriz[] novoVetor = new Matriz[tamanho + 1];
+
+        for (int i = 0; i < tamanho; i++) {
+            novoVetor[i] = vetor[i];
+        }
+        novoVetor[tamanho] = new Matriz();
+        novoVetor[tamanho].inserirMatriz(matriz.lerMatriz());
+        novoVetor[tamanho].inserirOperacao(matriz.lerOperacao());
+        return novoVetor;
+    }
+
     static void imprimirMatriz(Matriz matriz) {
         System.out.println();
         double number;
@@ -316,6 +292,13 @@ public class Software {
                 }
             }
             System.out.println();
+        }
+    }
+    
+    static void imprimirProcessos(Matriz[] processos) {
+        for (int i = 0; i < processos.length; i++) {
+            System.out.println(processos[i].lerOperacao());
+            imprimirMatriz(processos[i]);
         }
     }
 }
