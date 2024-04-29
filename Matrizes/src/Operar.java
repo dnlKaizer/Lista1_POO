@@ -10,7 +10,7 @@ public class Operar {
       */
     boolean adicionarMatriz(Matriz matriz) {
         if (matriz != null) {
-            adicionaVetor(matrizes, matriz);
+            matrizes = adicionaVetor(matrizes, matriz);
             numMatrizes++;
             return true;
         }
