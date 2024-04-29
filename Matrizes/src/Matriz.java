@@ -1,24 +1,21 @@
-import java.text.DecimalFormat;
-
 public class Matriz {
     
     int nColunas;
     int nLinhas;
     double[][] indice;
     double[] operacao = {-1, -1, 0};
-    DecimalFormat df = new DecimalFormat("#,##0.##");
 
     /**,
-     * Insere uma matriz ao objeto <code>Matriz</code>. Salva o tamanho das linhas em <em>nLinhas</em> e das colunas em <em>nColunas</em>. 
+     * Insere os índices ao objeto <code>Matriz</code>. Salva o tamanho das linhas em <em>nLinhas</em> e das colunas em <em>nColunas</em>. 
      * @param matriz de índices */
-    void inserirMatriz(double matriz[][]) {
-        nLinhas = matriz.length;
-        nColunas = matriz[0].length;
-        indice = new double[nLinhas][nColunas];
+    void inserirIndices(double indice[][]) {
+        nLinhas = indice.length;
+        nColunas = indice[0].length;
+        this.indice = new double[nLinhas][nColunas];
 
         for (int i = 0; i < nLinhas; i++) {
             for (int j = 0; j < nColunas; j++) {
-                inserirValor(matriz[i][j], i, j);
+                inserirValor(indice[i][j], i, j);
             }
         }
     }
@@ -57,7 +54,7 @@ public class Matriz {
      * Retorna uma <em>cópia</em> da matriz do Objeto
      * @return matriz de índices
       */
-    double[][] lerMatriz() {
+    double[][] lerMatrizDeIndices() {
         double matriz[][] = new double[nLinhas][nColunas];
         for (int i = 0; i < nLinhas; i++) {
             for (int j = 0; j < nColunas; j++) {
@@ -73,7 +70,7 @@ public class Matriz {
      * @param j índice da coluna 
      * @return valor do índice
       */
-    double lerIndice(int i, int j) {
+    double lerValor(int i, int j) {
         return indice[i][j];
     }
 
@@ -127,7 +124,7 @@ public class Matriz {
      * Método que retorna o número <code>int</code> de linhas da matriz
      * @return número de linhas da matriz
       */
-      int lerNLinhas() {
+    int lerNLinhas() {
         return nLinhas;
     }
     
@@ -301,7 +298,7 @@ public class Matriz {
             }
         }
 
-        inserirMatriz(matAux.lerMatriz());
+        inserirIndices(matAux.lerMatrizDeIndices());
     }
 
     /**
@@ -328,7 +325,7 @@ public class Matriz {
             }
         }
 
-        inserirMatriz(matAux.lerMatriz());
+        inserirIndices(matAux.lerMatrizDeIndices());
     }
 
     private double[] retornaSomaLinhas(int index1, double[] linha2) {

@@ -6,9 +6,9 @@ public class Software {
         
         Matriz matriz = new Matriz();
         double[][] matAux = {{1, 3, 2, 5}, {6, 5, 4, 8}, {1, 8, 5, 3}};
-        matriz.inserirMatriz(matAux);
+        matriz.inserirIndices(matAux);
 
-        imprimirProcessos(op.metodoGaussJordan(matriz));
+        imprimirProcessos(op.metodoGaussJordan(0));
     }
 
     static Operar op = new Operar();
@@ -99,7 +99,7 @@ public class Software {
         double number;
         for(int i = 0; i < matriz.lerNLinhas(); i++) {
             for(int j = 0; j < matriz.lerNColunas(); j++) {
-                number = matriz.lerIndice(i, j);
+                number = matriz.lerValor(i, j);
                 if (number == 0) {
                     number = Math.abs(number);
                 } 
