@@ -8,7 +8,7 @@ public class Matriz {
     /**,
      * Insere os índices ao objeto <code>Matriz</code>. Salva o tamanho das linhas em <em>nLinhas</em> e das colunas em <em>nColunas</em>. 
      * @param matriz de índices */
-    void inserirIndices(double indice[][]) {
+    void inserirMatrizDeIndices(double indice[][]) {
         nLinhas = indice.length;
         nColunas = indice[0].length;
         this.indice = new double[nLinhas][nColunas];
@@ -298,7 +298,7 @@ public class Matriz {
             }
         }
 
-        inserirIndices(matAux.lerMatrizDeIndices());
+        inserirMatrizDeIndices(matAux.lerMatrizDeIndices());
     }
 
     /**
@@ -325,7 +325,7 @@ public class Matriz {
             }
         }
 
-        inserirIndices(matAux.lerMatrizDeIndices());
+        inserirMatrizDeIndices(matAux.lerMatrizDeIndices());
     }
 
     private double[] retornaSomaLinhas(int index1, double[] linha2) {

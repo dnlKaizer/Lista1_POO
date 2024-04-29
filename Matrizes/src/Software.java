@@ -5,10 +5,11 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         Matriz matriz = new Matriz();
-        double[][] matAux = {{1, 3, 2, 5}, {6, 5, 4, 8}, {1, 8, 5, 3}};
-        matriz.inserirIndices(matAux);
+        double[][] matAux = {{2, 6, 2, 2}, {-3, -8, 0, 2}, {4, 9, 2, 3}};
+        matriz.inserirMatrizDeIndices(matAux);
+        op.adicionarMatriz(matriz);
 
-        imprimirProcessos(op.metodoGaussJordan(0));
+        imprimirMatriz(op.decomposicaoLU(matriz));
     }
 
     static Operar op = new Operar();

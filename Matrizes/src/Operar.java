@@ -104,7 +104,7 @@ public class Operar {
 
         Matriz[] processos = new Matriz[0];
         Matriz matriz = new Matriz();
-        matriz.inserirIndices(aux.lerMatrizDeIndices());
+        matriz.inserirMatrizDeIndices(aux.lerMatrizDeIndices());
         int nLinhas = matriz.lerNLinhas();
         int nColunas = matriz.lerNColunas();
         int indexPivo = 0;
@@ -169,7 +169,6 @@ public class Operar {
                 }
             }
             
-            // Zerar entradas abaixo do pivô
             for (int i = nPivos; i < nLinhas; i++) {
                 if (matriz.lerValor(i, j) != 0) {
                     index1 = i;
@@ -191,7 +190,7 @@ public class Operar {
     Matriz[] metodoGaussJordan(int indexMatriz) {
         Matriz[] processos = eliminacaoGaussiana(indexMatriz);
         Matriz matriz = new Matriz();
-        matriz.inserirIndices(processos[processos.length - 1].lerMatrizDeIndices());
+        matriz.inserirMatrizDeIndices(processos[processos.length - 1].lerMatrizDeIndices());
         int nLinhas = matriz.lerNLinhas();
         int nColunas = matriz.lerNColunas();
 
@@ -212,6 +211,41 @@ public class Operar {
         return processos;
     }
 
+    Matriz decomposicaoLU(Matriz matrizOriginal) {
+        if (matrizOriginal == null) {
+            return null;
+        }
+
+        Matriz matriz = new Matriz();
+        Matriz ly = new Matriz();
+        matriz.inserirMatrizDeIndices(matrizOriginal.lerMatrizDeIndices());
+        int nColunas = matriz.lerNColunas();
+        int nLinhas = matriz.lerNLinhas();
+        int nPivos = 0;
+        int indexPivo = 0;
+        double k;
+        ly.inserirTamanho(nLinhas, nColunas);
+
+        for (int j = 0; j < nLinhas; j++) {
+            indexPivo = nPivos;
+            // Introduzir pivô
+            k = (matriz.lerValor(indexPivo, j));
+            matriz.multiplicarEscalar(indexPivo, 1/k);
+            ly.inserirValor(k, indexPivo, j);
+            nPivos++;
+
+            // Zerar entradas abaixo do pivô
+            for (int l = nPivos; l < nLinhas; l++) {
+                k = matriz.lerValor(l, j);
+                matriz.somarMultiplo(l, indexPivo, k * (-1));
+                ly.inserirValor(k, l, j);
+            }
+        }
+        ly.inserirColuna(matriz.lerColuna(nColunas - 1), nColunas - 1);
+
+        return ly;
+    }
+
     /**
      * Adiciona um objeto <code>Matriz</code> ao vetor[] de <code>Matriz</code>. Faz uma cópia do vetor original, porém, com tamanho maior em 1 unidade, onde será armazenado o novo objeto.
      * @param vetor de matrizes
@@ -226,7 +260,7 @@ public class Operar {
             novoVetor[i] = vetor[i];
         }
         novoVetor[tamanho] = new Matriz();
-        novoVetor[tamanho].inserirIndices(matriz.lerMatrizDeIndices());
+        novoVetor[tamanho].inserirMatrizDeIndices(matriz.lerMatrizDeIndices());
         novoVetor[tamanho].inserirOperacao(matriz.lerOperacao());
         return novoVetor;
     }
