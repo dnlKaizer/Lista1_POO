@@ -1,7 +1,10 @@
+import java.util.Random;
+
 public class Operar {
 
     int numMatrizes = 0;
     Matriz[] matrizes = new Matriz[0];
+    Random random = new Random();
 
     /**
      * Adiciona uma matriz ao objeto Operar
@@ -210,11 +213,10 @@ public class Operar {
      * @param matrizOriginal matriz quadrada ou matriz aumentada
      * @return retorna um vetor que contém 2 matrizes, sendo a primeira a matriz U e a segunda a matriz L. Caso o parâmetro seja uma matriz aumentada, a primeira matriz do vetor passa a ser a matriz [ U | y ], sendo o y o vetor y = Ux. Explicação: Ax = b -> LUx = b -> L<strong>y</strong> = b; de modo que y = Ux
       */
-    Matriz[] decomposicaoLU(Matriz matrizOriginal) {
+    Matriz[] decomposicaoLU(Matriz matrizOriginal, Matriz matrizP) {
         if (matrizOriginal == null) {
             return null;
         }
-
 
         Matriz matrizUy = new Matriz();
         Matriz matrizL = new Matriz();
@@ -223,33 +225,154 @@ public class Operar {
         int nLinhas = matrizUy.lerNLinhas();
         int nPivos = 0;
         int indexPivo = 0;
+        boolean temNaoNulo;
         double k;
         matrizL.inserirTamanho(nLinhas, nLinhas);
 
+        Geral:
         for (int j = 0; j < nLinhas; j++) {
+            temNaoNulo = false;
             indexPivo = nPivos;
-            // Introduzir pivô
             k = (matrizUy.lerValor(indexPivo, j));
-            matrizUy.multiplicarEscalar(indexPivo, 1/k);
-            matrizL.inserirValor(k, indexPivo, j);
-            nPivos++;
+            // Verifica se será necessário trocar linhas
+            if (k != 0) {
+                // Introduzir pivô
+                matrizUy.multiplicarEscalar(indexPivo, 1/k);
+                matrizL.inserirValor(k, indexPivo, j);
+                nPivos++;
+    
+                // Zerar entradas abaixo do pivô
+                for (int i = nPivos; i < nLinhas; i++) {
+                    k = matrizUy.lerValor(i, j);
+                    matrizUy.somarMultiplo(i, indexPivo, k * (-1));
+                    matrizL.inserirValor(k, i, j);
+                }
+            } else {
+                int indexLinha = -1;
+                // Verifica se tem algum número não nulo na coluna
+                for (int i = nPivos + 1; i < nLinhas && !temNaoNulo; i++) {
+                    if (matrizUy.lerValor(i, j) != 0) {
+                        temNaoNulo = true;
+                        indexLinha = i;
+                    }
+                }
 
-            // Zerar entradas abaixo do pivô
-            for (int l = nPivos; l < nLinhas; l++) {
-                k = matrizUy.lerValor(l, j);
-                matrizUy.somarMultiplo(l, indexPivo, k * (-1));
-                matrizL.inserirValor(k, l, j);
+                if (temNaoNulo) { // Caso em que será necessário calcular PLU
+                    int[][] trocas = new int[0][2];
+                    if (matrizP != null) {
+                        trocas = matrizP.lerTrocas();
+                    } 
+
+                    matrizP = gerarIdentidade(nLinhas);
+                    matrizP.trocarLinhas(indexPivo, indexLinha);
+                    matrizP.adicionarTroca(indexPivo, indexLinha);
+
+                    for (int i = trocas.length - 1; i >= 0; i--) {
+                        matrizP.trocarLinhas(trocas[i][0], trocas[i][1]);
+                    }
+                    
+                    matrizOriginal.trocarLinhas(indexPivo, indexLinha);
+
+                    Matriz[] aux = decomposicaoLU(matrizOriginal, matrizP);
+                    if (aux == null) {
+                        return null;
+                    }
+                    matrizUy = aux[0];
+                    matrizL = aux[1];
+                    matrizP = aux[2];
+                    break Geral;
+
+                } else { // Caso em que a matriz não é invertível
+                    return null;
+                }
             }
         }
         double[] operacao = {-1, -1, 0};
 
-        Matriz[] resultante = new Matriz[2];
+        Matriz[] resultante = new Matriz[3];
         resultante[0] = matrizUy;
         resultante[0].inserirOperacao(operacao);
         resultante[1] = matrizL;
         resultante[1].inserirOperacao(operacao);
+        resultante[2] = matrizP;
 
         return resultante;
+    }
+
+    /**
+     * Gera uma matriz identidade
+     * @param tamanho da matriz
+     * @return matriz identidade
+      */
+    Matriz gerarIdentidade(int tamanho) {
+        Matriz matriz = new Matriz();
+        matriz.inserirTamanho(tamanho, tamanho);
+
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < tamanho; j++) {
+                if(i == j) {
+                    matriz.inserirValor(1, i, j);
+                } else {
+                    matriz.inserirValor(0, i, j);
+                }
+            }
+        }
+
+        return matriz;
+    }
+
+    /**
+     * Gera uma matriz invertível, de tamanho entre 2 e 5.
+     * @return matriz invertível
+      */
+    Matriz gerarMatrizInvertivel() {
+        int tamanho = 2 + random.nextInt(4);
+        Matriz matriz = gerarIdentidade(tamanho);
+        int nLinhas = matriz.lerNLinhas();
+        int caso;
+
+        for (int i = 0; i < (random.nextInt(12) + 4) * tamanho; i++) {
+            caso = random.nextInt(3);
+            int linha1 = random.nextInt(nLinhas);
+            int linha2;
+            do {
+                linha2 = random.nextInt(nLinhas);
+            } while (linha1 == linha2);
+
+            int escalar;
+            do {
+                escalar = -3 + random.nextInt(7);
+            } while (escalar == 0);
+
+            switch (caso) {
+                case 0:
+                    matriz.multiplicarEscalar(linha1, escalar);
+                break;
+    
+                case 1:
+                    matriz.trocarLinhas(linha1, linha2);
+                break;
+    
+                case 2:
+                    matriz.somarMultiplo(linha1, linha2, escalar);
+                break;
+            }
+        }
+
+        return matriz;
+    }
+
+    /**
+     * Gera vetor com entradas no intervalo [-10, 10]
+     * @param tamanho do vetor
+     * @return vetor gerado
+      */
+    double[] geraVetor(int tamanho) {
+        double[] vetor = new double[tamanho];
+        for (int i = 0; i < tamanho; i++) {
+            vetor[i] = random.nextInt(21) - 10;
+        }
+        return vetor;
     }
 
     /**
