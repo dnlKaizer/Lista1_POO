@@ -288,13 +288,17 @@ public class Operar {
             }
         }
         double[] operacao = {-1, -1, 0};
-
-        Matriz[] resultante = new Matriz[3];
+        Matriz[] resultante;
+        if (matrizP != null) {
+            resultante = new Matriz[3];
+            resultante[2] = matrizP;
+        } else {
+            resultante = new Matriz[2];
+        }
         resultante[0] = matrizUy;
         resultante[0].inserirOperacao(operacao);
         resultante[1] = matrizL;
         resultante[1].inserirOperacao(operacao);
-        resultante[2] = matrizP;
 
         return resultante;
     }
