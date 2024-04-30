@@ -328,6 +328,11 @@ public class Matriz {
         inserirMatrizDeIndices(matAux.lerMatrizDeIndices());
     }
 
+    void copiarMatriz(Matriz matriz) {
+        inserirMatrizDeIndices(matriz.lerMatrizDeIndices());
+        inserirOperacao(matriz.lerOperacao());
+    }
+
     private double[] retornaSomaLinhas(int index1, double[] linha2) {
         double[] linha1 = lerLinha(index1);
         for (int i = 0; i < nColunas; i++) {
