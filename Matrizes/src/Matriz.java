@@ -3,6 +3,7 @@ public class Matriz {
     int nColunas;
     int nLinhas;
     double[][] indice;
+    int[][] trocas = new int[0][2];
     double[] operacao = {-1, -1, 0};
 
     /**,
@@ -134,6 +135,30 @@ public class Matriz {
       */
     int lerNColunas() {
         return nColunas;
+    }
+
+    int[][] lerTrocas() {
+        int tamanho = trocas.length;
+        int[][] matAux = new int[tamanho][2];
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < 2; j++) {
+                matAux[i][j] = trocas[i][j];
+            }
+        }
+        return matAux;
+    }
+
+    void adicionarTroca(int index1, int index2) {
+        int tamanho = trocas.length;
+        int[][] matAux = new int[tamanho + 1][2];
+        for (int i = 0; i < tamanho; i++) {
+            for (int j = 0; j < 2; j++) {
+                matAux[i][j] = trocas[i][j];
+            }
+        }
+        matAux[tamanho][0] = index1;
+        matAux[tamanho][1] = index2;
+        trocas = matAux;
     }
 
     /**
@@ -280,7 +305,7 @@ public class Matriz {
      * @param index onde será inserida a coluna. Caso seja <code>-1</code>, é inserida automaticamente ao final da matriz
       */
     void adicionarNovaColuna(double[] coluna, int index) {
-        if (index == -1) {
+        if (index < 0 || index > nColunas) {
             index = nColunas;
         }
 
@@ -307,7 +332,7 @@ public class Matriz {
      * @param index onde será inserida a linha. Caso seja <code>-1</code>, é inserida automaticamente ao final da matriz
       */
     void adicionarNovaLinha(double[] linha, int index) {
-        if (index == -1) {
+        if (index < 0 || index > nLinhas) {
             index = nLinhas;
         }
 
