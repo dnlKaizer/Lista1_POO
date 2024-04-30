@@ -35,10 +35,7 @@ public class Operar {
      * @param matriz2 matriz 2
      * @return <code>null</code> se não podem ser somadas, ou a <code>Matriz</code> resultante
       */
-    Matriz soma(int index1, int index2) {
-        Matriz matriz1 = lerMatriz(index1);
-        Matriz matriz2 = lerMatriz(index2);
-
+    Matriz soma(Matriz matriz1, Matriz matriz2) {
         if (matriz1 == null || matriz2 == null) {
             return null;
         }
@@ -68,9 +65,7 @@ public class Operar {
      * @param matriz2 matriz 2
      * @return <code>null</code> se não podem ser multplicadas, ou a <code>Matriz</code> resultante
       */
-    Matriz multiplicaMatriz(int index1, int index2) {
-        Matriz matriz1 = lerMatriz(index1);
-        Matriz matriz2 = lerMatriz(index2);
+    Matriz multiplicaMatriz(Matriz matriz1, Matriz matriz2) {
 
         if (matriz1 != null && matriz2 != null && matriz1.lerNColunas() == matriz2.lerNLinhas()) {
             int nLinhas = matriz1.lerNLinhas();
@@ -96,15 +91,14 @@ public class Operar {
      * @param matriz1
      * @return nova matriz da forma escalonada
       */
-    Matriz[] eliminacaoGaussiana(int index) {
-        Matriz aux = lerMatriz(index);
-        if (aux == null) {
+    Matriz[] eliminacaoGaussiana(Matriz matrizOriginal) {
+        if (matrizOriginal == null) {
             return null;
         }
 
         Matriz[] processos = new Matriz[0];
         Matriz matriz = new Matriz();
-        matriz.inserirMatrizDeIndices(aux.lerMatrizDeIndices());
+        matriz.copiarMatriz(matrizOriginal);
         int nLinhas = matriz.lerNLinhas();
         int nColunas = matriz.lerNColunas();
         int indexPivo = 0;
@@ -187,8 +181,8 @@ public class Operar {
      * @param matriz1
      * @return nova matriz da forma escalonada
       */
-    Matriz[] metodoGaussJordan(int indexMatriz) {
-        Matriz[] processos = eliminacaoGaussiana(indexMatriz);
+    Matriz[] metodoGaussJordan(Matriz matrizOriginal) {
+        Matriz[] processos = eliminacaoGaussiana(matrizOriginal);
         Matriz matriz = new Matriz();
         matriz.inserirMatrizDeIndices(processos[processos.length - 1].lerMatrizDeIndices());
         int nLinhas = matriz.lerNLinhas();
@@ -211,39 +205,51 @@ public class Operar {
         return processos;
     }
 
-    Matriz decomposicaoLU(Matriz matrizOriginal) {
+    /**
+     * Realiza a decomposição LU de uma matriz. Caso o parâmetro seja uma matriz do tipo n x (n+1), ou seja, uma matriz aumentada, 
+     * @param matrizOriginal matriz quadrada ou matriz aumentada
+     * @return retorna um vetor que contém 2 matrizes, sendo a primeira a matriz U e a segunda a matriz L. Caso o parâmetro seja uma matriz aumentada, a primeira matriz do vetor passa a ser a matriz [ U | y ], sendo o y o vetor y = Ux. Explicação: Ax = b -> LUx = b -> L<strong>y</strong> = b; de modo que y = Ux
+      */
+    Matriz[] decomposicaoLU(Matriz matrizOriginal) {
         if (matrizOriginal == null) {
             return null;
         }
 
-        Matriz matriz = new Matriz();
-        Matriz ly = new Matriz();
-        matriz.inserirMatrizDeIndices(matrizOriginal.lerMatrizDeIndices());
-        int nColunas = matriz.lerNColunas();
-        int nLinhas = matriz.lerNLinhas();
+
+        Matriz matrizUy = new Matriz();
+        Matriz matrizL = new Matriz();
+
+        matrizUy.copiarMatriz(matrizOriginal);
+        int nLinhas = matrizUy.lerNLinhas();
         int nPivos = 0;
         int indexPivo = 0;
         double k;
-        ly.inserirTamanho(nLinhas, nColunas);
+        matrizL.inserirTamanho(nLinhas, nLinhas);
 
         for (int j = 0; j < nLinhas; j++) {
             indexPivo = nPivos;
             // Introduzir pivô
-            k = (matriz.lerValor(indexPivo, j));
-            matriz.multiplicarEscalar(indexPivo, 1/k);
-            ly.inserirValor(k, indexPivo, j);
+            k = (matrizUy.lerValor(indexPivo, j));
+            matrizUy.multiplicarEscalar(indexPivo, 1/k);
+            matrizL.inserirValor(k, indexPivo, j);
             nPivos++;
 
             // Zerar entradas abaixo do pivô
             for (int l = nPivos; l < nLinhas; l++) {
-                k = matriz.lerValor(l, j);
-                matriz.somarMultiplo(l, indexPivo, k * (-1));
-                ly.inserirValor(k, l, j);
+                k = matrizUy.lerValor(l, j);
+                matrizUy.somarMultiplo(l, indexPivo, k * (-1));
+                matrizL.inserirValor(k, l, j);
             }
         }
-        ly.inserirColuna(matriz.lerColuna(nColunas - 1), nColunas - 1);
+        double[] operacao = {-1, -1, 0};
 
-        return ly;
+        Matriz[] resultante = new Matriz[2];
+        resultante[0] = matrizUy;
+        resultante[0].inserirOperacao(operacao);
+        resultante[1] = matrizL;
+        resultante[1].inserirOperacao(operacao);
+
+        return resultante;
     }
 
     /**
@@ -260,8 +266,7 @@ public class Operar {
             novoVetor[i] = vetor[i];
         }
         novoVetor[tamanho] = new Matriz();
-        novoVetor[tamanho].inserirMatrizDeIndices(matriz.lerMatrizDeIndices());
-        novoVetor[tamanho].inserirOperacao(matriz.lerOperacao());
+        novoVetor[tamanho].copiarMatriz(matriz);
         return novoVetor;
     }
 

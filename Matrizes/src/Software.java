@@ -9,7 +9,11 @@ public class Software {
         matriz.inserirMatrizDeIndices(matAux);
         op.adicionarMatriz(matriz);
 
-        imprimirMatriz(op.decomposicaoLU(matriz));
+        Matriz[] resultante = op.decomposicaoLU(matriz);
+        imprimirMatriz(resultante[0]);
+        imprimirMatriz(resultante[1]);
+        resultante = op.metodoGaussJordan(resultante[0]);
+        imprimirProcessos(resultante);
     }
 
     static Operar op = new Operar();
