@@ -137,6 +137,17 @@ public class Matriz {
         return nColunas;
     }
 
+    double[] lerDiagonalPrincipal() {
+        if (nLinhas < nColunas) {
+            return null;
+        }
+        double[] diagonalPrincipal = new double[nLinhas];
+        for (int i = 0; i < nLinhas; i++) {
+            diagonalPrincipal[i] = indice[i][i];
+        }
+        return diagonalPrincipal;
+    }
+
     int[][] lerTrocas() {
         int tamanho = trocas.length;
         int[][] matAux = new int[tamanho][2];
