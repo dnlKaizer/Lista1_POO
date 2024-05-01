@@ -188,9 +188,9 @@ public class Matriz {
      * @return <code>true</code> se for triangular inferior, e <code>false</code> caso não seja
       */
     boolean isTriangularInferior() {
-        if(isQuadrada()) {
+        if(nLinhas == nColunas || nColunas == nLinhas + 1) {
             for (int i = 0; i < nLinhas; i++) {
-                for (int j = i + 1; j < nColunas; j++) {
+                for (int j = i + 1; j < nLinhas; j++) {
                     if (indice[i][j] != 0) {
                         return false;
                     }
@@ -206,9 +206,9 @@ public class Matriz {
      * @return <code>true</code> se for triangular superior, e <code>false</code> caso não seja
       */
     boolean isTriangularSuperior() {
-        if(isQuadrada()) {
-            for (int i = nColunas - 1; i >= 0; i--) {
-                for (int j = i - 1; j >= 0; j--) {
+        if(nLinhas == nColunas || nColunas == nLinhas + 1) {
+            for (int i = 1; i < nLinhas; i++) {
+                for (int j = i - 1; j < nLinhas; j++) {
                     if (indice[i][j] != 0) {
                         return false;
                     }
