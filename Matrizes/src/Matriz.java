@@ -172,6 +172,10 @@ public class Matriz {
         trocas = matAux;
     }
 
+    void inserirTrocas(int[][] trocas) {
+        this.trocas = trocas;
+    }
+
     /**
      * Retorna se a matriz é quadrada ou não
      * @return <code>true</code> se for quadrada, e <code>false</code> caso não seja

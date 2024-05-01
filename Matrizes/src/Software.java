@@ -4,24 +4,35 @@ import java.util.Random;
 public class Software {
     public static void main(String[] args) throws Exception {
         
-        Matriz matriz = op.gerarMatrizInvertivel();
-        imprimirMatriz(matriz);
+        // Matriz matriz = op.gerarMatrizInvertivel();
+        // imprimirMatriz(matriz);
 
-        Matriz[] resultante = op.decomposicaoLU(matriz, null);
-        if (resultante != null) {
-            int tam = resultante.length;
-            Matriz result;
-            for (int i = 0; i < tam; i++) {
-                imprimirMatriz(resultante[i]);
-            }
-            result = op.multiplicaMatriz(resultante[tam - 1], resultante[tam - 2]);
-            if (tam == 3) {
-                result = op.multiplicaMatriz(result, resultante[0]);
-            }
-            imprimirMatriz(result);
-        } else {
-            System.out.println("Nula");
-        }
+        // Matriz[] resultante = op.decomposicaoLU(matriz, null);
+        // if (resultante != null) {
+        //     int tam = resultante.length;
+        //     Matriz result;
+        //     for (int i = 0; i < tam; i++) {
+        //         imprimirMatriz(resultante[i]);
+        //     }
+        //     result = op.multiplicaMatriz(resultante[tam - 1], resultante[tam - 2]);
+        //     if (tam == 3) {
+        //         result = op.multiplicaMatriz(result, resultante[0]);
+        //     }
+        //     imprimirMatriz(result);
+        // } else {
+        //     System.out.println("Nula");
+        // }
+        long start = System.currentTimeMillis();
+        
+        // Matriz matriz = new Matriz();
+        // double[][] aux = {{1,2,3,4,5},{8,6,2,1,12},{9,1,3,6,8},{1,4,4,5,42},{5,4,52,1,2}};
+        // matriz.inserirMatrizDeIndices(aux);
+        Matriz matriz = op.gerarMatrizInvertivel();
+        
+        // imprimirMatriz(matriz);
+        System.out.println(df.format(op.determinante(matriz)));
+
+        System.out.println((System.currentTimeMillis() - start) / 1000.0);
     }
 
     static Operar op = new Operar();

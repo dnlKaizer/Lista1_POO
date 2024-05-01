@@ -261,9 +261,11 @@ public class Operar {
                     int[][] trocas = new int[0][2];
                     if (matrizP != null) {
                         trocas = matrizP.lerTrocas();
-                    } 
+                    } else {
+                        matrizP = new Matriz();
+                    }
 
-                    matrizP = gerarIdentidade(nLinhas);
+                    matrizP.inserirMatrizDeIndices(gerarIdentidade(nLinhas).lerMatrizDeIndices());
                     matrizP.trocarLinhas(indexPivo, indexLinha);
                     matrizP.adicionarTroca(indexPivo, indexLinha);
 
@@ -280,6 +282,7 @@ public class Operar {
                     matrizUy = aux[0];
                     matrizL = aux[1];
                     matrizP = aux[2];
+                    // matrizP.inserirTrocas(aux[2].lerTrocas());
                     break Geral;
 
                 } else { // Caso em que a matriz não é invertível
@@ -315,9 +318,11 @@ public class Operar {
             if (matrizFatorada == null) {
                 return 0;
             }
-            for (int i = 0; i < matrizFatorada.length; i++) {
-                result *= determinante(matrizFatorada[i]);
+            result *= determinante(matrizFatorada[1]);
+            if (matrizFatorada.length == 3) {
+                result *= Math.pow(-1, matrizFatorada[2].lerTrocas().length);
             }
+            
         }
         return result;
     }
@@ -349,7 +354,7 @@ public class Operar {
      * @return matriz invertível
       */
     Matriz gerarMatrizInvertivel() {
-        int tamanho = 2 + random.nextInt(4);
+        int tamanho = 100 /* + random.nextInt(4) */;
         Matriz matriz = gerarIdentidade(tamanho);
         int nLinhas = matriz.lerNLinhas();
         int caso;
