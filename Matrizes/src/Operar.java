@@ -303,6 +303,25 @@ public class Operar {
         return resultante;
     }
 
+    double determinante(Matriz matriz) {
+        double result = 1;
+        if (matriz.isTriangular()) {
+            double[] diagonalPrincipal = matriz.lerDiagonalPrincipal();
+            for (double valor : diagonalPrincipal) {
+                result *= valor;
+            }
+        } else {
+            Matriz[] matrizFatorada = decomposicaoLU(matriz, null);
+            if (matrizFatorada == null) {
+                return 0;
+            }
+            for (int i = 0; i < matrizFatorada.length; i++) {
+                result *= determinante(matrizFatorada[i]);
+            }
+        }
+        return result;
+    }
+
     /**
      * Gera uma matriz identidade
      * @param tamanho da matriz
