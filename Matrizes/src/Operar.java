@@ -354,6 +354,25 @@ public class Operar {
         return result;
     }
 
+    Matriz inversa(Matriz matriz) {
+        if (!matriz.isQuadrada()) {
+            return null;
+        }
+        int nLinhas = matriz.lerNLinhas();
+        Matriz identidade = gerarIdentidade(nLinhas);
+        Matriz inversa = new Matriz();
+        inversa.inserirTamanho(nLinhas, nLinhas);
+        Matriz aux = new Matriz();
+        
+        for (int i = 0; i < nLinhas; i++) {
+            aux.copiarMatriz(matriz);
+            aux.adicionarNovaColuna(identidade.lerColuna(i), -1);
+            Matriz[] processos = metodoGaussJordan(aux);
+            inversa.inserirColuna(processos[processos.length - 1].lerColuna(nLinhas), i);
+        }
+        return inversa;
+    }
+
     /**
      * Gera uma matriz identidade
      * @param tamanho da matriz
@@ -381,7 +400,7 @@ public class Operar {
      * @return matriz invertível
       */
     Matriz gerarMatrizInvertivel() {
-        int tamanho = 100 /* + random.nextInt(4) */;
+        int tamanho = 10 /* + random.nextInt(4) */;
         Matriz matriz = gerarIdentidade(tamanho);
         int nLinhas = matriz.lerNLinhas();
         int caso;
