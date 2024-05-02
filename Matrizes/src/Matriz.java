@@ -1,8 +1,8 @@
 public class Matriz {
     
-    int nColunas;
-    int nLinhas;
-    double[][] indice;
+    int nColunas = 0;
+    int nLinhas = 0;
+    double[][] indice = new double[0][0];
     int[][] trocas = new int[0][2];
     double[] operacao = {-1, -1, 0};
 
@@ -192,7 +192,7 @@ public class Matriz {
      * @return <code>true</code> se for triangular inferior, e <code>false</code> caso não seja
       */
     boolean isTriangularInferior() {
-        if(isQuadrada() || nColunas == nLinhas + 1) {
+        if(isQuadrada()) {
             for (int i = 0; i < nLinhas; i++) {
                 for (int j = i + 1; j < nLinhas; j++) {
                     if (indice[i][j] != 0) {
@@ -210,7 +210,7 @@ public class Matriz {
      * @return <code>true</code> se for triangular superior, e <code>false</code> caso não seja
       */
     boolean isTriangularSuperior() {
-        if(isQuadrada() || nColunas == nLinhas + 1) {
+        if(isQuadrada()) {
             for (int i = 1; i < nLinhas; i++) {
                 for (int j = i - 1; j >= 0; j--) {
                     if (indice[i][j] != 0) {

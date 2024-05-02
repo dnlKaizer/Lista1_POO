@@ -213,15 +213,37 @@ public class Operar {
      * @param matrizOriginal matriz quadrada ou matriz aumentada
      * @return retorna um vetor que contém 2 matrizes, sendo a primeira a matriz U e a segunda a matriz L. Caso o parâmetro seja uma matriz aumentada, a primeira matriz do vetor passa a ser a matriz [ U | y ], sendo o y o vetor y = Ux. Explicação: Ax = b -> LUx = b -> L<strong>y</strong> = b; de modo que y = Ux
       */
-    Matriz[] decomposicaoLU(Matriz matrizOriginal, Matriz matrizP) {
+    Matriz[] decomposicaoLU(Matriz matrizOriginal) {
         if (matrizOriginal == null) {
             return null;
         }
 
         Matriz matrizUy = new Matriz();
+        int nColunas = matrizOriginal.lerNColunas();
+        Matriz matrizP = new Matriz();
+        
+        if (nColunas > matrizOriginal.lerNLinhas() + 1) {
+            int indexColuna;
+            if (matrizOriginal.lerNColunas() % 2 == 1) {
+                indexColuna = (nColunas + 1) / 2;
+                matrizP.inserirTamanho(indexColuna - 1, indexColuna - 1);
+            } else {
+                indexColuna = nColunas / 2;
+                matrizP.inserirTamanho(indexColuna, indexColuna);
+            }
+            for (int j = indexColuna; j < nColunas; j++) {
+                matrizP.inserirColuna(matrizOriginal.lerColuna(j), j - indexColuna);
+            }
+            for (int j = 0; j < indexColuna; j++) {
+                matrizUy.inserirColuna(matrizOriginal.lerColuna(j), j);
+            }
+        } else {
+            matrizUy.copiarMatriz(matrizOriginal);
+            matrizP = null;
+        }
+
         Matriz matrizL = new Matriz();
 
-        matrizUy.copiarMatriz(matrizOriginal);
         int nLinhas = matrizUy.lerNLinhas();
         int nPivos = 0;
         int indexPivo = 0;
@@ -273,9 +295,15 @@ public class Operar {
                         matrizP.trocarLinhas(trocas[i][0], trocas[i][1]);
                     }
                     
-                    matrizOriginal.trocarLinhas(indexPivo, indexLinha);
+                    Matriz copiaMatrizOriginal = new Matriz();
+                    copiaMatrizOriginal.copiarMatriz(matrizOriginal);
+                    copiaMatrizOriginal.trocarLinhas(indexPivo, indexLinha);
 
-                    Matriz[] aux = decomposicaoLU(matrizOriginal, matrizP);
+                    for (int n = 0; n < matrizP.lerNColunas(); n++) {
+                        copiaMatrizOriginal.adicionarNovaColuna(matrizP.lerColuna(n), -1);
+                    }
+
+                    Matriz[] aux = decomposicaoLU(copiaMatrizOriginal);
                     if (aux == null) {
                         return null;
                     }
@@ -314,7 +342,7 @@ public class Operar {
                 result *= valor;
             }
         } else {
-            Matriz[] matrizFatorada = decomposicaoLU(matriz, null);
+            Matriz[] matrizFatorada = decomposicaoLU(matriz);
             if (matrizFatorada == null) {
                 return 0;
             }
@@ -322,7 +350,6 @@ public class Operar {
             if (matrizFatorada.length == 3) {
                 result *= Math.pow(-1, matrizFatorada[2].lerTrocas().length);
             }
-            
         }
         return result;
     }
