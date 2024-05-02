@@ -368,6 +368,38 @@ public class Matriz {
         inserirMatrizDeIndices(matAux.lerMatrizDeIndices());
     }
 
+    void removerColuna(int index) {
+        if (index < 0 || index > nColunas) {
+            index = nColunas - 1;
+        }
+        Matriz aux = new Matriz();
+        aux.inserirTamanho(nLinhas, nColunas - 1);
+
+        for (int j = 0; j < index; j++) {
+            aux.inserirColuna(lerColuna(j), j);
+        }
+        for (int j = index + 1; j < nColunas - 1; j++) {
+            aux.inserirColuna(lerColuna(j), j - 1);
+        }
+        inserirMatrizDeIndices(aux.lerMatrizDeIndices());
+    }
+
+    void removerLinha(int index) {
+        if (index < 0 || index > nLinhas) {
+            index = nLinhas - 1;
+        }
+        Matriz aux = new Matriz();
+        aux.inserirTamanho(nLinhas - 1, nColunas);
+
+        for (int i = 0; i < index; i++) {
+            aux.inserirLinha(lerLinha(i), i);
+        }
+        for (int i = index + 1; i < nLinhas - 1; i++) {
+            aux.inserirLinha(lerLinha(i), i - 1);
+        }
+        inserirMatrizDeIndices(aux.lerMatrizDeIndices());
+    }
+
     void copiarMatriz(Matriz matriz) {
         inserirMatrizDeIndices(matriz.lerMatrizDeIndices());
         inserirOperacao(matriz.lerOperacao());
