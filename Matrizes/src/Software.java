@@ -4,10 +4,15 @@ import java.util.Random;
 public class Software {
     public static void main(String[] args) throws Exception {
         
-        double[][] matIndices = {{1,2,3},{4,5,6},{7,8,10}};
+        // double[][] matIndices = {{1,2},{3,4}};
         Matriz matriz = new Matriz();
-        matriz.inserirMatrizDeIndices(matIndices);
-
+        // matriz.inserirMatrizDeIndices(matIndices);
+        matriz = op.gerarMatrizInvertivel();
+        Matriz inversa = op.inversa(matriz);
+        imprimirMatriz(matriz);
+        imprimirMatriz(inversa);
+        imprimirMatriz(op.multiplicaMatriz(matriz, inversa));
+        imprimirMatriz(op.multiplicaMatriz(inversa, matriz));
     }
 
     static Operar op = new Operar();
