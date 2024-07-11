@@ -4,7 +4,7 @@ public class Estoque {
     private int codigo = 1;
 
     /* Inserir novo produto */
-    boolean inserir(Produto novoProduto) {
+    public boolean inserir(Produto novoProduto) {
         if (novoProduto != null) {
             /* Verificar se a lista de produtos está cheia */
             if (nProdutos == produtos.length) {
@@ -35,7 +35,7 @@ public class Estoque {
     }
 
     /* Método para excluir um produto */
-    boolean excluir(int codigo) {
+    public boolean excluir(int codigo) {
         if (codigo > 0) {
             for (int i = 0; i < nProdutos; i++) {
                 if (produtos[i].getCodigo() == codigo) {
@@ -52,7 +52,7 @@ public class Estoque {
     }
 
     /* Retorna cópia da lista de produtos em ordem por código */
-    Produto[] listarTodos() {
+    public Produto[] listarTodos() {
         Produto[] vetAux = new Produto[nProdutos];
         for (int i = 0; i < nProdutos; i++) {
             vetAux[i] = new Produto();
@@ -66,18 +66,18 @@ public class Estoque {
     }
 
     /* Retorna cópia da lista de produtos em ordem alfabética */
-    Produto[] listarPorNome() {
+    public Produto[] listarPorNome() {
         Produto[] vetAux = ordenarProdutos();
         return vetAux;
     }    
 
     /* Retorna a quantidade de produtos cadastrados */
-    int getNProdutos() {
+    public int getNProdutos() {
         return nProdutos;
     }
 
     /* Busca produto no estoque pelo código */
-    Produto buscar(int codigo) {
+    public Produto buscar(int codigo) {
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getCodigo() == codigo) {
                 return produtos[i];
@@ -87,7 +87,7 @@ public class Estoque {
     }
 
     /* Busca produto no estoque pelo nome */
-    Produto buscarPorNome(String nome) {
+    public Produto buscarPorNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getNome().equalsIgnoreCase(nome)) {
                 return produtos[i];
@@ -97,7 +97,7 @@ public class Estoque {
     }
 
     /* Verifica se existe produto com mesmo nome */
-    boolean verificaNome(String nome) {
+    public boolean verificaNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getNome().equalsIgnoreCase(nome)) {
                 return true;
@@ -122,7 +122,7 @@ public class Estoque {
         return vetAux;
     }
 
-    boolean alterar(int codigo, Produto produtoAlterado) {
+    public boolean alterar(int codigo, Produto produtoAlterado) {
         if (produtoAlterado != null) {
             for (int i = 0; i < nProdutos; i++) {
                 if (produtos[i].getCodigo() == codigo) {
