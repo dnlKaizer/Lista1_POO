@@ -188,7 +188,7 @@ public class Software {
             return;
         }
         System.out.println();
-        if (estoque.alterar(codigo, produto)) {
+        if (estoque.alterar(produto)) {
             System.out.println(produto.getNome() + " alterado com sucesso.");
         } else {
             System.out.println("Falha ao alterar.");

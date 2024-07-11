@@ -14,20 +14,18 @@ public class Estoque {
                 }
                 produtos = vetAux;
             }
-            for (int i = 0; i < produtos.length; i++) {
-                if (produtos[i] == null) {
-                    produtos[i] = new Produto();
+            if (produtos[nProdutos] == null) {
+                produtos[nProdutos] = new Produto();
 
-                    produtos[i].setCodigo(codigo);
-                    produtos[i].setNome(novoProduto.getNome());
-                    produtos[i].setMarca(novoProduto.getMarca());
-                    produtos[i].setPreco(novoProduto.getPreco());
-                    produtos[i].setQuantidade(novoProduto.getQuantidade());
+                produtos[nProdutos].setCodigo(this.codigo);
+                produtos[nProdutos].setNome(novoProduto.getNome());
+                produtos[nProdutos].setMarca(novoProduto.getMarca());
+                produtos[nProdutos].setPreco(novoProduto.getPreco());
+                produtos[nProdutos].setQuantidade(novoProduto.getQuantidade());
 
-                    codigo++;
-                    nProdutos++;
-                    return true;
-                }
+                this.codigo++;
+                nProdutos++;
+                return true;
             }
             return false;
         }
@@ -122,7 +120,8 @@ public class Estoque {
         return vetAux;
     }
 
-    public boolean alterar(int codigo, Produto produtoAlterado) {
+    public boolean alterar(Produto produtoAlterado) {
+        int codigo = produtoAlterado.getCodigo();
         if (produtoAlterado != null) {
             for (int i = 0; i < nProdutos; i++) {
                 if (produtos[i].getCodigo() == codigo) {
