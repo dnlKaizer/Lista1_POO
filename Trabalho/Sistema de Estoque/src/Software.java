@@ -67,13 +67,13 @@ public class Software {
         
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
         String marcas[] = {"PratoFino", "Camil", "BemBrasil", "Saudali", "Del Valle"};
-        float precos[] = {1100.99f, 8.89f, 41.49f, 29.99f, 4.29f};
+        float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
-            produto.addNome(nomes[i]);
-            produto.addMarca(marcas[i]);
-            produto.addPreco(precos[i]);
-            produto.addQuantidade(20);
+            produto.setNome(nomes[i]);
+            produto.setMarca(marcas[i]);
+            produto.setPreco(precos[i]);
+            produto.setQuantidade(20);
             estoque.inserir(produto);
         }
     }
@@ -94,17 +94,17 @@ public class Software {
             nome = sc.nextLine();
             m++;
         } while (estoque.verificaNome(nome));
-        produto.addNome(nome);
+        produto.setNome(nome);
         System.out.print("Marca: ");
-        produto.addMarca(sc.nextLine());
+        produto.setMarca(sc.nextLine());
         System.out.print("Preço: ");
-        produto.addPreco(sc.nextFloat());
+        produto.setPreco(sc.nextFloat());
         System.out.print("Quantidade: ");
-        produto.addQuantidade(sc.nextInt());
+        produto.setQuantidade(sc.nextInt());
         
         System.out.println();
         if (estoque.inserir(produto)) {
-            System.out.println(produto.lerNome() + " cadastrado com sucesso.");
+            System.out.println(produto.getNome() + " cadastrado com sucesso.");
         } else {
             System.out.println("Falha ao cadastrar.");
         }
@@ -122,14 +122,14 @@ public class Software {
             System.out.println("Não foi possível encontrar um produto com esse código.");
             return;
         }
-        System.out.println("Tem certeza que deseja excluir " + produto.lerNome() + "?\n");
+        System.out.println("Tem certeza que deseja excluir " + produto.getNome() + "?\n");
         System.out.println("0. Não");
         System.out.println("1. Sim");
         System.out.print("\nConfirmar: ");
         if (sc.nextInt() == 1) {
             System.out.println();
             if (estoque.excluir(codigo)) {
-                System.out.println(produto.lerNome() + " excluído com sucesso.");
+                System.out.println(produto.getNome() + " excluído com sucesso.");
             } else {
                 System.out.println("Falha ao escluir.");
             }
@@ -168,19 +168,19 @@ public class Software {
             return;
             case 1:
             System.out.print("Digite o novo nome: ");
-            produto.addNome(sc.nextLine());
+            produto.setNome(sc.nextLine());
             break;
             case 2:
             System.out.print("Digite a nova marca: ");
-            produto.addMarca(sc.nextLine());
+            produto.setMarca(sc.nextLine());
             break;
             case 3:
             System.out.print("Digite o novo preço: ");
-            produto.addPreco(sc.nextFloat());
+            produto.setPreco(sc.nextFloat());
             break;
             case 4:
             System.out.print("Digite a nova quantidade: ");
-            produto.addQuantidade(sc.nextInt());
+            produto.setQuantidade(sc.nextInt());
             break;
             
             default:
@@ -189,7 +189,7 @@ public class Software {
         }
         System.out.println();
         if (estoque.alterar(codigo, produto)) {
-            System.out.println(produto.lerNome() + " alterado com sucesso.");
+            System.out.println(produto.getNome() + " alterado com sucesso.");
         } else {
             System.out.println("Falha ao alterar.");
         }
@@ -239,8 +239,8 @@ public class Software {
         for (int i = 0; i < nProdutos; i++) {
             System.out.printf(
                 "|  %-" + tamColuna[0] + "d  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s  |  R$ %" + tamColuna[3] + "s  |  %-" + tamColuna[4] + "d  |",
-                produtos[i].lerCodigo(), produtos[i].lerNome(), produtos[i].lerMarca(),
-                moeda.format(produtos[i].lerPreco()),produtos[i].lerQuantidade());
+                produtos[i].getCodigo(), produtos[i].getNome(), produtos[i].getMarca(),
+                moeda.format(produtos[i].getPreco()),produtos[i].getQuantidade());
             System.out.println();
         }
         System.out.println(linhaMenu);
@@ -304,22 +304,22 @@ public class Software {
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         
-        if ((produtos[produtos.length - 1].lerCodigo() + "").length() > tamColuna[0]) {
-            tamColuna[0] = (produtos[produtos.length - 1].lerCodigo() + "").length();
+        if ((produtos[produtos.length - 1].getCodigo() + "").length() > tamColuna[0]) {
+            tamColuna[0] = (produtos[produtos.length - 1].getCodigo() + "").length();
         }
 
         for (int i = 0; i < produtos.length; i++) {
-            if (produtos[i].lerNome().length() > tamColuna[1]) {
-                tamColuna[1] = produtos[i].lerNome().length();
+            if (produtos[i].getNome().length() > tamColuna[1]) {
+                tamColuna[1] = produtos[i].getNome().length();
             }
-            if (produtos[i].lerMarca().length() > tamColuna[2]) {
-                tamColuna[2] = produtos[i].lerMarca().length();
+            if (produtos[i].getMarca().length() > tamColuna[2]) {
+                tamColuna[2] = produtos[i].getMarca().length();
             }
-            if (moeda.format(produtos[i].lerPreco()).length() > tamColuna[3]) {
-                tamColuna[3] = moeda.format(produtos[i].lerPreco()).length();
+            if (moeda.format(produtos[i].getPreco()).length() > tamColuna[3]) {
+                tamColuna[3] = moeda.format(produtos[i].getPreco()).length();
             }
-            if ((produtos[i].lerQuantidade() + "").length() > tamColuna[4]) {
-                tamColuna[4] = (produtos[i].lerQuantidade() + "").length();
+            if ((produtos[i].getQuantidade() + "").length() > tamColuna[4]) {
+                tamColuna[4] = (produtos[i].getQuantidade() + "").length();
             }
         }
 

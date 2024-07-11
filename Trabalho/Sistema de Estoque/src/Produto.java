@@ -1,42 +1,42 @@
 public class Produto {
-    int codigo;
-    String nome;
-    String marca;
-    float preco;
-    int quantidade;
+    private int codigo;
+    private String nome;
+    private String marca;
+    private float preco;
+    private int quantidade;
 
-    void addCodigo(int codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    int lerCodigo() {
+    public int getCodigo() {
         return codigo;
     }
-    
-    void addNome(String nome) {
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
-    String lerNome() {
+    public String getNome() {
         return nome;
     }
-    
-    void addMarca(String marca) {
+
+    public void setMarca(String marca) {
         this.marca = marca;
     }
-    String lerMarca() {
+    public String getMarca() {
         return marca;
     }
 
-    void addPreco(float preco) {
+    public void setPreco(float preco) {
         this.preco = preco;
     }
-    float lerPreco() {
+    public float getPreco() {
         return preco;
     }
 
-    void addQuantidade(int quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    int lerQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 }

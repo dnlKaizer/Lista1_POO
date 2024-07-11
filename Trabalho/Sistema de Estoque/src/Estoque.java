@@ -1,7 +1,7 @@
 public class Estoque {
-    Produto[] produtos = new Produto[10];
-    int nProdutos = 0;
-    int codigo = 1;
+    private Produto[] produtos = new Produto[10];
+    private int nProdutos = 0;
+    private int codigo = 1;
 
     /* Inserir novo produto */
     boolean inserir(Produto novoProduto) {
@@ -18,11 +18,11 @@ public class Estoque {
                 if (produtos[i] == null) {
                     produtos[i] = new Produto();
 
-                    produtos[i].addCodigo(codigo);
-                    produtos[i].addNome(novoProduto.lerNome());
-                    produtos[i].addMarca(novoProduto.lerMarca());
-                    produtos[i].addPreco(novoProduto.lerPreco());
-                    produtos[i].addQuantidade(novoProduto.lerQuantidade());
+                    produtos[i].setCodigo(codigo);
+                    produtos[i].setNome(novoProduto.getNome());
+                    produtos[i].setMarca(novoProduto.getMarca());
+                    produtos[i].setPreco(novoProduto.getPreco());
+                    produtos[i].setQuantidade(novoProduto.getQuantidade());
 
                     codigo++;
                     nProdutos++;
@@ -38,7 +38,7 @@ public class Estoque {
     boolean excluir(int codigo) {
         if (codigo > 0) {
             for (int i = 0; i < nProdutos; i++) {
-                if (produtos[i].lerCodigo() == codigo) {
+                if (produtos[i].getCodigo() == codigo) {
                     for (int j = i; j < produtos.length - 1; j++) {
                         produtos[j] = produtos[j + 1];
                     }
@@ -56,11 +56,11 @@ public class Estoque {
         Produto[] vetAux = new Produto[nProdutos];
         for (int i = 0; i < nProdutos; i++) {
             vetAux[i] = new Produto();
-            vetAux[i].addCodigo(produtos[i].lerCodigo());
-            vetAux[i].addNome(produtos[i].lerNome());
-            vetAux[i].addMarca(produtos[i].lerMarca());
-            vetAux[i].addPreco(produtos[i].lerPreco());
-            vetAux[i].addQuantidade(produtos[i].lerQuantidade());
+            vetAux[i].setCodigo(produtos[i].getCodigo());
+            vetAux[i].setNome(produtos[i].getNome());
+            vetAux[i].setMarca(produtos[i].getMarca());
+            vetAux[i].setPreco(produtos[i].getPreco());
+            vetAux[i].setQuantidade(produtos[i].getQuantidade());
         }
         return vetAux;
     }
@@ -72,14 +72,14 @@ public class Estoque {
     }    
 
     /* Retorna a quantidade de produtos cadastrados */
-    int lerNProdutos() {
+    int getNProdutos() {
         return nProdutos;
     }
 
     /* Busca produto no estoque pelo código */
     Produto buscar(int codigo) {
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].lerCodigo() == codigo) {
+            if (produtos[i].getCodigo() == codigo) {
                 return produtos[i];
             }
         }
@@ -89,7 +89,7 @@ public class Estoque {
     /* Busca produto no estoque pelo nome */
     Produto buscarPorNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].lerNome().equalsIgnoreCase(nome)) {
+            if (produtos[i].getNome().equalsIgnoreCase(nome)) {
                 return produtos[i];
             }
         }
@@ -99,7 +99,7 @@ public class Estoque {
     /* Verifica se existe produto com mesmo nome */
     boolean verificaNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].nome.equalsIgnoreCase(nome)) {
+            if (produtos[i].getNome().equalsIgnoreCase(nome)) {
                 return true;
             } 
         }
@@ -112,7 +112,7 @@ public class Estoque {
         Produto[] vetAux = listarTodos();
         for (int i = 0; i < nProdutos; i++) {
             for (int j = i + 1; j < nProdutos; j++) {
-                if ((vetAux[i].lerNome()).compareToIgnoreCase(vetAux[j].lerNome()) > 0) {
+                if ((vetAux[i].getNome()).compareToIgnoreCase(vetAux[j].getNome()) > 0) {
                     auxP = vetAux[i];
                     vetAux[i] = vetAux[j];
                     vetAux[j] = auxP;
@@ -125,7 +125,7 @@ public class Estoque {
     boolean alterar(int codigo, Produto produtoAlterado) {
         if (produtoAlterado != null) {
             for (int i = 0; i < nProdutos; i++) {
-                if (produtos[i].lerCodigo() == codigo) {
+                if (produtos[i].getCodigo() == codigo) {
                     produtos[i] = produtoAlterado;
                     return true;
                 }
