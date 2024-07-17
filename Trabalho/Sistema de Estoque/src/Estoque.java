@@ -14,20 +14,17 @@ public class Estoque {
                 }
                 produtos = vetAux;
             }
-            if (produtos[nProdutos] == null) {
-                produtos[nProdutos] = new Produto();
+            produtos[nProdutos] = new Produto();
 
-                produtos[nProdutos].setCodigo(this.codigo);
-                produtos[nProdutos].setNome(novoProduto.getNome());
-                produtos[nProdutos].setMarca(novoProduto.getMarca());
-                produtos[nProdutos].setPreco(novoProduto.getPreco());
-                produtos[nProdutos].setQuantidade(novoProduto.getQuantidade());
+            produtos[nProdutos].setCodigo(this.codigo);
+            produtos[nProdutos].setNome(novoProduto.getNome());
+            produtos[nProdutos].setMarca(novoProduto.getMarca());
+            produtos[nProdutos].setPreco(novoProduto.getPreco());
+            produtos[nProdutos].setQuantidade(novoProduto.getQuantidade());
 
-                this.codigo++;
-                nProdutos++;
-                return true;
-            }
-            return false;
+            this.codigo++;
+            nProdutos++;
+            return true;
         }
         return false;
     }
@@ -106,7 +103,7 @@ public class Estoque {
 
     /* Retorna cópia da lista de produtos ordenada lexicograficamente */
     private Produto[] ordenarProdutos() {
-        Produto auxP = new Produto();
+        Produto auxP;
         Produto[] vetAux = listarTodos();
         for (int i = 0; i < nProdutos; i++) {
             for (int j = i + 1; j < nProdutos; j++) {
@@ -121,8 +118,8 @@ public class Estoque {
     }
 
     public boolean alterar(Produto produtoAlterado) {
-        int codigo = produtoAlterado.getCodigo();
         if (produtoAlterado != null) {
+            int codigo = produtoAlterado.getCodigo();
             for (int i = 0; i < nProdutos; i++) {
                 if (produtos[i].getCodigo() == codigo) {
                     produtos[i] = produtoAlterado;
