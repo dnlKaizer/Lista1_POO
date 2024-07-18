@@ -131,7 +131,7 @@ public class Software {
             if (estoque.excluir(codigo)) {
                 System.out.println(produto.getNome() + " excluído com sucesso.");
             } else {
-                System.out.println("Falha ao escluir.");
+                System.out.println("Falha ao excluir.");
             }
         }
     }
@@ -164,28 +164,28 @@ public class Software {
         System.out.println();
         switch (caso) {
             case 0:
-            System.out.println("Alteração cancelada.");
-            return;
+                System.out.println("Alteração cancelada.");
+                return;
             case 1:
-            System.out.print("Digite o novo nome: ");
-            produto.setNome(sc.nextLine());
-            break;
+                System.out.print("Digite o novo nome: ");
+                produto.setNome(sc.nextLine());
+                break;
             case 2:
-            System.out.print("Digite a nova marca: ");
-            produto.setMarca(sc.nextLine());
-            break;
+                System.out.print("Digite a nova marca: ");
+                produto.setMarca(sc.nextLine());
+                break;
             case 3:
-            System.out.print("Digite o novo preço: ");
-            produto.setPreco(sc.nextFloat());
-            break;
+                System.out.print("Digite o novo preço: ");
+                produto.setPreco(sc.nextFloat());
+                break;
             case 4:
-            System.out.print("Digite a nova quantidade: ");
-            produto.setQuantidade(sc.nextInt());
-            break;
+                System.out.print("Digite a nova quantidade: ");
+                produto.setQuantidade(sc.nextInt());
+                break;
             
             default:
-            System.out.println("Falha ao alterar.");
-            return;
+                System.out.println("Falha ao alterar.");
+                return;
         }
         System.out.println();
         if (estoque.alterar(produto)) {

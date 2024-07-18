@@ -50,12 +50,7 @@ public class Estoque {
     public Produto[] listarTodos() {
         Produto[] vetAux = new Produto[nProdutos];
         for (int i = 0; i < nProdutos; i++) {
-            vetAux[i] = new Produto();
-            vetAux[i].setCodigo(produtos[i].getCodigo());
-            vetAux[i].setNome(produtos[i].getNome());
-            vetAux[i].setMarca(produtos[i].getMarca());
-            vetAux[i].setPreco(produtos[i].getPreco());
-            vetAux[i].setQuantidade(produtos[i].getQuantidade());
+            vetAux[i] = produtos[i].copy();
         }
         return vetAux;
     }
@@ -75,7 +70,7 @@ public class Estoque {
     public Produto buscar(int codigo) {
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getCodigo() == codigo) {
-                return produtos[i];
+                return produtos[i].copy();
             }
         }
         return null;
@@ -85,7 +80,7 @@ public class Estoque {
     public Produto buscarPorNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getNome().equalsIgnoreCase(nome)) {
-                return produtos[i];
+                return produtos[i].copy();
             }
         }
         return null;
