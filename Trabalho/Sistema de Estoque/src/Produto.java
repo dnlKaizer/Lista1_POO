@@ -39,4 +39,14 @@ public class Produto {
     public int getQuantidade() {
         return quantidade;
     }
+
+    public Produto copy() {
+        Produto auxP = new Produto();
+        auxP.setCodigo(getCodigo());
+        auxP.setNome(getNome());
+        auxP.setMarca(getMarca());
+        auxP.setPreco(getPreco());
+        auxP.setQuantidade(getQuantidade());
+        return auxP;
+    }
 }
