@@ -1,9 +1,14 @@
 public class Main {
     public static void main(String[] args) throws Exception {
-        Protozoario protozoario = new Protozoario();
-        imprimirVetor(protozoario.getGenotipo());
-        protozoario.mutate();
-        imprimirVetor(protozoario.getGenotipo());
+        Protozoario protozoario = Protozoario.getInstance();
+        Protozoario parceiro = Protozoario.getInstance();
+        Protozoario mate = protozoario.mate(parceiro);
+        Protozoario clone = protozoario.getClone();
+
+        System.out.println(protozoario.toString());
+        System.out.println(parceiro.toString());
+        System.out.println(mate.toString());
+        System.out.println(clone.toString());
     }
 
     static void imprimirVetor(int[] vet) {
