@@ -6,10 +6,10 @@ import entity.Usuario;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        Usuario usuario = Usuario.getInstance(1, "Roger Guedes", "rogerin", "rogerin1234");
-        new UsuarioDAO().create(usuario);
+        new UsuarioDAO().create(Usuario.getInstance("Rodinei", "rodo", "rodo1234"));
+
         List<Usuario> usuarios = new UsuarioDAO().read();
-        usuario = usuarios.get(0);
+        Usuario usuario = usuarios.get(1);
         System.out.println(usuario.getCdUsuario());
         System.out.println(usuario.getNmUsuario());
         System.out.println(usuario.getLogin());
