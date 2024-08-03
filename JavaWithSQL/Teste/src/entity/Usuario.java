@@ -28,6 +28,24 @@ public class Usuario {
         return new Usuario(cdUsuario, nmUsuario, login, senha);
     }
 
+    private Usuario(String nmUsuario, String login, String senha) {
+        this.nmUsuario = nmUsuario;
+        this.login = login;
+        this.senha = senha;
+    }
+    public static Usuario getInstance(String nmUsuario, String login, String senha) {
+        if (nmUsuario.length() > 100) {
+            return null;
+        }
+        if (login.length() > 50) {
+            return null;
+        }
+        if (senha.length() > 50) {
+            return null;
+        }
+        return new Usuario(nmUsuario, login, senha);
+    }
+
     public int getCdUsuario() {
         return cdUsuario;
     }
