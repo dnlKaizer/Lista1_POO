@@ -9,10 +9,8 @@ import entity.Usuario;
 
 public class UsuarioDAO {
     
-    public boolean cadastrarUsuario(Usuario user) {
-        String sql = "INSERT INTO USUARIO (NOME, LOGIN, SENHA) VALUES (?, ?, ?)";
-        boolean verify = false;
-    
+    public void cadastrarUsuario(Usuario user) {
+        String sql = "INSERT INTO USUARIO (NmUsuario, Login, Senha) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = Conexao.getConexao().prepareStatement(sql);
@@ -20,12 +18,11 @@ public class UsuarioDAO {
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getSenha());
 
-            verify = ps.execute();
+            ps.execute();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return verify;
 
     }
 
