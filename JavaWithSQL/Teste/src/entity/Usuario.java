@@ -1,22 +1,22 @@
 package entity;
 
 public class Usuario {
-    private int codigo;
-    private String nome;
+    private int cdUsuario;
+    private String nmUsuario;
     private String login;
     private String senha;
 
-    private Usuario(int codigo, String nome, String login, String senha) {
-        this.codigo = codigo;
-        this.nome = nome;
+    private Usuario(int cdUsuario, String nmUsuario, String login, String senha) {
+        this.cdUsuario = cdUsuario;
+        this.nmUsuario = nmUsuario;
         this.login = login;
         this.senha = senha;
     }
-    public static Usuario getInstance(int codigo, String nome, String login, String senha) {
-        if (codigo < 0) {
+    public static Usuario getInstance(int cdUsuario, String nmUsuario, String login, String senha) {
+        if (cdUsuario < 0) {
             return null;
         }
-        if (nome.length() > 100) {
+        if (nmUsuario.length() > 100) {
             return null;
         }
         if (login.length() > 50) {
@@ -25,21 +25,21 @@ public class Usuario {
         if (senha.length() > 50) {
             return null;
         }
-        return new Usuario(codigo, nome, login, senha);
+        return new Usuario(cdUsuario, nmUsuario, login, senha);
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getCdUsuario() {
+        return cdUsuario;
     }
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setCdUsuario(int cdUsuario) {
+        this.cdUsuario = cdUsuario;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNmUsuario() {
+        return nmUsuario;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNmUsuario(String nmUsuario) {
+        this.nmUsuario = nmUsuario;
     }
 
     public String getLogin() {

@@ -1,4 +1,4 @@
-package conexao;
+package connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Conexao {
+public class ConnectionFactory {
     private static final String url = "jdbc:mysql://localhost:3306/bd_teste";
     private static final String user = "root";
     private static final String password = "root";
 
-    public static Connection getConexao() {
+    public static Connection getConnection() {
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
@@ -20,7 +20,7 @@ public class Conexao {
         }
     }
     
-    public static void closeConexao(Connection connection) {
+    public static void closeConnection(Connection connection) {
         try {
             if (connection != null) {
                 connection.close();
@@ -30,8 +30,8 @@ public class Conexao {
         }
     }
     
-    public static void closeConexao(Connection connection, PreparedStatement statement) {
-        closeConexao(connection);
+    public static void closeConnection(Connection connection, PreparedStatement statement) {
+        closeConnection(connection);
         try {
             if (statement != null) {
                 statement.close();
@@ -41,8 +41,8 @@ public class Conexao {
         }
     }
     
-    public static void closeConexao(Connection connection, PreparedStatement statement, ResultSet resultSet) {
-        closeConexao(connection, statement);
+    public static void closeConnection(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+        closeConnection(connection, statement);
         try {
             if (resultSet != null) {
                 resultSet.close();

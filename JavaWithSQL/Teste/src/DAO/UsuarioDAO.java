@@ -8,19 +8,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import conexao.Conexao;
+import connection.ConnectionFactory;
 import entity.Usuario;
 
 public class UsuarioDAO {
     
-    public void cadastrarUsuario(Usuario usuario) {
-        Connection connection = Conexao.getConexao();
+    public void create(Usuario usuario) {
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement("INSERT INTO TbUsuario (NmUsuario, Login, Senha) VALUES (?, ?, ?)");
 
             // Passando os parâmetros
-            statement.setString(1, usuario.getNome());
+            statement.setString(1, usuario.getNmUsuario());
             statement.setString(2, usuario.getLogin());
             statement.setString(3, usuario.getSenha());
 
@@ -31,13 +31,13 @@ public class UsuarioDAO {
             e.printStackTrace();
         } finally {
             // Fechando a Connection e o Statement
-            Conexao.closeConexao(connection, statement);
+            ConnectionFactory.closeConnection(connection, statement);
         }
 
     }
 
-    public List<Usuario> lerUsuario() {
-        Connection connection = Conexao.getConexao();
+    public List<Usuario> read() {
+        Connection connection = ConnectionFactory.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -57,7 +57,7 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            Conexao.closeConexao(connection, statement, resultSet);
+            ConnectionFactory.closeConnection(connection, statement, resultSet);
         }
 
         return usuarios;
