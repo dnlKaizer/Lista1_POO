@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Protozoario {
     int[] genotipo = new int[10];
-
+    
     public Protozoario() {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
@@ -23,5 +23,18 @@ public class Protozoario {
             }
         }
         return new Protozoario(genotipo);
+    }
+
+    public int[] getGenotipo() {
+        return genotipo.clone();
+    }
+
+    public void mutate() {
+        Random random = new Random();
+        int index = random.nextInt(0, 10);
+        genotipo[index]--;
+        if (genotipo[index] < 0) {
+            genotipo[index] += 2;
+        }
     }
 }
