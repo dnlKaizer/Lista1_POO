@@ -13,7 +13,7 @@ public class Usuario {
         this.senha = senha;
     }
     public static Usuario getInstance(int cdUsuario, String nmUsuario, String login, String senha) {
-        if (cdUsuario < 0) {
+        if (cdUsuario < 1) {
             return null;
         }
         if (nmUsuario.length() > 100) {
@@ -44,6 +44,16 @@ public class Usuario {
             return null;
         }
         return new Usuario(nmUsuario, login, senha);
+    }
+    
+    private Usuario(int cdUsuario) {
+        this.cdUsuario = cdUsuario;
+    }
+    public static Usuario getInstance(int cdUsuario) {
+        if (cdUsuario < 1) {
+            return null;
+        }
+        return new Usuario(cdUsuario);
     }
 
     public int getCdUsuario() {
