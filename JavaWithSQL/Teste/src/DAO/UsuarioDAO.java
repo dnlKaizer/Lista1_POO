@@ -59,6 +59,27 @@ public class UsuarioDAO {
         }
 
     }
+    
+    public void delete(Usuario usuario) {
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement("DELETE FROM TbUsuario WHERE CdUsuario = ?");
+
+            // Passando os parâmetros
+            statement.setInt(1, usuario.getCdUsuario());
+
+            // Responsável por INSERT, UPDATE e DELETE
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fechando a Connection e o Statement
+            ConnectionFactory.closeConnection(connection, statement);
+        }
+
+    }
 
     public List<Usuario> read() {
         Connection connection = ConnectionFactory.getConnection();
