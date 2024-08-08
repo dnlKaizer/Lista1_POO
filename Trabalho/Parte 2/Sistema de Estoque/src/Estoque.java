@@ -21,28 +21,23 @@ public class Estoque {
 
     /* Inserir novo produto */
     public boolean inserir(Produto novoProduto) {
-        if (novoProduto != null) {
-            /* Verificar se a lista de produtos está cheia */
-            if (nProdutos == produtos.length) {
-                Produto[] vetAux = new Produto[nProdutos * 2];
-                for (int i = 0; i < nProdutos; i++) {
-                    vetAux[i] = produtos[i];
-                }
-                produtos = vetAux;
-            }
-            produtos[nProdutos] = new Produto();
-
-            produtos[nProdutos].setCodigo(this.codigo);
-            produtos[nProdutos].setNome(novoProduto.getNome());
-            produtos[nProdutos].setMarca(novoProduto.getMarca());
-            produtos[nProdutos].setPreco(novoProduto.getPreco());
-            produtos[nProdutos].setQuantidade(novoProduto.getQuantidade());
-
-            this.codigo++;
-            nProdutos++;
-            return true;
+        if (novoProduto == null) {
+            return false;
         }
-        return false;
+        /* Verificar se a lista de produtos está cheia */
+        if (nProdutos == produtos.length) {
+            Produto[] vetAux = new Produto[nProdutos * 2];
+            for (int i = 0; i < nProdutos; i++) {
+                vetAux[i] = produtos[i];
+            }
+            produtos = vetAux;
+        }
+        novoProduto.setCodigo(this.codigo);
+        produtos[nProdutos] = novoProduto;
+        
+        this.codigo++;
+        nProdutos++;
+        return true;
     }
 
     /* Método para excluir um produto */
