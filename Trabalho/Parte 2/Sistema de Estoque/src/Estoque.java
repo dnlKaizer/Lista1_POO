@@ -80,6 +80,7 @@ public class Estoque {
 
     /* Busca produto no estoque pelo código */
     public Produto buscar(int codigo) {
+        if (codigo <= 0) return null;
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getCodigo() == codigo) {
                 return produtos[i].copy();
@@ -125,15 +126,14 @@ public class Estoque {
     }
 
     public boolean alterar(Produto produtoAlterado) {
-        if (produtoAlterado != null) {
-            int codigo = produtoAlterado.getCodigo();
-            for (int i = 0; i < nProdutos; i++) {
-                if (produtos[i].getCodigo() == codigo) {
-                    produtos[i] = produtoAlterado;
-                    return true;
-                }
+        if (produtoAlterado == null) return false;
+        int codigo = produtoAlterado.getCodigo();
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].getCodigo() == codigo) {
+                produtos[i] = produtoAlterado;
+                return true;
             }
-        } 
+        }
         return false;
     }
 
