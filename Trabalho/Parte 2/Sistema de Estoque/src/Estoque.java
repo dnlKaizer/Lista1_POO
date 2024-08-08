@@ -34,7 +34,7 @@ public class Estoque {
         }
         novoProduto.setCodigo(this.codigo);
         produtos[nProdutos] = novoProduto;
-        
+
         this.codigo++;
         nProdutos++;
         return true;
@@ -42,18 +42,19 @@ public class Estoque {
 
     /* Método para excluir um produto */
     public boolean excluir(int codigo) {
-        if (codigo > 0) {
-            for (int i = 0; i < nProdutos; i++) {
-                if (produtos[i].getCodigo() == codigo) {
-                    for (int j = i; j < produtos.length - 1; j++) {
-                        produtos[j] = produtos[j + 1];
-                    }
-                    nProdutos--;
-                    produtos[nProdutos] = null;
-                    return true;
+        if (codigo <= 0) return false;
+        
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].getCodigo() == codigo) {
+                for (int j = i; j < nProdutos - 1; j++) {
+                    produtos[j] = produtos[j + 1];
                 }
+                nProdutos--;
+                produtos[nProdutos - 1] = null;
+                return true;
             }
         }
+        
         return false;
     }
 
