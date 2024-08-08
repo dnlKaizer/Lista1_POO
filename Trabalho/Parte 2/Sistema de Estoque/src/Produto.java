@@ -22,8 +22,13 @@ public class Produto {
         return new Produto(codigo, nome, marca, preco, quantidade);
     }
 
+    // codigo = 0
     public static Produto getInstance(String nome, String marca, float preco, int quantidade) {
-        return getInstance(0, nome, marca, preco, quantidade);
+        if (nome.length() <= 0) return null;
+        if (marca.length() <= 0) return null;
+        if (preco < 0) return null;
+        if (quantidade < 0) return null;
+        return new Produto(0, nome, marca, preco, quantidade);
     }
 
     public void setCodigo(int codigo) {
