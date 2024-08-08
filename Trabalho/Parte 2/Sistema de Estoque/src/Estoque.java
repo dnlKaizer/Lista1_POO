@@ -1,7 +1,23 @@
 public class Estoque {
-    private Produto[] produtos = new Produto[10];
-    private int nProdutos = 0;
-    private int codigo = 1;
+    private Produto[] produtos;
+    private int nProdutos;
+    private int codigo;
+
+    // Classe Singleton
+    private static Estoque instance;
+
+	private Estoque() {
+		this.produtos = new Produto[10];
+        this.nProdutos = 0;
+        this.codigo = 1;
+	}
+
+	public static Estoque getInstance() {
+		if (instance == null)
+			instance = new Estoque();
+
+		return instance;
+	}
 
     /* Inserir novo produto */
     public boolean inserir(Produto novoProduto) {
