@@ -12,7 +12,7 @@ public class Software {
 
         Menu:
         while (true) {
-            
+
             printMenu();
             comando = sc.nextInt();
 
@@ -23,7 +23,7 @@ public class Software {
                     break Menu;
 
                 case 1:
-                    cadastrar(estoque);
+                    // cadastrar(estoque);
                     Thread.sleep(1000);
                     break;
 
@@ -43,7 +43,7 @@ public class Software {
                     break;
             
                 case 5:
-                    detalhar(estoque);
+                    // detalhar(estoque);
                     Thread.sleep(1000);
                     break;
 
@@ -68,52 +68,46 @@ public class Software {
     
     /* Cadastra 5 produtos automaticamente */
     static void init(Estoque estoque) {
-        Produto produto = new Produto();
-        
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
         String marcas[] = {"PratoFino", "Camil", "BemBrasil", "Saudali", "Del Valle"};
         float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
-            produto.setNome(nomes[i]);
-            produto.setMarca(marcas[i]);
-            produto.setPreco(precos[i]);
-            produto.setQuantidade(20);
-            estoque.inserir(produto);
+            estoque.inserir(Produto.getInstance(nomes[i], marcas[i], precos[i], 20));
         }
     }
 
     /* Cadastrar produto */
-    static void cadastrar(Estoque estoque) {
-        Produto produto = new Produto();
-        String nome;
-        int m = 0;
-        sc.nextLine();
+    // static void cadastrar(Estoque estoque) {
+    //     Produto produto = new Produto();
+    //     String nome;
+    //     int m = 0;
+    //     sc.nextLine();
         
-        System.out.println("\nDigite as informações do produto a seguir:\n");
-        do {
-            if (m != 0) {
-                System.out.println("\nEste nome já existe. Tente novamente.\n");
-            }
-            System.out.print("Nome: ");
-            nome = sc.nextLine();
-            m++;
-        } while (estoque.verificaNome(nome));
-        produto.setNome(nome);
-        System.out.print("Marca: ");
-        produto.setMarca(sc.nextLine());
-        System.out.print("Preço: ");
-        produto.setPreco(sc.nextFloat());
-        System.out.print("Quantidade: ");
-        produto.setQuantidade(sc.nextInt());
+    //     System.out.println("\nDigite as informações do produto a seguir:\n");
+    //     do {
+    //         if (m != 0) {
+    //             System.out.println("\nEste nome já existe. Tente novamente.\n");
+    //         }
+    //         System.out.print("Nome: ");
+    //         nome = sc.nextLine();
+    //         m++;
+    //     } while (estoque.verificaNome(nome));
+    //     produto.setNome(nome);
+    //     System.out.print("Marca: ");
+    //     produto.setMarca(sc.nextLine());
+    //     System.out.print("Preço: ");
+    //     produto.setPreco(sc.nextFloat());
+    //     System.out.print("Quantidade: ");
+    //     produto.setQuantidade(sc.nextInt());
         
-        System.out.println();
-        if (estoque.inserir(produto)) {
-            System.out.println(produto.getNome() + " cadastrado com sucesso.");
-        } else {
-            System.out.println("Falha ao cadastrar.");
-        }
-    }
+    //     System.out.println();
+    //     if (estoque.inserir(produto)) {
+    //         System.out.println(produto.getNome() + " cadastrado com sucesso.");
+    //     } else {
+    //         System.out.println("Falha ao cadastrar.");
+    //     }
+    // }
 
     /* Excluir produto */
     static void excluir(Estoque estoque) {
@@ -252,43 +246,43 @@ public class Software {
     }
 
     /* Detalha um único produto */
-    static void detalhar(Estoque estoque) {
+    // static void detalhar(Estoque estoque) {
 
-        System.out.println("\nComo deseja detalhar?\n");
-        System.out.println("1. Por Código");
-        System.out.println("2. Por Nome");
-        System.out.print("\nDigite o comando: ");
-        int caso = sc.nextInt();
-        Produto produto = new Produto();
-        Produto[] vetAux = new Produto[1];
+    //     System.out.println("\nComo deseja detalhar?\n");
+    //     System.out.println("1. Por Código");
+    //     System.out.println("2. Por Nome");
+    //     System.out.print("\nDigite o comando: ");
+    //     int caso = sc.nextInt();
+    //     Produto produto = new Produto();
+    //     Produto[] vetAux = new Produto[1];
 
-        System.out.println();
-        switch (caso) {
-            case 1:
-                System.out.print("Digite o código do produto: ");
-                int codigo = sc.nextInt();
-                produto = estoque.buscar(codigo);
-                break;
+    //     System.out.println();
+    //     switch (caso) {
+    //         case 1:
+    //             System.out.print("Digite o código do produto: ");
+    //             int codigo = sc.nextInt();
+    //             produto = estoque.buscar(codigo);
+    //             break;
                 
-            case 2:
-                sc.nextLine();
-                System.out.print("Digite o nome do produto: ");
-                String nome = sc.nextLine();
-                produto = estoque.buscarPorNome(nome); 
-                break;
+    //         case 2:
+    //             sc.nextLine();
+    //             System.out.print("Digite o nome do produto: ");
+    //             String nome = sc.nextLine();
+    //             produto = estoque.buscarPorNome(nome); 
+    //             break;
         
-            default:
-                System.out.println("Comando inválido.");
-                return;
-        }
+    //         default:
+    //             System.out.println("Comando inválido.");
+    //             return;
+    //     }
 
-        if (produto != null) {
-            vetAux[0] = produto;
-            listarTodos(vetAux);
-        } else {
-            System.out.println("\nProduto não encontrado.");
-        }
-    }
+    //     if (produto != null) {
+    //         vetAux[0] = produto;
+    //         listarTodos(vetAux);
+    //     } else {
+    //         System.out.println("\nProduto não encontrado.");
+    //     }
+    // }
 
     static String gerarLinha(int n) {
         String linha = "";
