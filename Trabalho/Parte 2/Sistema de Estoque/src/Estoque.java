@@ -21,9 +21,8 @@ public class Estoque {
 
     /* Inserir novo produto */
     public boolean inserir(Produto novoProduto) {
-        if (novoProduto == null) {
-            return false;
-        }
+        if (novoProduto == null) return false;
+        if (verificaNome(novoProduto.getNome())) return false;
         /* Verificar se a lista de produtos está cheia */
         if (nProdutos == produtos.length) {
             Produto[] vetAux = new Produto[nProdutos * 2];
