@@ -13,7 +13,7 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public Produto getInstance(int codigo, String nome, String marca, float preco, int quantidade) {
+    public static Produto getInstance(int codigo, String nome, String marca, float preco, int quantidade) {
         if (codigo <= 0) return null;
         if (nome.length() <= 0) return null;
         if (marca.length() <= 0) return null;
