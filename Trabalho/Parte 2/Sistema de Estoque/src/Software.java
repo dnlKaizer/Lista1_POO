@@ -8,7 +8,7 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         int comando;
-        init(estoque);
+        init();
 
         Menu:
         while (true) {
@@ -23,22 +23,22 @@ public class Software {
                     break Menu;
 
                 case 1:
-                    // cadastrar(estoque);
+                    cadastrar();
                     Thread.sleep(1000);
                     break;
 
                 case 2:
-                    excluir(estoque);
+                    excluir();
                     Thread.sleep(1000);
                     break;
                     
                 case 3:
-                    alterar(estoque);
+                    alterar();
                     Thread.sleep(1000);
                     break;
 
                 case 4:
-                    listar(estoque);
+                    listar();
                     Thread.sleep(2000);
                     break;
             
@@ -67,7 +67,7 @@ public class Software {
     }
     
     /* Cadastra 5 produtos automaticamente */
-    static void init(Estoque estoque) {
+    static void init() {
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
         String marcas[] = {"PratoFino", "Camil", "BemBrasil", "Saudali", "Del Valle"};
         float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
@@ -78,39 +78,46 @@ public class Software {
     }
 
     /* Cadastrar produto */
-    // static void cadastrar(Estoque estoque) {
-    //     Produto produto = new Produto();
-    //     String nome;
-    //     int m = 0;
-    //     sc.nextLine();
+    static void cadastrar() {
+        Produto produto = lerProduto();
+        if (estoque.inserir(produto)) {
+            System.out.println(produto.getNome() + " cadastrado com sucesso.");
+        } else {
+            System.out.println("Falha ao cadastrar.");
+        }
+    }
+
+    static Produto lerProduto() {
+        String nome;
+        String marca;
+        float preco;
+        int quantidade;
+
+        int m = 0;
+        sc.nextLine();
         
-    //     System.out.println("\nDigite as informações do produto a seguir:\n");
-    //     do {
-    //         if (m != 0) {
-    //             System.out.println("\nEste nome já existe. Tente novamente.\n");
-    //         }
-    //         System.out.print("Nome: ");
-    //         nome = sc.nextLine();
-    //         m++;
-    //     } while (estoque.verificaNome(nome));
-    //     produto.setNome(nome);
-    //     System.out.print("Marca: ");
-    //     produto.setMarca(sc.nextLine());
-    //     System.out.print("Preço: ");
-    //     produto.setPreco(sc.nextFloat());
-    //     System.out.print("Quantidade: ");
-    //     produto.setQuantidade(sc.nextInt());
-        
-    //     System.out.println();
-    //     if (estoque.inserir(produto)) {
-    //         System.out.println(produto.getNome() + " cadastrado com sucesso.");
-    //     } else {
-    //         System.out.println("Falha ao cadastrar.");
-    //     }
-    // }
+        System.out.println("\nDigite as informações do produto a seguir:\n");
+        do {
+            if (m != 0) {
+                System.out.println("\nEste nome já existe. Tente novamente.\n");
+            }
+            System.out.print("Nome: ");
+            nome = sc.nextLine();
+            m++;
+        } while (estoque.verificaNome(nome));
+        System.out.print("Marca: ");
+        marca = sc.nextLine();
+        System.out.print("Preço: ");
+        preco = sc.nextFloat();
+        System.out.print("Quantidade: ");
+        quantidade = sc.nextInt();
+        System.out.println();
+
+        return Produto.getInstance(nome, marca, preco, quantidade);
+    }
 
     /* Excluir produto */
-    static void excluir(Estoque estoque) {
+    static void excluir() {
         listarTodos(estoque.listarTodos());
         System.out.print("\nDigite o código do produto que deseja excluir: ");
         int codigo = sc.nextInt();
@@ -136,7 +143,7 @@ public class Software {
     }
     
     /* Altera um atributo escolhido de um produto */
-    static void alterar(Estoque estoque) {
+    static void alterar() {
         listarTodos(estoque.listarTodos());
         System.out.print("\nDigite o código do produto que deseja alterar: ");
         int codigo = sc.nextInt();
@@ -195,7 +202,7 @@ public class Software {
     }
 
     /* Listar todos os produtos cadatrados */
-    static void listar(Estoque estoque) {
+    static void listar() {
         
         System.out.println();
         System.out.println("1. Por Código");
@@ -246,7 +253,7 @@ public class Software {
     }
 
     /* Detalha um único produto */
-    // static void detalhar(Estoque estoque) {
+    // static void detalhar() {
 
     //     System.out.println("\nComo deseja detalhar?\n");
     //     System.out.println("1. Por Código");
