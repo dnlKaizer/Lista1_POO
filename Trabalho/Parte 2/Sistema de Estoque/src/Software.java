@@ -3,23 +3,17 @@ import java.util.Scanner;
 
 public class Software {
 
+    static Estoque estoque = Estoque.getInstance();
     static Scanner sc = new Scanner(System.in, "CP850"); 
     public static void main(String[] args) throws Exception {
         
-        Estoque estoque = Estoque.getInstance();
         int comando;
         init(estoque);
 
         Menu:
         while (true) {
-            System.out.println("\nO que deseja fazer?\n");
-            System.out.println("0. Sair");
-            System.out.println("1. Cadastrar produto");
-            System.out.println("2. Excluir produto");
-            System.out.println("3. Alterar produto");
-            System.out.println("4. Listar produtos");
-            System.out.println("5. Detalhar produto");
-            System.out.print("\nDigite o comando: ");
+            
+            printMenu();
             comando = sc.nextInt();
 
             switch (comando) {
@@ -59,6 +53,17 @@ public class Software {
                     break;
             }
         }
+    }
+
+    static void printMenu() {
+        System.out.println("\nO que deseja fazer?\n");
+        System.out.println("0. Sair");
+        System.out.println("1. Cadastrar produto");
+        System.out.println("2. Excluir produto");
+        System.out.println("3. Alterar produto");
+        System.out.println("4. Listar produtos");
+        System.out.println("5. Detalhar produto");
+        System.out.print("\nDigite o comando: ");
     }
     
     /* Cadastra 5 produtos automaticamente */
