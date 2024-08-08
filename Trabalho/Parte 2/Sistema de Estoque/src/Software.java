@@ -6,7 +6,7 @@ public class Software {
     static Scanner sc = new Scanner(System.in, "CP850"); 
     public static void main(String[] args) throws Exception {
         
-        Estoque estoque = new Estoque();
+        Estoque estoque = Estoque.getInstance();
         int comando;
         init(estoque);
 
