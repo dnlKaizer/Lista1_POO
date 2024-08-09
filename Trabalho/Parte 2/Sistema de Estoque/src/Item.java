@@ -9,11 +9,10 @@ public class Item {
         this.quantidade = quantidade;
     }
 
-    public Item getInstance(Produto produto, float preco, int quantidade) {
+    public Item getInstance(Produto produto, int quantidade) {
         if (produto == null) return null;
-        if (preco <= 0) return null;
-        if (quantidade < 0) return null;
-        return new Item(produto, preco, quantidade);
+        if (quantidade <= 0) return null;
+        return new Item(produto, produto.getPreco(), quantidade);
     }
 
     public Produto getProduto() {
