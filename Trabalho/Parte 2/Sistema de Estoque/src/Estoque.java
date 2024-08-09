@@ -49,7 +49,7 @@ public class Estoque {
                     produtos[j] = produtos[j + 1];
                 }
                 nProdutos--;
-                produtos[nProdutos - 1] = null;
+                produtos[nProdutos] = null;
                 return true;
             }
         }
