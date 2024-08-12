@@ -24,13 +24,8 @@ public class Estoque {
         if (novoProduto == null) return false;
         if (verificaNome(novoProduto.getNome())) return false;
         /* Verificar se a lista de produtos está cheia */
-        if (nProdutos == produtos.length) {
-            Produto[] vetAux = new Produto[nProdutos * 2];
-            for (int i = 0; i < nProdutos; i++) {
-                vetAux[i] = produtos[i];
-            }
-            produtos = vetAux;
-        }
+        if (nProdutos == produtos.length) ampliarEstoque();
+        
         novoProduto.setCodigo(this.codigo);
         produtos[nProdutos] = novoProduto;
 
@@ -136,4 +131,11 @@ public class Estoque {
         return false;
     }
 
+    private void ampliarEstoque() {
+        Produto[] vetAux = new Produto[this.nProdutos * 2];
+        for (int i = 0; i < this.nProdutos; i++) {
+            vetAux[i] = this.produtos[i];
+        }
+        this.produtos = vetAux;
+    }
 }
