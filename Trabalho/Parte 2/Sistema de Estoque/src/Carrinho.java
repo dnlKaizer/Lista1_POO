@@ -5,7 +5,22 @@ public class Carrinho {
     public Carrinho() {
         itens = new Item[10];
     }
-    
+    private Carrinho(Carrinho car) {
+        this.itens = car.copyItens();
+        this.nItens = car.getNItens();
+    }
+    private Item[] copyItens() {
+        Item[] itensAux = new Item[this.itens.length];
+        for (int i = 0; i < this.nItens; i++) {
+            itensAux[i] = this.itens[i].copy();
+        }
+        return itensAux;
+    }
+
+    public int getNItens() {
+        return nItens;
+    }
+
     public boolean addItem(Item item) {
         if (item == null) return false;
         // Verifica se o carrinho está cheio
@@ -41,5 +56,9 @@ public class Carrinho {
             itensAux[i] = this.itens[i]; 
         }
         this.itens = itensAux;
+    }
+
+    public Carrinho copy() {
+        return new Carrinho(this);
     }
 }
