@@ -28,4 +28,8 @@ public class Item {
     public void merge(Item item2) {
         quantidade += item2.getQuantidade();
     }
+
+    public Item copy() {
+        return new Item(this.produto, this.preco, this.quantidade);
+    }
 }
