@@ -9,7 +9,7 @@ public class Item {
         this.quantidade = quantidade;
     }
 
-    public Item getInstance(Produto produto, int quantidade) {
+    public static Item getInstance(Produto produto, int quantidade) {
         if (produto == null) return null;
         if (quantidade <= 0) return null;
         return new Item(produto, produto.getPreco(), quantidade);
