@@ -9,6 +9,13 @@
             "name": "Software",
             "request": "launch",
             "mainClass": "Software",
+            "projectName": "Sistema de Estoque_ed19fcbe"
+        },
+        {
+            "type": "java",
+            "name": "Software",
+            "request": "launch",
+            "mainClass": "Software",
             "projectName": "Sistema de Estoque_2f38df13"
         },
         {
