@@ -62,4 +62,8 @@ public class Data {
         int ano = Integer.parseInt(nums[2]);
         return getInstance(dia, mes, ano);
     }
+
+    public Data copy() {
+        return new Data(dia, mes, ano, string);
+    }
 }
