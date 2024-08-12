@@ -24,4 +24,8 @@ public class Item {
     public int getQuantidade() {
         return quantidade;
     }
+
+    public void merge(Item item2) {
+        quantidade += item2.getQuantidade();
+    }
 }
