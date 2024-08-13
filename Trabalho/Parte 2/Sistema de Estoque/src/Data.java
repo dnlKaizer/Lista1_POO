@@ -22,8 +22,9 @@ public class Data {
     public void setAno(int ano) {
         this.ano = ano;
     }
-    public String getString() {
-        return string;
+    @Override
+    public String toString() {
+        return this.string;
     }
     public void setString(String string) {
         this.string = string;
@@ -63,7 +64,14 @@ public class Data {
         return getInstance(dia, mes, ano);
     }
 
+    private Data(Data data) {
+        this.dia = data.getDia();
+        this.mes = data.getMes();
+        this.ano = data.getAno();
+        this.string = data.toString();
+    }
+
     public Data copy() {
-        return new Data(dia, mes, ano, string);
+        return new Data(this);
     }
 }
