@@ -9,65 +9,68 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         init();
-        // System.out.println(estoque.buscar(1));
-        Carrinho carrinho = new Carrinho();
-        Item item1 = Item.getInstance(estoque.buscar(1), 2);
-        Item item11 = Item.getInstance(estoque.buscar(1), 5);
-        Item item2 = Item.getInstance(estoque.buscar(2), 5);
-        carrinho.addItem(item1);
-        carrinho.addItem(item11);
-        carrinho.addItem(item2);
+        admin();
+        // Carrinho carrinho = new Carrinho();
+        // Item item1 = Item.getInstance(estoque.buscar(1), 2);
+        // Item item11 = Item.getInstance(estoque.buscar(1), 5);
+        // Item item2 = Item.getInstance(estoque.buscar(2), 5);
+        // carrinho.addItem(item1);
+        // carrinho.addItem(item11);
+        // carrinho.addItem(item2);
 
-        System.out.println(carrinho.buscar(0).getQuantidade());
-        System.out.println(carrinho.buscar(1).getQuantidade());
-        // int comando;
-
-        // Menu:
-        // while (true) {
-
-        //     printMenu();
-        //     comando = sc.nextInt();
-
-        //     switch (comando) {
-        //         case 0: 
-        //             System.out.println("\nPrograma finalizado.");
-        //             Thread.sleep(1000);
-        //             break Menu;
-
-        //         case 1:
-        //             cadastrar();
-        //             Thread.sleep(1000);
-        //             break;
-
-        //         case 2:
-        //             excluir();
-        //             Thread.sleep(1000);
-        //             break;
-                    
-        //         case 3:
-        //             alterar();
-        //             Thread.sleep(1000);
-        //             break;
-
-        //         case 4:
-        //             listar();
-        //             Thread.sleep(2000);
-        //             break;
-            
-        //         case 5:
-        //             detalhar();
-        //             Thread.sleep(1000);
-        //             break;
-
-        //         default:
-        //             System.out.println("\nComando inválido. Tente novamente.");
-        //             Thread.sleep(1000);
-        //             break;
-        //     }
-        // }
+        // System.out.println(carrinho.buscar(0).getQuantidade());
+        // System.out.println(carrinho.buscar(1).getQuantidade());
     }
 
-    static void printMenu() {
+    static void admin() throws InterruptedException {
+        int comando;
+
+        Menu:
+        while (true) {
+
+            printAdminMenu();
+            comando = sc.nextInt();
+
+            switch (comando) {
+                case 0: 
+                    System.out.println("\nPrograma finalizado.");
+                    Thread.sleep(1000);
+                    break Menu;
+
+                case 1:
+                    cadastrar();
+                    Thread.sleep(1000);
+                    break;
+
+                case 2:
+                    excluir();
+                    Thread.sleep(1000);
+                    break;
+                    
+                case 3:
+                    alterar();
+                    Thread.sleep(1000);
+                    break;
+
+                case 4:
+                    listar();
+                    Thread.sleep(2000);
+                    break;
+            
+                case 5:
+                    detalhar();
+                    Thread.sleep(1000);
+                    break;
+
+                default:
+                    System.out.println("\nComando inválido. Tente novamente.");
+                    Thread.sleep(1000);
+                    break;
+            }
+        }
+    }
+
+    static void printAdminMenu() {
         System.out.println("\nO que deseja fazer?\n");
         System.out.println("0. Sair");
         System.out.println("1. Cadastrar produto");
