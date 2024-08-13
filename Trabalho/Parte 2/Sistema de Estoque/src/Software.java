@@ -24,24 +24,19 @@ public class Software {
 
     static void admin() throws InterruptedException {
         int comando;
-
         Menu:
         while (true) {
-
             printAdminMenu();
             comando = sc.nextInt();
-
             switch (comando) {
                 case 0: 
                     System.out.println("\nPrograma finalizado.");
                     Thread.sleep(1000);
                     break Menu;
-
                 case 1:
                     cadastrar();
                     Thread.sleep(1000);
                     break;
-
                 case 2:
                     excluir();
                     Thread.sleep(1000);
@@ -51,17 +46,14 @@ public class Software {
                     alterar();
                     Thread.sleep(1000);
                     break;
-
                 case 4:
                     listar();
                     Thread.sleep(2000);
                     break;
-            
                 case 5:
                     detalhar();
                     Thread.sleep(1000);
                     break;
-
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
                     Thread.sleep(1000);
@@ -81,7 +73,35 @@ public class Software {
     }
     
     static void atendente() throws InterruptedException {
+        int comando;
+        Menu:
+        while (true) {
+            printAtendenteMenu();
+            comando = sc.nextInt();
+            switch (comando) {
+                case 0: 
+                    System.out.println("\nPrograma finalizado.");
+                    Thread.sleep(1000);
+                    break Menu;
+                case 1:
+                    listar();
+                    Thread.sleep(1000);
+                    break;
 
+                case 2:
+                    
+                    Thread.sleep(1000);
+                    break;
+                case 3:
+                    
+                    Thread.sleep(1000);
+                    break;
+                default:
+                    System.out.println("\nComando inválido. Tente novamente.");
+                    Thread.sleep(1000);
+                    break;
+            }
+        }
     }
     static void printAtendenteMenu() {
         System.out.println("\nO que deseja fazer?\n");
