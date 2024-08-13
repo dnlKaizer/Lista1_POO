@@ -23,20 +23,13 @@ public class Produto {
         return new Produto(nome, marca, preco, quantidade);
     }
 
+    // Constructor para o copy, não precisa de método fábrica
     private Produto(int codigo, String nome, String marca, float preco, int quantidade) {
         this.codigo = codigo;
         this.nome = nome;
         this.marca = marca;
         this.preco = preco;
         this.quantidade = quantidade;
-    }
-    public static Produto getInstance(int codigo, String nome, String marca, float preco, int quantidade) {
-        if (codigo < 0) return null;
-        if (nome.length() <= 0) return null;
-        if (marca.length() <= 0) return null;
-        if (preco < 0) return null;
-        if (quantidade < 0) return null;
-        return new Produto(codigo, nome, marca, preco, quantidade);
     }
 
     public int getCodigo() {
