@@ -1,20 +1,20 @@
-public class Estoque {
+public class Sistema {
     private Produto[] produtos;
     private int nProdutos;
-    private int codigo;
+    private int cdProduto;
 
     // Classe Singleton
-    private static Estoque instance;
+    private static Sistema instance;
 
-	private Estoque() {
+	private Sistema() {
 		this.produtos = new Produto[10];
         this.nProdutos = 0;
-        this.codigo = 1;
+        this.cdProduto = 1;
 	}
 
-	public static Estoque getInstance() {
+	public static Sistema getInstance() {
 		if (instance == null)
-			instance = new Estoque();
+			instance = new Sistema();
 
 		return instance;
 	}
@@ -26,10 +26,10 @@ public class Estoque {
         /* Verificar se a lista de produtos está cheia */
         if (nProdutos == produtos.length) ampliarEstoque();
         
-        novoProduto.setCodigo(this.codigo);
+        novoProduto.setCodigo(this.cdProduto);
         produtos[nProdutos] = novoProduto;
 
-        this.codigo++;
+        this.cdProduto++;
         nProdutos++;
         return true;
     }

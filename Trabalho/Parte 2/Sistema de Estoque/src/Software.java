@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Software {
 
-    static Estoque estoque = Estoque.getInstance();
+    static Sistema sistema = Sistema.getInstance();
     static Scanner sc = new Scanner(System.in, "CP850"); 
 
     public static void main(String[] args) throws Exception {
@@ -11,9 +11,9 @@ public class Software {
         init();
         admin();
         // Carrinho carrinho = new Carrinho();
-        // Item item1 = Item.getInstance(estoque.buscar(1), 2);
-        // Item item11 = Item.getInstance(estoque.buscar(1), 5);
-        // Item item2 = Item.getInstance(estoque.buscar(2), 5);
+        // Item item1 = Item.getInstance(sistema.buscar(1), 2);
+        // Item item11 = Item.getInstance(sistema.buscar(1), 5);
+        // Item item2 = Item.getInstance(sistema.buscar(2), 5);
         // carrinho.addItem(item1);
         // carrinho.addItem(item11);
         // carrinho.addItem(item2);
@@ -119,14 +119,14 @@ public class Software {
         float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
-            estoque.inserir(Produto.getInstance(nomes[i], marcas[i], precos[i], 20));
+            sistema.inserir(Produto.getInstance(nomes[i], marcas[i], precos[i], 20));
         }
     }
 
     /* Cadastrar produto */
     static void cadastrar() {
         Produto produto = lerProduto();
-        if (estoque.inserir(produto)) {
+        if (sistema.inserir(produto)) {
             System.out.println(produto.getNome() + " cadastrado com sucesso.");
         } else {
             System.out.println("\nFalha ao cadastrar.");
@@ -151,7 +151,7 @@ public class Software {
             nome = sc.nextLine();
             if (nome.equals(".")) return null;
             m++;
-        } while (estoque.verificaNome(nome));
+        } while (sistema.verificaNome(nome));
 
         System.out.print("Marca: ");
         marca = sc.nextLine();
@@ -172,10 +172,10 @@ public class Software {
 
     /* Excluir produto */
     static void excluir() {
-        listarTodos(estoque.listarTodos());
+        listarTodos(sistema.listarTodos());
         System.out.print("\nDigite o código do produto que deseja excluir: ");
         int codigo = sc.nextInt();
-        Produto produto = estoque.buscar(codigo);
+        Produto produto = sistema.buscar(codigo);
         
         System.out.println();
         if (produto == null) {
@@ -189,7 +189,7 @@ public class Software {
         int comando = sc.nextInt();
         if (comando == 1) {
             System.out.println();
-            if (estoque.excluir(codigo)) {
+            if (sistema.excluir(codigo)) {
                 System.out.println(produto.getNome() + " excluído com sucesso.");
             } else {
                 System.out.println("Falha ao excluir.");
@@ -199,10 +199,10 @@ public class Software {
     
     /* Altera um atributo escolhido de um produto */
     static void alterar() {
-        listarTodos(estoque.listarTodos());
+        listarTodos(sistema.listarTodos());
         System.out.print("\nDigite o código do produto que deseja alterar: ");
         int codigo = sc.nextInt();
-        Produto produto = estoque.buscar(codigo);
+        Produto produto = sistema.buscar(codigo);
 
         System.out.println();
     
@@ -249,7 +249,7 @@ public class Software {
                 return;
         }
         System.out.println();
-        if (estoque.alterar(produto)) {
+        if (sistema.alterar(produto)) {
             System.out.println(produto.getNome() + " alterado com sucesso.");
         } else {
             System.out.println("Falha ao alterar.");
@@ -268,12 +268,12 @@ public class Software {
         switch (ordem) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
-                listarTodos(estoque.listarTodos());
+                listarTodos(sistema.listarTodos());
                 break;
 
             /* Ordem alfabética (nome, código, preço) */
             case 2:
-                listarTodos(estoque.listarPorNome());
+                listarTodos(sistema.listarPorNome());
                 break;
         
             default:
@@ -323,14 +323,14 @@ public class Software {
             case 1:
                 System.out.print("Digite o código do produto: ");
                 int codigo = sc.nextInt();
-                produto = estoque.buscar(codigo);
+                produto = sistema.buscar(codigo);
                 break;
                 
             case 2:
                 sc.nextLine();
                 System.out.print("Digite o nome do produto: ");
                 String nome = sc.nextLine();
-                produto = estoque.buscarPorNome(nome); 
+                produto = sistema.buscarPorNome(nome); 
                 break;
         
             default:
