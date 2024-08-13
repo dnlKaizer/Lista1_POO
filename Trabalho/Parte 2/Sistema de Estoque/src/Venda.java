@@ -1,25 +1,27 @@
 public class Venda {
-    static int codigo;
+    int codigo;
     Data data;
     Carrinho carrinho;
 
-    public static int getCodigo() {
+    private Venda(int codigo, Data data, Carrinho carrinho) {
+        this.codigo = codigo;
+        this.data = data;
+        this.carrinho = carrinho;
+    }
+    public static Venda getInstance(int codigo, Data data, Carrinho carrinho) {
+        if (codigo <= 0) return null;
+        if (data == null) return null;
+        if (carrinho == null) return null;
+        return new Venda(codigo, data, carrinho);
+    }
+
+    public int getCodigo() {
         return codigo;
     }
-    public static void setCodigo(int codigo) {
-        Venda.codigo = codigo;
-    }
     public Data getData() {
-        return data;
-    }
-    public void setData(Data data) {
-        this.data = data.copy();
+        return data.copy();
     }
     public Carrinho getCarrinho() {
         return carrinho.copy();
     }
-    public void setCarrinho(Carrinho carrinho) {
-        this.carrinho = carrinho;
-    }
-
 }
