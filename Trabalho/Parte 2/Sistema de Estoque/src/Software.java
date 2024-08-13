@@ -69,7 +69,6 @@ public class Software {
             }
         }
     }
-
     static void printAdminMenu() {
         System.out.println("\nO que deseja fazer?\n");
         System.out.println("0. Sair");
@@ -81,6 +80,18 @@ public class Software {
         System.out.print("\nDigite o comando: ");
     }
     
+    static void atendente() throws InterruptedException {
+
+    }
+    static void printAtendenteMenu() {
+        System.out.println("\nO que deseja fazer?\n");
+        System.out.println("0. Sair");
+        System.out.println("1. Listar produtos");
+        System.out.println("2. Inserir no carrinho");
+        System.out.println("3. Finalizar compra");
+        System.out.print("\nDigite o comando: ");
+    }
+
     /* Cadastra 5 produtos automaticamente */
     static void init() {
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
