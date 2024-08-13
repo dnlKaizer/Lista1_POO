@@ -1,7 +1,6 @@
 public class Sistema {
     private Produto[] produtos;
     private int nProdutos;
-    private int cdProduto;
 
     // Classe Singleton
     private static Sistema instance;
@@ -9,7 +8,6 @@ public class Sistema {
 	private Sistema() {
 		this.produtos = new Produto[10];
         this.nProdutos = 0;
-        this.cdProduto = 1;
 	}
 
 	public static Sistema getInstance() {
@@ -25,11 +23,8 @@ public class Sistema {
         if (verificaNome(novoProduto.getNome())) return false;
         /* Verificar se a lista de produtos está cheia */
         if (nProdutos == produtos.length) ampliarEstoque();
-        
-        novoProduto.setCodigo(this.cdProduto);
         produtos[nProdutos] = novoProduto;
 
-        this.cdProduto++;
         nProdutos++;
         return true;
     }
