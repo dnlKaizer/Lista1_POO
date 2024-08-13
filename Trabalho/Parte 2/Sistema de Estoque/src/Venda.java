@@ -18,10 +18,10 @@ public class Venda {
     }
 
     // Constructor para o copy, não precisa de método fábrica
-    private Venda(int codigo, Carrinho carrinho, Data data) {
-        this.codigo = codigo;
-        this.data = data;
-        this.carrinho = carrinho;
+    private Venda(Venda venda) {
+        this.codigo = venda.getCodigo();
+        this.data = venda.getData();
+        this.carrinho = venda.getCarrinho();
     }
 
     public int getCodigo() {
@@ -35,6 +35,6 @@ public class Venda {
     }
 
     public Venda copy() {
-        return new Venda(codigo, carrinho, data);
+        return new Venda(this);
     }
 }
