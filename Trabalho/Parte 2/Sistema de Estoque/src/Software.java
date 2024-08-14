@@ -28,12 +28,12 @@ public class Software {
                     Thread.sleep(1000);
                     break;
                 case 2:
-                    excluir();
+                    excluir(lerProdutoExistente());
                     Thread.sleep(1000);
                     break;
                     
                 case 3:
-                    alterar();
+                    alterar(lerProdutoExistente());
                     Thread.sleep(1000);
                     break;
                 case 4:
@@ -186,8 +186,7 @@ public class Software {
     }
 
     /* Excluir produto */
-    static void excluir() {
-        Produto produto = lerProdutoExistente();
+    static void excluir(Produto produto) {
         System.out.println("Tem certeza que deseja excluir " + produto.getNome() + "?\n");
         System.out.println("0. Não");
         System.out.println("1. Sim");
@@ -204,11 +203,8 @@ public class Software {
     }
     
     /* Altera um atributo escolhido de um produto */
-    static void alterar() {
-        Produto produto = lerProdutoExistente();
-
-        /* Sub-Menu */
-        printAlterarMenu();
+    static void alterar(Produto produto) {
+        printSubMenu();
         int caso = sc.nextInt();
         sc.nextLine();
         
@@ -233,11 +229,11 @@ public class Software {
                 System.out.print("Digite a nova quantidade: ");
                 produto.setQuantidade(sc.nextInt());
                 break;
-            
             default:
-                System.out.println("Falha ao alterar.");
+                System.out.println("Comando inválido.");
                 return;
         }
+
         System.out.println();
         if (sistema.alterar(produto)) {
             System.out.println(produto.getNome() + " alterado com sucesso.");
@@ -245,7 +241,7 @@ public class Software {
             System.out.println("Falha ao alterar.");
         }
     }
-    static void printAlterarMenu() {
+    static void printSubMenu() {
         System.out.println("Qual informação deseja alterar?\n");
         System.out.println("0. Cancelar alteração");
         System.out.println("1. Nome");
@@ -257,27 +253,23 @@ public class Software {
 
     /* Listar todos os produtos cadatrados */
     static void listar() {
-        
         System.out.println();
         System.out.println("1. Por Código");
         System.out.println("2. Alfabética");
         System.out.print("\nDigite a ordem: ");
-        int ordem = sc.nextInt();
+        int comando = sc.nextInt();
 
-        switch (ordem) {
+        switch (comando) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
                 listarTodos(sistema.listarTodos());
                 break;
-
             /* Ordem alfabética (nome, código, preço) */
             case 2:
                 listarTodos(sistema.listarPorNome());
                 break;
-        
             default:
-                System.out.println("\nERRO\n");
-                break;
+                System.out.println("\nComando inválido.\n");
         }
     }
 
@@ -308,7 +300,6 @@ public class Software {
 
     /* Detalha um único produto */
     static void detalhar() {
-
         System.out.println("\nComo deseja detalhar?\n");
         System.out.println("1. Por Código");
         System.out.println("2. Por Nome");
