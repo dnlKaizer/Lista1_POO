@@ -20,6 +20,9 @@ public class Carrinho {
     public int getNItens() {
         return nItens;
     }
+    public Item[] getItens() {
+        return copyItens();
+    }
 
     public boolean addItem(Item item) {
         if (item == null) return false;
