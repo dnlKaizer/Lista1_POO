@@ -9,6 +9,7 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         init();
+        admin();
     }
 
     static void admin() throws InterruptedException {
@@ -23,7 +24,7 @@ public class Software {
                     Thread.sleep(1000);
                     break Menu;
                 case 1:
-                    cadastrar();
+                    cadastrar(lerNovoProduto());
                     Thread.sleep(1000);
                     break;
                 case 2:
@@ -130,8 +131,7 @@ public class Software {
     }
 
     /* Cadastrar produto */
-    static void cadastrar() {
-        Produto produto = lerProduto();
+    static void cadastrar(Produto produto) {
         if (sistema.inserir(produto)) {
             System.out.println(produto.getNome() + " cadastrado com sucesso.");
         } else {
@@ -139,7 +139,7 @@ public class Software {
         }
     }
 
-    static Produto lerProduto() {
+    static Produto lerNovoProduto() {
         String nome;
         String marca;
         float preco;
@@ -176,18 +176,18 @@ public class Software {
         return Produto.getInstance(nome, marca, preco, quantidade);
     }
 
+    static Produto lerProdutoExistente() {
+        listarTodos(sistema.listarTodos());
+        System.out.print("\nDigite o código do produto: ");
+        int codigo = sc.nextInt();
+        System.out.println();
+        Produto produto = sistema.buscar(codigo);
+        return produto;
+    }
+
     /* Excluir produto */
     static void excluir() {
-        listarTodos(sistema.listarTodos());
-        System.out.print("\nDigite o código do produto que deseja excluir: ");
-        int codigo = sc.nextInt();
-        Produto produto = sistema.buscar(codigo);
-        
-        System.out.println();
-        if (produto == null) {
-            System.out.println("Não foi possível encontrar um produto com esse código.");
-            return;
-        }
+        Produto produto = lerProdutoExistente();
         System.out.println("Tem certeza que deseja excluir " + produto.getNome() + "?\n");
         System.out.println("0. Não");
         System.out.println("1. Sim");
@@ -195,7 +195,7 @@ public class Software {
         int comando = sc.nextInt();
         if (comando == 1) {
             System.out.println();
-            if (sistema.excluir(codigo)) {
+            if (sistema.excluir(produto.getCodigo())) {
                 System.out.println(produto.getNome() + " excluído com sucesso.");
             } else {
                 System.out.println("Falha ao excluir.");
@@ -205,26 +205,10 @@ public class Software {
     
     /* Altera um atributo escolhido de um produto */
     static void alterar() {
-        listarTodos(sistema.listarTodos());
-        System.out.print("\nDigite o código do produto que deseja alterar: ");
-        int codigo = sc.nextInt();
-        Produto produto = sistema.buscar(codigo);
-
-        System.out.println();
-    
-        if (produto == null) {
-            System.out.println("Não foi possível encontrar um produto com esse código.");
-            return;
-        }
+        Produto produto = lerProdutoExistente();
 
         /* Sub-Menu */
-        System.out.println("Qual informação deseja alterar?\n");
-        System.out.println("0. Cancelar alteração");
-        System.out.println("1. Nome");
-        System.out.println("2. Marca");
-        System.out.println("3. Preço");
-        System.out.println("4. Quantidade");
-        System.out.print("\nDigite o comando: ");
+        printAlterarMenu();
         int caso = sc.nextInt();
         sc.nextLine();
         
@@ -260,6 +244,15 @@ public class Software {
         } else {
             System.out.println("Falha ao alterar.");
         }
+    }
+    static void printAlterarMenu() {
+        System.out.println("Qual informação deseja alterar?\n");
+        System.out.println("0. Cancelar alteração");
+        System.out.println("1. Nome");
+        System.out.println("2. Marca");
+        System.out.println("3. Preço");
+        System.out.println("4. Quantidade");
+        System.out.print("\nDigite o comando: ");
     }
 
     /* Listar todos os produtos cadatrados */
