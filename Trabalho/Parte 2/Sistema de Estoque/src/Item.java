@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class Item {
     Produto produto;
     float preco;
@@ -31,5 +33,13 @@ public class Item {
 
     public Item copy() {
         return new Item(this.produto, this.preco, this.quantidade);
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat money = new DecimalFormat("R$ #,##0.00");
+        return String.format(
+        "{ Produto: (%s) , Preço: %s , Quantidade: %d }", 
+        this.produto, money.format(this.preco), this.quantidade);
     }
 }
