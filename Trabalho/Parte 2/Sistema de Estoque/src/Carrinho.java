@@ -61,4 +61,19 @@ public class Carrinho {
     public Carrinho copy() {
         return new Carrinho(this);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+        "{ Itens: [%s] }", 
+        this.arrayItensToString());
+    }
+    private String arrayItensToString() {
+        String str = "";
+        for (int i = 0; i < nItens; i++) {
+            str += "(" + itens[i] + ")";
+            if (i != nItens - 1) str += ", ";
+        }
+        return str;
+    }
 }
