@@ -9,17 +9,6 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         init();
-        admin();
-        // Carrinho carrinho = new Carrinho();
-        // Item item1 = Item.getInstance(sistema.buscar(1), 2);
-        // Item item11 = Item.getInstance(sistema.buscar(1), 5);
-        // Item item2 = Item.getInstance(sistema.buscar(2), 5);
-        // carrinho.addItem(item1);
-        // carrinho.addItem(item11);
-        // carrinho.addItem(item2);
-
-        // System.out.println(carrinho.buscar(0).getQuantidade());
-        // System.out.println(carrinho.buscar(1).getQuantidade());
     }
 
     static void admin() throws InterruptedException {
@@ -112,14 +101,31 @@ public class Software {
         System.out.print("\nDigite o comando: ");
     }
 
-    /* Cadastra 5 produtos automaticamente */
     static void init() {
+        initProdutos();
+        initVendas();
+    }
+    /* Cadastra 5 produtos automaticamente */
+    static void initProdutos() {
         String nomes[] = {"Arroz", "Feijão", "Batata Frita", "Picanha Suína", "Suco de Laranja"};
         String marcas[] = {"PratoFino", "Camil", "BemBrasil", "Saudali", "Del Valle"};
         float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
             sistema.inserir(Produto.getInstance(nomes[i], marcas[i], precos[i], 20));
+        }
+    }
+    /* Cadastra 2 vendas automaticamente */
+    static void initVendas() {
+        int[][] codigos = {{1,2,3}, {2,4}};
+        int[][] quantidades = {{3,4,5}, {2,7}};
+
+        for (int i = 0; i < 2; i++) {
+            Carrinho carrinho = new Carrinho();
+            for (int j = 0; j < codigos[i].length; j++) {
+                carrinho.addItem(Item.getInstance(sistema.buscar(codigos[i][j]), quantidades[i][j]));
+            }
+            sistema.gerarVenda(Venda.getInstance(carrinho, Data.getInstance("5/3/2020")));
         }
     }
 
