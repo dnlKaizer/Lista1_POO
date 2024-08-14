@@ -144,6 +144,16 @@ public class Sistema {
         return true;
     }
 
+    public Venda buscarVenda(int codigo) {
+        if (codigo < 1) return null;
+        for (int i = 0; i < this.nVendas; i++) {
+            if (codigo == vendas[i].getCodigo()) {
+                return vendas[i];
+            }
+        }
+        return null;
+    }
+
     private void ampliarVendas() {
         Venda[] vetAux = new Venda[this.nVendas * 2];
         for (int i = 0; i < this.nVendas; i++) {
