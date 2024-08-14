@@ -1,6 +1,8 @@
 public class Sistema {
     private Produto[] produtos;
     private int nProdutos;
+    private Produto[] excluidos;
+    private int nExcluidos;
     private Venda[] vendas;
     private int nVendas;
 
@@ -10,6 +12,7 @@ public class Sistema {
 	private Sistema() {
 		this.produtos = new Produto[10];
         this.vendas = new Venda[10];
+        this.excluidos = new Produto[10];
 	}
 
 	public static Sistema getInstance() {
@@ -37,6 +40,7 @@ public class Sistema {
         
         for (int i = 0; i < nProdutos; i++) {
             if (produtos[i].getCodigo() == codigo) {
+                addToExcluidos(produtos[i]);
                 for (int j = i; j < nProdutos - 1; j++) {
                     produtos[j] = produtos[j + 1];
                 }
@@ -47,6 +51,10 @@ public class Sistema {
         }
         
         return false;
+    }
+    private void addToExcluidos(Produto produto) {
+        if (this.excluidos.length == this.nExcluidos) ampliarExcluidos();
+        this.excluidos[this.nExcluidos] = produto;
     }
 
     /* Retorna cópia da lista de produtos em ordem por código */
@@ -134,6 +142,13 @@ public class Sistema {
             vetAux[i] = this.produtos[i];
         }
         this.produtos = vetAux;
+    }
+    private void ampliarExcluidos() {
+        Produto[] vetAux = new Produto[this.nExcluidos * 2];
+        for (int i = 0; i < this.nExcluidos; i++) {
+            vetAux[i] = this.excluidos[i];
+        }
+        this.excluidos = vetAux;
     }
 
     public boolean gerarVenda(Venda venda) {
