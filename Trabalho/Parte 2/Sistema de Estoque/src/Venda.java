@@ -33,6 +33,9 @@ public class Venda {
     public Carrinho getCarrinho() {
         return carrinho.copy();
     }
+    public Item[] getItens() {
+        return carrinho.getItens();
+    }
 
     public Venda copy() {
         return new Venda(this);
