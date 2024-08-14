@@ -136,6 +136,14 @@ public class Sistema {
         this.produtos = vetAux;
     }
 
+    public boolean gerarVenda(Venda venda) {
+        if (venda == null) return false;
+        if (this.vendas.length == this.nVendas) ampliarVendas();
+        this.vendas[this.nVendas] = venda;
+        this.nVendas++;
+        return true;
+    }
+
     private void ampliarVendas() {
         Venda[] vetAux = new Venda[this.nVendas * 2];
         for (int i = 0; i < this.nVendas; i++) {
