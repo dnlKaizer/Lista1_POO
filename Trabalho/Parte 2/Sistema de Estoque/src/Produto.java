@@ -74,9 +74,7 @@ public class Produto {
     public String toString() {
         DecimalFormat money = new DecimalFormat("R$ #,##0.00");
         return String.format(
-        "  {\n      Código = %d\n      Nome = %s" +
-        "\n      Marca = %s\n      Preço = %s" +
-        "\n      Quantidade = %d\n}", 
+        "{ Código: %d , Nome: %s , Marca: %s , Preço: %s , Quantidade: %d }", 
         this.codigo, this.nome, this.marca, money.format(this.preco), this.quantidade);
     }
 }
