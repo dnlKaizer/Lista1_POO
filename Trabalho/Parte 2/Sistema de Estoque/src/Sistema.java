@@ -153,10 +153,44 @@ public class Sistema {
 
     public boolean gerarVenda(Venda venda) {
         if (venda == null) return false;
+        if (!verificarVenda(venda)) return false;
+        efetuarVenda(venda);
         if (this.vendas.length == this.nVendas) ampliarVendas();
         this.vendas[this.nVendas] = venda;
         this.nVendas++;
         return true;
+    }
+    public boolean verificarVenda(Venda venda) {
+        Carrinho carrinho = venda.getCarrinho();
+        for (int i = 0; i < carrinho.getNItens(); i++) {
+            Produto produto = buscar(carrinho.buscar(i).getProduto().getCodigo());
+            if (produto == null) return false;
+            if (produto.getQuantidade() < carrinho.buscar(i).getProduto().getQuantidade()) return false;
+        }
+        return true;
+    }
+    public void efetuarVenda(Venda venda) {
+        Carrinho carrinho = venda.getCarrinho();
+        for (int i = 0; i < carrinho.getNItens(); i++) {
+            reduzirQuantidade(carrinho.buscar(i).getProduto().getCodigo(), carrinho.buscar(i).getQuantidade());
+        }
+    }
+
+    public void aumentarQuantidade(int codigo, int quantidade) {
+        if (codigo <= 0) return;
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].getCodigo() == codigo) {
+                produtos[i].setQuantidade(produtos[i].getQuantidade() + quantidade);
+            }
+        }
+    }
+    private void reduzirQuantidade(int codigo, int quantidade) {
+        if (codigo <= 0) return;
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].getCodigo() == codigo) {
+                produtos[i].setQuantidade(produtos[i].getQuantidade() - quantidade);
+            }
+        }
     }
 
     public Venda buscarVenda(int codigo) {
