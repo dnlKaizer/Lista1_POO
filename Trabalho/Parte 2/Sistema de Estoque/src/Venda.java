@@ -37,4 +37,11 @@ public class Venda {
     public Venda copy() {
         return new Venda(this);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+        "{ Código: %d , Data: %s , Carrinho: [%s] }", 
+        this.codigo, this.data, this.carrinho);
+    }
 }
