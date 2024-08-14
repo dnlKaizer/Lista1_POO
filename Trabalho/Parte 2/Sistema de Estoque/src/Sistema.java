@@ -1,13 +1,15 @@
 public class Sistema {
     private Produto[] produtos;
     private int nProdutos;
+    private Venda[] vendas;
+    private int nVendas;
 
     // Classe Singleton
     private static Sistema instance;
 
 	private Sistema() {
 		this.produtos = new Produto[10];
-        this.nProdutos = 0;
+        this.vendas = new Venda[10];
 	}
 
 	public static Sistema getInstance() {
@@ -132,5 +134,13 @@ public class Sistema {
             vetAux[i] = this.produtos[i];
         }
         this.produtos = vetAux;
+    }
+
+    private void ampliarVendas() {
+        Venda[] vetAux = new Venda[this.nVendas * 2];
+        for (int i = 0; i < this.nVendas; i++) {
+            vetAux[i] = this.vendas[i];
+        }
+        this.vendas = vetAux;
     }
 }
