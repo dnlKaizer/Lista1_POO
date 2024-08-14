@@ -9,7 +9,37 @@ public class Software {
     public static void main(String[] args) throws Exception {
         
         init();
-        admin();
+        login();
+    }
+
+    static void login() throws InterruptedException {
+        int comando;
+        printLoginMenu();
+        comando = sc.nextInt();
+        switch (comando) {
+            case 0: 
+                System.out.println("\nPrograma finalizado.");
+                break;
+            case 1:
+                admin();
+                Thread.sleep(1000);
+                break;
+            case 2:
+                atendente();
+                Thread.sleep(1000);
+                break;
+            default:
+                System.out.println("\nComando inválido.");
+                Thread.sleep(500);
+                break;
+        }
+    }
+    static void printLoginMenu() {
+        System.out.println("\nQual o módulo de acesso?\n");
+        System.out.println("0. Sair");
+        System.out.println("1. Administrador");
+        System.out.println("2. Atendente");
+        System.out.print("\nDigite o comando: ");
     }
 
     static void admin() throws InterruptedException {
@@ -21,7 +51,6 @@ public class Software {
             switch (comando) {
                 case 0: 
                     System.out.println("\nPrograma finalizado.");
-                    Thread.sleep(1000);
                     break Menu;
                 case 1:
                     cadastrar(lerNovoProduto());
@@ -46,7 +75,7 @@ public class Software {
                     break;
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     break;
             }
         }
@@ -71,7 +100,6 @@ public class Software {
             switch (comando) {
                 case 0: 
                     System.out.println("\nPrograma finalizado.");
-                    Thread.sleep(1000);
                     break Menu;
                 case 1:
                     listar();
@@ -88,7 +116,7 @@ public class Software {
                     break;
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     break;
             }
         }
