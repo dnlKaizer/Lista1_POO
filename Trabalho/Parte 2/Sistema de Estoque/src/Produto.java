@@ -1,17 +1,17 @@
 import java.text.DecimalFormat;
 
 public class Produto {
-    private int codigo;
+    private int cdProduto;
     private String nome;
     private String marca;
     private float preco;
     private int quantidade;
 
-    private static int codigoAutoGerado;
+    private static int cdAutoGerado;
 
     private Produto(String nome, String marca, float preco, int quantidade) {
-        codigoAutoGerado++;
-        this.codigo = codigoAutoGerado;
+        cdAutoGerado++;
+        this.cdProduto = cdAutoGerado;
         this.nome = nome;
         this.marca = marca;
         this.preco = preco;
@@ -25,17 +25,8 @@ public class Produto {
         return new Produto(nome, marca, preco, quantidade);
     }
 
-    // Constructor para o copy, não precisa de método fábrica
-    private Produto(int codigo, String nome, String marca, float preco, int quantidade) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.marca = marca;
-        this.preco = preco;
-        this.quantidade = quantidade;
-    }
-
-    public int getCodigo() {
-        return codigo;
+    public int getCdProduto() {
+        return cdProduto;
     }
 
     public void setNome(String nome) {
@@ -73,15 +64,11 @@ public class Produto {
         return quantidade;
     }
 
-    public Produto copy() {
-        return new Produto(codigo, nome, marca, preco, quantidade);
-    }
-
     @Override
     public String toString() {
         DecimalFormat money = new DecimalFormat("R$ #,##0.00");
         return String.format(
         "{ Código: %d , Nome: %s , Marca: %s , Preço: %s , Quantidade: %d }", 
-        this.codigo, this.nome, this.marca, money.format(this.preco), this.quantidade);
+        this.cdProduto, this.nome, this.marca, money.format(this.preco), this.quantidade);
     }
 }
