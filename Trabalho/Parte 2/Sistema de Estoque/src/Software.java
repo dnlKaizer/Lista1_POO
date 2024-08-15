@@ -154,7 +154,7 @@ public class Software {
             for (int j = 0; j < codigos[i].length; j++) {
                 carrinho.addItem(Item.getInstance(sistema.buscar(codigos[i][j]), quantidades[i][j]));
             }
-            sistema.gerarVenda(Venda.getInstance(carrinho, Data.getInstance("5/3/2020")));
+            sistema.gerarVenda(carrinho, Data.getInstance("5/3/2020"));
         }
     }
 
@@ -222,7 +222,7 @@ public class Software {
         int comando = sc.nextInt();
         if (comando == 1) {
             System.out.println();
-            if (sistema.excluir(produto.getCodigo())) {
+            if (sistema.excluir(produto.getCdProduto())) {
                 System.out.println(produto.getNome() + " excluído com sucesso.");
             } else {
                 System.out.println("Falha ao excluir.");
@@ -319,7 +319,7 @@ public class Software {
         for (int i = 0; i < nProdutos; i++) {
             System.out.printf(
                 "|  %-" + tamColuna[0] + "d  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s  |  R$ %" + tamColuna[3] + "s  |  %-" + tamColuna[4] + "d  |",
-                produtos[i].getCodigo(), produtos[i].getNome(), produtos[i].getMarca(),
+                produtos[i].getCdProduto(), produtos[i].getNome(), produtos[i].getMarca(),
                 moeda.format(produtos[i].getPreco()),produtos[i].getQuantidade());
             System.out.println();
         }
@@ -383,8 +383,8 @@ public class Software {
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         
-        if ((produtos[produtos.length - 1].getCodigo() + "").length() > tamColuna[0]) {
-            tamColuna[0] = (produtos[produtos.length - 1].getCodigo() + "").length();
+        if ((produtos[produtos.length - 1].getCdProduto() + "").length() > tamColuna[0]) {
+            tamColuna[0] = (produtos[produtos.length - 1].getCdProduto() + "").length();
         }
 
         for (int i = 0; i < produtos.length; i++) {
