@@ -9,6 +9,13 @@ public class Produto {
 
     private static int cdAutoGerado;
 
+    private Produto(int cdProduto, String nome, String marca, float preco, int quantidade) {
+        this.cdProduto = cdProduto;
+        this.nome = nome;
+        this.marca = marca;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
     private Produto(String nome, String marca, float preco, int quantidade) {
         cdAutoGerado++;
         this.cdProduto = cdAutoGerado;
@@ -65,7 +72,7 @@ public class Produto {
     }
 
     public Produto copy() {
-        return new Produto(nome, marca, preco, quantidade);
+        return new Produto(cdProduto, nome, marca, preco, quantidade);
     }
 
     @Override
