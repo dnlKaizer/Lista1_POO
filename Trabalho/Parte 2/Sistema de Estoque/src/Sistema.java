@@ -39,7 +39,7 @@ public class Sistema {
         if (codigo <= 0) return false;
         
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].getCodigo() == codigo) {
+            if (produtos[i].getCdProduto() == codigo) {
                 addToExcluidos(produtos[i]);
                 for (int j = i; j < nProdutos - 1; j++) {
                     produtos[j] = produtos[j + 1];
@@ -81,7 +81,7 @@ public class Sistema {
     public Produto buscar(int codigo) {
         if (codigo <= 0) return null;
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].getCodigo() == codigo) {
+            if (produtos[i].getCdProduto() == codigo) {
                 return produtos[i].copy();
             }
         }
@@ -126,9 +126,9 @@ public class Sistema {
 
     public boolean alterar(Produto produtoAlterado) {
         if (produtoAlterado == null) return false;
-        int codigo = produtoAlterado.getCodigo();
+        int codigo = produtoAlterado.getCdProduto();
         for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].getCodigo() == codigo) {
+            if (produtos[i].getCdProduto() == codigo) {
                 produtos[i] = produtoAlterado;
                 return true;
             }
@@ -149,58 +149,6 @@ public class Sistema {
             vetAux[i] = this.excluidos[i];
         }
         this.excluidos = vetAux;
-    }
-
-    public boolean gerarVenda(Venda venda) {
-        if (venda == null) return false;
-        if (!verificarVenda(venda)) return false;
-        efetuarVenda(venda);
-        if (this.vendas.length == this.nVendas) ampliarVendas();
-        this.vendas[this.nVendas] = venda;
-        this.nVendas++;
-        return true;
-    }
-    public boolean verificarVenda(Venda venda) {
-        Carrinho carrinho = venda.getCarrinho();
-        for (int i = 0; i < carrinho.getNItens(); i++) {
-            Produto produto = buscar(carrinho.buscar(i).getProduto().getCodigo());
-            if (produto == null) return false;
-            if (produto.getQuantidade() < carrinho.buscar(i).getQuantidade()) return false;
-        }
-        return true;
-    }
-    public void efetuarVenda(Venda venda) {
-        Carrinho carrinho = venda.getCarrinho();
-        for (int i = 0; i < carrinho.getNItens(); i++) {
-            subQuantidade(carrinho.buscar(i).getProduto().getCodigo(), carrinho.buscar(i).getQuantidade());
-        }
-    }
-
-    public void addQuantidade(int codigo, int quantidade) {
-        if (codigo <= 0) return;
-        for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].getCodigo() == codigo) {
-                produtos[i].addQuantidade(quantidade);
-            }
-        }
-    }
-    private void subQuantidade(int codigo, int quantidade) {
-        if (codigo <= 0) return;
-        for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].getCodigo() == codigo) {
-                produtos[i].subQuantidade(quantidade);
-            }
-        }
-    }
-
-    public Venda buscarVenda(int codigo) {
-        if (codigo < 1) return null;
-        for (int i = 0; i < this.nVendas; i++) {
-            if (codigo == vendas[i].getCodigo()) {
-                return vendas[i];
-            }
-        }
-        return null;
     }
 
     private void ampliarVendas() {
