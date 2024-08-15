@@ -66,6 +66,10 @@ public class Produto {
         if (qtd > quantidade) return;
         this.quantidade -= qtd;
     }
+    public void setQuantidade(int qtd) {
+        if (qtd < 0) return;
+        this.quantidade = qtd;
+    }
     public int getQuantidade() {
         return quantidade;
     }
