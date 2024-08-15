@@ -13,6 +13,9 @@ public class Carrinho {
     public int getNItens() {
         return nItens;
     }
+    public float getPrecoTotal(int pos) {
+        return itens[pos].getPrecoTotal();
+    }
 
     public boolean addItem(Item item) {
         if (item == null) return false;
