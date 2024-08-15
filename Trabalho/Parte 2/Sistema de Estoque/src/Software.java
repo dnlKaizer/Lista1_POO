@@ -167,52 +167,6 @@ public class Software {
         }
     }
 
-    static Produto lerNovoProduto() {
-        String nome;
-        String marca;
-        float preco;
-        int quantidade;
-
-        int m = 0;
-        sc.nextLine();
-        
-        System.out.println("\nDigite as informações do produto a seguir:\n");
-        do {
-            if (m != 0) {
-                System.out.println("\nEste nome já existe. Tente novamente.\n");
-            }
-            System.out.print("Nome: ");
-            nome = sc.nextLine();
-            if (nome.equals(".")) return null;
-            m++;
-        } while (sistema.verificaNome(nome));
-
-        System.out.print("Marca: ");
-        marca = sc.nextLine();
-        if (marca.equals(".")) return null;
-
-        System.out.print("Preço: ");
-        preco = sc.nextFloat();
-        if (preco == -1) return null;
-
-        System.out.print("Quantidade: ");
-        quantidade = sc.nextInt();
-        if (quantidade == -1) return null;
-
-        System.out.println();
-
-        return Produto.getInstance(nome, marca, preco, quantidade);
-    }
-
-    static Produto lerProdutoExistente() {
-        listarTodos(sistema.listarTodos());
-        System.out.print("\nDigite o código do produto: ");
-        int codigo = sc.nextInt();
-        System.out.println();
-        Produto produto = sistema.buscar(codigo);
-        return produto;
-    }
-
     /* Excluir produto */
     static void excluir(Produto produto) {
         System.out.println("Tem certeza que deseja excluir " + produto.getNome() + "?\n");
@@ -229,7 +183,7 @@ public class Software {
             }
         } else if (comando != 0) System.out.println("\nComando inválido.");
     }
-    
+
     /* Altera um atributo escolhido de um produto */
     static void alterar(Produto produto) {
         printSubMenu();
@@ -277,6 +231,51 @@ public class Software {
         System.out.println("3. Preço");
         System.out.println("4. Quantidade");
         System.out.print("\nDigite o comando: ");
+    }
+
+    static Produto lerNovoProduto() {
+        String nome;
+        String marca;
+        float preco;
+        int quantidade;
+
+        int m = 0;
+        sc.nextLine();
+        
+        System.out.println("\nDigite as informações do produto a seguir:\n");
+        do {
+            if (m != 0) {
+                System.out.println("\nEste nome já existe. Tente novamente.\n");
+            }
+            System.out.print("Nome: ");
+            nome = sc.nextLine();
+            if (nome.equals(".")) return null;
+            m++;
+        } while (sistema.verificaNome(nome));
+
+        System.out.print("Marca: ");
+        marca = sc.nextLine();
+        if (marca.equals(".")) return null;
+
+        System.out.print("Preço: ");
+        preco = sc.nextFloat();
+        if (preco == -1) return null;
+
+        System.out.print("Quantidade: ");
+        quantidade = sc.nextInt();
+        if (quantidade == -1) return null;
+
+        System.out.println();
+
+        return Produto.getInstance(nome, marca, preco, quantidade);
+    }
+    static Produto lerProdutoExistente() {
+        listarTodos(sistema.listarTodos());
+        System.out.print("\nDigite o código do produto: ");
+        int codigo = sc.nextInt();
+        System.out.println();
+        Produto produto = sistema.buscar(codigo);
+        return produto;
     }
 
     /* Listar todos os produtos cadatrados */
