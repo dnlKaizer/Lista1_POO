@@ -2,6 +2,10 @@ public class Carrinho {
     private Item[] itens;
     private int nItens;
 
+    private Carrinho(Item[] itens, int nItens) {
+        this.itens = itens;
+        this.nItens = nItens;
+    }
     public Carrinho() {
         itens = new Item[10];
     }
@@ -39,6 +43,17 @@ public class Carrinho {
         return -1;
     }
 
+    public Carrinho copy() {
+        return new Carrinho(copyItens(), this.nItens);
+    }
+    private Item[] copyItens() {
+        Item[] itens = new Item[this.nItens];
+        for (int i = 0; i < this.nItens; i++) {
+            itens[i] = this.itens[i].copy();
+        }
+        return itens;
+    }
+
     @Override
     public String toString() {
         return String.format(
@@ -53,7 +68,7 @@ public class Carrinho {
         }
         this.itens = itensAux;
     }
-    
+
     private String arrayItensToString() {
         String str = "";
         for (int i = 0; i < nItens; i++) {
