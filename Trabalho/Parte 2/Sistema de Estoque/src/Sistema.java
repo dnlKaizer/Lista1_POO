@@ -14,13 +14,17 @@ public class Sistema {
         this.vendas = new Venda[10];
         this.excluidos = new Produto[10];
 	}
-
 	public static Sistema getInstance() {
 		if (instance == null)
 			instance = new Sistema();
 
 		return instance;
 	}
+
+    /* Retorna a quantidade de produtos cadastrados */
+    public int getNProdutos() {
+        return nProdutos;
+    }
 
     /* Inserir novo produto */
     public boolean inserir(Produto novoProduto) {
@@ -57,6 +61,19 @@ public class Sistema {
         this.excluidos[this.nExcluidos] = produto;
     }
 
+    /* Método para alterar um produto */
+    public boolean alterar(Produto produtoAlterado) {
+        if (produtoAlterado == null) return false;
+        int codigo = produtoAlterado.getCdProduto();
+        for (int i = 0; i < nProdutos; i++) {
+            if (produtos[i].getCdProduto() == codigo) {
+                produtos[i] = produtoAlterado;
+                return true;
+            }
+        }
+        return false;
+    }
+
     /* Retorna cópia da lista de produtos em ordem por código */
     public Produto[] listarTodos() {
         Produto[] vetAux = new Produto[nProdutos];
@@ -65,17 +82,11 @@ public class Sistema {
         }
         return vetAux;
     }
-
     /* Retorna cópia da lista de produtos em ordem alfabética */
     public Produto[] listarPorNome() {
         Produto[] vetAux = ordenarProdutos();
         return vetAux;
     }    
-
-    /* Retorna a quantidade de produtos cadastrados */
-    public int getNProdutos() {
-        return nProdutos;
-    }
 
     /* Busca produto no estoque pelo código */
     public Produto buscar(int codigo) {
@@ -87,7 +98,6 @@ public class Sistema {
         }
         return null;
     }
-
     /* Busca produto no estoque pelo nome */
     public Produto buscarPorNome(String nome) {
         for (int i = 0; i < nProdutos; i++) {
@@ -124,18 +134,6 @@ public class Sistema {
         return vetAux;
     }
 
-    public boolean alterar(Produto produtoAlterado) {
-        if (produtoAlterado == null) return false;
-        int codigo = produtoAlterado.getCdProduto();
-        for (int i = 0; i < nProdutos; i++) {
-            if (produtos[i].getCdProduto() == codigo) {
-                produtos[i] = produtoAlterado;
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void ampliarEstoque() {
         Produto[] vetAux = new Produto[this.nProdutos * 2];
         for (int i = 0; i < this.nProdutos; i++) {
@@ -150,7 +148,6 @@ public class Sistema {
         }
         this.excluidos = vetAux;
     }
-
     private void ampliarVendas() {
         Venda[] vetAux = new Venda[this.nVendas * 2];
         for (int i = 0; i < this.nVendas; i++) {
