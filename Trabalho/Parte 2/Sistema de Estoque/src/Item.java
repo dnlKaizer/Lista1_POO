@@ -1,9 +1,9 @@
 import java.text.DecimalFormat;
 
 public class Item {
-    Produto produto;
-    float preco;
-    int quantidade;
+    private Produto produto;
+    private float preco;
+    private int quantidade;
 
     private Item(Produto produto, float preco, int quantidade) {
         this.produto = produto;

@@ -1,8 +1,8 @@
 public class Data {
-    int dia;
-    int mes;
-    int ano;
-    String string;
+    private int dia;
+    private int mes;
+    private int ano;
+    private String string;
 
     public int getDia() {
         return dia;

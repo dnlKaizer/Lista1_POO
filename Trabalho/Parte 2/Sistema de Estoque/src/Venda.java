@@ -1,7 +1,7 @@
 public class Venda {
-    int cdVenda;
-    Data data;
-    Carrinho carrinho;
+    private int cdVenda;
+    private Data data;
+    private Carrinho carrinho;
 
     static int codigoAutoGerado;
 
