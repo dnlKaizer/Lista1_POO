@@ -87,6 +87,35 @@ public class Sistema {
         Produto[] vetAux = ordenarProdutos();
         return vetAux;
     }    
+    /* Retorna cópia da lista de vendas por código */
+    public Venda[] listarVendas() {
+        Venda[] vendas = new Venda[this.nVendas];
+        for (int i = 0; i < this.nVendas; i++) {
+            vendas[i] = this.vendas[i].copy();
+        }
+        return vendas;
+    }
+    /* Retorna cópia da lista de vendas por código */
+    public Venda[] listarVendasPorData(Data data) {
+        int tam = 0;
+        for (int i = 0; i < this.nVendas; i++) {
+            if (this.vendas[i].getData().compare(data)) tam++;
+        }
+        if (tam == 0) return null;
+        Venda[] vendas = new Venda[tam];
+        for (int i = 0; i < tam; i++) {
+            if (this.vendas[i].getData().compare(data)) 
+            vendas[i] = this.vendas[i].copy();
+        }
+        return vendas;
+    }
+    /* Retorna cópia da lista de vendas por código */
+    public Venda listarVendaPorCd(int cdVenda) {
+        for (int i = 0; i < this.nVendas; i++) {
+            if (this.vendas[i].getCdVenda() == cdVenda) return this.vendas[i].copy();
+        }
+        return null;
+    }
 
     /* Busca produto no estoque pelo código */
     public Produto buscar(int codigo) {
@@ -154,7 +183,7 @@ public class Sistema {
         }
         return true;
     }
-    
+
     private void addVenda(Venda venda) {
         if (venda == null) return;
         if (this.vendas.length == this.nVendas) ampliarVendas();
