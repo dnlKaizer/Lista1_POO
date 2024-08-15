@@ -36,6 +36,13 @@ public class Venda {
         return this.carrinho.getNItens();
     }
 
+    public float getPrecoTotal(int pos) {
+        return carrinho.getPrecoTotal(pos);
+    }
+    public float getPrecoTotal() {
+        return carrinho.getPrecoTotal();
+    }
+
     public Venda copy() {
         return new Venda(this.cdVenda, this.carrinho.copy(), this.data.copy());
     }
