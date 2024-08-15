@@ -1,5 +1,5 @@
 public class Venda {
-    int codigo;
+    int cdVenda;
     Data data;
     Carrinho carrinho;
 
@@ -7,7 +7,7 @@ public class Venda {
 
     private Venda(Carrinho carrinho, Data data) {
         codigoAutoGerado++;
-        this.codigo = codigoAutoGerado;
+        this.cdVenda = codigoAutoGerado;
         this.data = data;
         this.carrinho = carrinho;
     }
@@ -17,34 +17,21 @@ public class Venda {
         return new Venda(carrinho, data);
     }
 
-    // Constructor para o copy, não precisa de método fábrica
-    private Venda(Venda venda) {
-        this.codigo = venda.getCodigo();
-        this.data = venda.getData();
-        this.carrinho = venda.getCarrinho();
-    }
-
-    public int getCodigo() {
-        return codigo;
+    public int getCdVenda() {
+        return cdVenda;
     }
     public Data getData() {
         return data.copy();
     }
-    public Carrinho getCarrinho() {
-        return carrinho.copy();
-    }
-    public Item[] getItens() {
-        return carrinho.getItens();
-    }
 
-    public Venda copy() {
-        return new Venda(this);
+    public Item buscarItem(int pos) {
+        return this.carrinho.buscarItem(pos);
     }
 
     @Override
     public String toString() {
         return String.format(
         "{ Código: %d , Data: %s , Carrinho: [%s] }", 
-        this.codigo, this.data, this.carrinho);
+        this.cdVenda, this.data, this.carrinho);
     }
 }
