@@ -64,6 +64,11 @@ public class Data {
         return getInstance(dia, mes, ano);
     }
 
+    public boolean compare(Data data) {
+        if (data.getDia() == this.dia && data.getMes() == this.mes && data.getAno() == this.ano) return true;
+        return false; 
+    }
+
     private Data(Data data) {
         this.dia = data.getDia();
         this.mes = data.getMes();
