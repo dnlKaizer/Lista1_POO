@@ -134,6 +134,42 @@ public class Sistema {
         return vetAux;
     }
 
+    public boolean gerarVenda(Carrinho carrinho, Data data) {
+        Venda venda = Venda.getInstance(carrinho, data);
+        if (venda == null) return false;
+        if (!verificarVenda(venda)) return false;
+        for (int i = 0; i < venda.getNItens(); i++) {
+            Item item = venda.buscarItem(i);
+            subQuantidadeProduto(item.getCdProduto(), item.getQuantidade());
+        }
+        addVenda(venda);
+        return true;
+    }
+
+    private boolean verificarVenda(Venda venda) {
+        if (venda == null) return false;
+        for (int i = 0; i < venda.getNItens(); i++) {
+            int cdProduto = venda.buscarItem(i).getCdProduto();
+            if (venda.buscarItem(i).getQuantidade() > this.buscar(cdProduto).getQuantidade()) return false;
+        }
+        return true;
+    }
+    
+    private void addVenda(Venda venda) {
+        if (venda == null) return;
+        if (this.vendas.length == this.nVendas) ampliarVendas();
+        this.vendas[this.nVendas] = venda;
+        this.nVendas++;
+    }
+
+    private void subQuantidadeProduto(int cdProduto, int qtd) {
+        for (int i = 0; i < this.nProdutos; i++) {
+            if (produtos[i].getCdProduto() == cdProduto) {
+                this.produtos[i].subQuantidade(qtd);
+            }
+        }
+    }
+    
     private void ampliarEstoque() {
         Produto[] vetAux = new Produto[this.nProdutos * 2];
         for (int i = 0; i < this.nProdutos; i++) {
