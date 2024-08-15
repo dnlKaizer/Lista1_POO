@@ -30,6 +30,13 @@ public class Item {
     public void merge(Item item2) {
         quantidade += item2.getQuantidade();
     }
+    public void addQuantidade(int qtd) {
+        this.quantidade += qtd;
+    }
+    public void subQuantidade(int qtd) {
+        if (qtd > quantidade) return;
+        this.quantidade -= qtd;
+    }
 
     public Item copy() {
         return new Item(this.produto, this.preco, this.quantidade);
