@@ -17,8 +17,8 @@ public class Item {
         return new Item(produto, produto.getPreco(), quantidade);
     }
 
-    public Produto getProduto() {
-        return produto.copy();
+    public int getCdProduto() {
+        return produto.getCdProduto();
     }
     public float getPreco() {
         return preco;
