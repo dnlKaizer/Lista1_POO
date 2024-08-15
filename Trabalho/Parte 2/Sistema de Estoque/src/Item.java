@@ -26,6 +26,9 @@ public class Item {
     public int getQuantidade() {
         return quantidade;
     }
+    public float getPrecoTotal() {
+        return this.preco * this.quantidade;
+    }
 
     public void merge(Item item2) {
         quantidade += item2.getQuantidade();
