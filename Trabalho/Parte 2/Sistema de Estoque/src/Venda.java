@@ -5,6 +5,11 @@ public class Venda {
 
     static int codigoAutoGerado;
 
+    private Venda(int cdVenda, Carrinho carrinho, Data data) {
+        this.cdVenda = cdVenda;
+        this.data = data;
+        this.carrinho = carrinho;
+    }
     private Venda(Carrinho carrinho, Data data) {
         codigoAutoGerado++;
         this.cdVenda = codigoAutoGerado;
@@ -29,6 +34,10 @@ public class Venda {
     }
     public int getNItens() {
         return this.carrinho.getNItens();
+    }
+
+    public Venda copy() {
+        return new Venda(this.cdVenda, this.carrinho.copy(), this.data.copy());
     }
 
     @Override
