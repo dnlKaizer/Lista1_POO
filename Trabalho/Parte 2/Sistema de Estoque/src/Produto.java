@@ -59,8 +59,12 @@ public class Produto {
         return preco;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void addQuantidade(int qtd) {
+        this.quantidade += qtd;
+    }
+    public void subQuantidade(int qtd) {
+        if (qtd > quantidade) return;
+        this.quantidade -= qtd;
     }
     public int getQuantidade() {
         return quantidade;
