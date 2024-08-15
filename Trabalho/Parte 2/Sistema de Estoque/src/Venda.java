@@ -27,6 +27,9 @@ public class Venda {
     public Item buscarItem(int pos) {
         return this.carrinho.buscarItem(pos);
     }
+    public int getNItens() {
+        return this.carrinho.getNItens();
+    }
 
     @Override
     public String toString() {
