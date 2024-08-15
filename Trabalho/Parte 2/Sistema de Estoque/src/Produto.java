@@ -64,6 +64,10 @@ public class Produto {
         return quantidade;
     }
 
+    public Produto copy() {
+        return new Produto(nome, marca, preco, quantidade);
+    }
+
     @Override
     public String toString() {
         DecimalFormat money = new DecimalFormat("R$ #,##0.00");
