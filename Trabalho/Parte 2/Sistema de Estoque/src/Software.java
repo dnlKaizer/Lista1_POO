@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Software {
 
-    static Sistema sistema = Sistema.getInstance();
     static Scanner sc = new Scanner(System.in, "CP850"); 
 
     public static void main(String[] args) throws Exception {
@@ -141,7 +140,7 @@ public class Software {
         float precos[] = {11.99f, 8.89f, 41.49f, 29.99f, 4.29f};
         
         for (int i = 0; i < 5; i++) {
-            sistema.inserir(Produto.getInstance(nomes[i], marcas[i], precos[i], 20));
+            Sistema.getInstance().inserir(Produto.getInstance(nomes[i], marcas[i], precos[i], 20));
         }
     }
     /* Cadastra 2 vendas automaticamente */
@@ -152,15 +151,15 @@ public class Software {
         for (int i = 0; i < 2; i++) {
             Carrinho carrinho = new Carrinho();
             for (int j = 0; j < codigos[i].length; j++) {
-                carrinho.addItem(Item.getInstance(sistema.buscar(codigos[i][j]), quantidades[i][j]));
+                carrinho.addItem(Item.getInstance(Sistema.getInstance().buscar(codigos[i][j]), quantidades[i][j]));
             }
-            sistema.gerarVenda(carrinho, Data.getInstance("5/3/2020"));
+            Sistema.getInstance().gerarVenda(carrinho, Data.getInstance("5/3/2020"));
         }
     }
 
     /* Cadastrar produto */
     static void cadastrar(Produto produto) {
-        if (sistema.inserir(produto)) {
+        if (Sistema.getInstance().inserir(produto)) {
             System.out.println(produto.getNome() + " cadastrado com sucesso.");
         } else {
             System.out.println("\nFalha ao cadastrar.");
@@ -176,7 +175,7 @@ public class Software {
         int comando = sc.nextInt();
         if (comando == 1) {
             System.out.println();
-            if (sistema.excluir(produto.getCdProduto())) {
+            if (Sistema.getInstance().excluir(produto.getCdProduto())) {
                 System.out.println(produto.getNome() + " excluído com sucesso.");
             } else {
                 System.out.println("Falha ao excluir.");
@@ -217,7 +216,7 @@ public class Software {
         }
 
         System.out.println();
-        if (sistema.alterar(produto)) {
+        if (Sistema.getInstance().alterar(produto)) {
             System.out.println(produto.getNome() + " alterado com sucesso.");
         } else {
             System.out.println("Falha ao alterar.");
@@ -251,7 +250,7 @@ public class Software {
             nome = sc.nextLine();
             if (nome.equals(".")) return null;
             m++;
-        } while (sistema.verificaNome(nome));
+        } while (Sistema.getInstance().verificaNome(nome));
 
         System.out.print("Marca: ");
         marca = sc.nextLine();
@@ -270,11 +269,11 @@ public class Software {
         return Produto.getInstance(nome, marca, preco, quantidade);
     }
     static Produto lerProdutoExistente() {
-        listarTodos(sistema.listarTodos());
+        listarTodos(Sistema.getInstance().listarTodos());
         System.out.print("\nDigite o código do produto: ");
         int codigo = sc.nextInt();
         System.out.println();
-        Produto produto = sistema.buscar(codigo);
+        Produto produto = Sistema.getInstance().buscar(codigo);
         return produto;
     }
 
@@ -289,11 +288,11 @@ public class Software {
         switch (comando) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
-                listarTodos(sistema.listarTodos());
+                listarTodos(Sistema.getInstance().listarTodos());
                 break;
             /* Ordem alfabética (nome, código, preço) */
             case 2:
-                listarTodos(sistema.listarPorNome());
+                listarTodos(Sistema.getInstance().listarPorNome());
                 break;
             default:
                 System.out.println("\nComando inválido.\n");
@@ -340,14 +339,14 @@ public class Software {
             case 1:
                 System.out.print("Digite o código do produto: ");
                 int codigo = sc.nextInt();
-                produto = sistema.buscar(codigo);
+                produto = Sistema.getInstance().buscar(codigo);
                 break;
                 
             case 2:
                 sc.nextLine();
                 System.out.print("Digite o nome do produto: ");
                 String nome = sc.nextLine();
-                produto = sistema.buscarPorNome(nome); 
+                produto = Sistema.getInstance().buscarPorNome(nome); 
                 break;
         
             default:
