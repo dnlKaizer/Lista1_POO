@@ -72,6 +72,14 @@ public class Software {
                     detalhar();
                     Thread.sleep(1000);
                     break;
+                case 6:
+                    listarVendas();
+                    Thread.sleep(2000);
+                    break;
+                case 7:
+                    // detalharVenda();
+                    Thread.sleep(1000);
+                    break;
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
                     Thread.sleep(500);
@@ -87,6 +95,8 @@ public class Software {
         System.out.println("3. Alterar produto");
         System.out.println("4. Listar produtos");
         System.out.println("5. Detalhar produto");
+        System.out.println("6. Listar vendas");
+        System.out.println("7. Detalhar venda");
         System.out.print("\nDigite o comando: ");
     }
     
@@ -269,7 +279,7 @@ public class Software {
         return Produto.getInstance(nome, marca, preco, quantidade);
     }
     static Produto lerProdutoExistente() {
-        listarTodos(Sistema.getInstance().listarTodos());
+        imprimirProdutos(Sistema.getInstance().listarTodos());
         System.out.print("\nDigite o código do produto: ");
         int codigo = sc.nextInt();
         System.out.println();
@@ -288,11 +298,11 @@ public class Software {
         switch (comando) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
-                listarTodos(Sistema.getInstance().listarTodos());
+                imprimirProdutos(Sistema.getInstance().listarTodos());
                 break;
             /* Ordem alfabética (nome, código, preço) */
             case 2:
-                listarTodos(Sistema.getInstance().listarPorNome());
+                imprimirProdutos(Sistema.getInstance().listarPorNome());
                 break;
             default:
                 System.out.println("\nComando inválido.\n");
@@ -300,7 +310,7 @@ public class Software {
     }
 
     /* Imprime tabela com todos os produtos */
-    static void listarTodos(Produto[] produtos) {
+    static void imprimirProdutos(Produto[] produtos) {
         int[] tamColuna = acharTamanhoColuna(produtos);
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
@@ -356,10 +366,57 @@ public class Software {
 
         if (produto != null) {
             vetAux[0] = produto;
-            listarTodos(vetAux);
+            imprimirProdutos(vetAux);
         } else {
             System.out.println("\nProduto não encontrado.");
         }
+    }
+
+    static void listarVendas() {
+        System.out.println();
+        System.out.println("1. Listar Todas");
+        System.out.println("2. Listar por Data");
+        System.out.print("\nDigite o comando: ");
+        int comando = sc.nextInt();
+        sc.nextLine();
+
+        switch (comando) {
+            case 1:
+                imprimirVendas(Sistema.getInstance().listarVendas());
+                break;
+            case 2:
+                System.out.println();
+                System.out.print("\nDigite a data: ");
+                Data data = Data.getInstance(sc.nextLine());
+                if (data == null) System.out.println("\nData inválida.\n");
+                else imprimirVendas(Sistema.getInstance().listarVendasPorData(data));
+                break;
+            default:
+                System.out.println("\nComando inválido.\n");
+        }
+    }
+
+    static void imprimirVendas(Venda[] vendas) {
+        int[] tamColuna = acharTamanhoColuna(vendas);
+
+        DecimalFormat moeda = new DecimalFormat("#,##0.00");
+        int nProdutos = vendas.length;
+        String linhaMenu = gerarLinha(tamColuna[3]);
+
+        System.out.println();
+        System.out.println(linhaMenu);
+        System.out.printf("|  %-" + tamColuna[0] + "s  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s   |", 
+            "CÓDIGO", "DATA", "VALOR");
+        System.out.println();
+        System.out.println(linhaMenu);
+            
+        for (int i = 0; i < nProdutos; i++) {
+            System.out.printf(
+                "|  %-" + tamColuna[0] + "d  |  %-" + tamColuna[1] + "s  |R$ %" + tamColuna[2] + "s  |",
+                vendas[i].getCdVenda(), vendas[i].getData().toString(), moeda.format(vendas[i].getPrecoTotal()));
+            System.out.println();
+        }
+        System.out.println(linhaMenu);
     }
 
     static String gerarLinha(int n) {
@@ -401,6 +458,29 @@ public class Software {
         }
 
         tamColuna[5] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + tamColuna[4] + 29;
+        return tamColuna;
+    }
+    static int[] acharTamanhoColuna(Venda[] vendas) {
+        int[] tamColuna = new int[4];
+        tamColuna[0] = 6;
+        tamColuna[1] = 10;
+        tamColuna[2] = 5;
+
+        DecimalFormat moeda = new DecimalFormat("#,##0.00");
+        
+        if ((vendas[vendas.length - 1].getCdVenda() + "").length() > tamColuna[0]) {
+            tamColuna[0] = (vendas[vendas.length - 1].getCdVenda() + "").length();
+        }
+
+        for (int i = 0; i < vendas.length; i++) {
+            if (vendas[i].getData().toString().length() > tamColuna[1]) {
+                tamColuna[1] = vendas[i].getData().toString().length();
+            }
+            if (moeda.format(vendas[i].getPrecoTotal()).length() > tamColuna[2]) {
+                tamColuna[2] = moeda.format(vendas[i].getPrecoTotal()).length();
+            }
+        }
+        tamColuna[3] = tamColuna[0] + tamColuna[1] + tamColuna[2] + 17;
         return tamColuna;
     }
 }
