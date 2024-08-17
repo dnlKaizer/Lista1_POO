@@ -428,10 +428,9 @@ public class Software {
     }
 
     static void imprimirVenda(Venda venda) {
-        // int[] tamColuna = acharTamanhoColuna(venda);
-        // String linhaMenu = gerarLinha(tamColuna[3]);
-        String linhaMenu = gerarLinha(32);
-        int col = 10;
+        int[] tamColuna = acharTamanhoColuna(venda);
+        String linhaMenu = gerarLinha(tamColuna[4]);
+        int col = tamColuna[4] - 22;
 
         DecimalFormat moeda = new DecimalFormat("R$ #,##0.00");
 
@@ -450,10 +449,23 @@ public class Software {
             "CÓDIGO", venda.getCdVenda(),
             "DATA", venda.getData().toString(),
             "CLIENTE", venda.getNmCliente(),
-            "VALOR TOTAL", moeda.format(venda.getPrecoTotal()));
-
-            // Falta o resto
+            "VALOR TOTAL", moeda.format(venda.getPrecoTotal())
+        );
+        moeda = new DecimalFormat("#,##0.00");
+        System.out.printf(
+            "\n|  %-" + tamColuna[0] + "s  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s     |  %-" + tamColuna[3] + "s     |\n",
+            "PRODUTO", "QUANTIDADE", "VALOR", "TOTAL"
+        );
+        System.out.println(linhaMenu);
+        for (int i = 0; i < venda.getNItens(); i++) {
+            System.out.printf(
+                "|  %-" + tamColuna[0] + "s  |  %-" + tamColuna[1] + "s  |  R$ %-" + tamColuna[2] + "s  |  R$ %-" + tamColuna[3] + "s  |\n",
+                venda.buscarItem(i).getNmProduto(), venda.buscarItem(i).getQuantidade(), moeda.format(venda.buscarItem(i).getPreco()), moeda.format(venda.buscarItem(i).getPrecoTotal())
+            );
         }
+        System.out.println(linhaMenu);
+        System.out.println();
+    }
 
     static String gerarLinha(int n) {
         String linha = "";
@@ -517,6 +529,31 @@ public class Software {
             }
         }
         tamColuna[3] = tamColuna[0] + tamColuna[1] + tamColuna[2] + 19;
+        return tamColuna;
+    }
+    static int[] acharTamanhoColuna(Venda venda) {
+        int[] tamColuna = new int[5];
+        tamColuna[0] = 7;
+        tamColuna[1] = 10;
+        tamColuna[2] = 5;
+        tamColuna[3] = 5;
+
+        DecimalFormat moeda = new DecimalFormat("#,##0.00");
+        for (int i = 0; i < venda.getNItens(); i++) {
+            int tamNmProduto = venda.buscarItem(i).getNmProduto().length();
+            if (tamNmProduto > tamColuna[0]) tamColuna[0] = tamNmProduto;
+
+            int tamQuantidade = (venda.buscarItem(i).getQuantidade() + "").length();
+            if (tamQuantidade > tamColuna[1]) tamColuna[1] = tamQuantidade;
+
+            int tamValor = moeda.format(venda.buscarItem(i).getPreco()).length();
+            if (tamValor > tamColuna[2]) tamColuna[2] = tamValor;
+
+            int tamTotal = moeda.format(venda.buscarItem(i).getPrecoTotal()).length();
+            if (tamTotal > tamColuna[3]) tamColuna[3] = tamTotal;
+        }
+        
+        tamColuna[4] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + 27;
         return tamColuna;
     }
 }
