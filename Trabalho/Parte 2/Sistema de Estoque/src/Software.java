@@ -103,6 +103,7 @@ public class Software {
     
     /* Módulo de atendente */
     static void atendente() throws InterruptedException {
+        Carrinho carrinho = new Carrinho(); 
         int comando;
         Menu:
         while (true) {
@@ -113,13 +114,14 @@ public class Software {
                     System.out.println("\nPrograma finalizado.");
                     break Menu;
                 case 1:
-                    
+                    addCarrinho(carrinho, lerItem());
                     Thread.sleep(1000);
                     break;
 
                 case 2:
                     
                     Thread.sleep(1000);
+                    carrinho = new Carrinho();
                     break;
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
@@ -166,12 +168,11 @@ public class Software {
         }
     }
 
+    /* ------------------- MÓDULO ADMINISTRADOR ------------------- */
+
     /* Cadastrar produto */
     static void cadastrar(Produto produto) {
-        if (produto == null) {
-            System.out.println("Falha ao cadastrar.");
-            return;
-        }
+        if (produto == null) return;
         if (Sistema.getInstance().inserir(produto)) {
             System.out.println(produto.getNome() + " cadastrado com sucesso.");
         } else {
@@ -181,10 +182,7 @@ public class Software {
 
     /* Excluir produto */
     static void excluir(Produto produto) {
-        if (produto == null) {
-            System.out.println("Falha ao excluir.");
-            return;
-        }
+        if (produto == null) return;
         System.out.println("Tem certeza que deseja excluir " + produto.getNome() + "?\n");
         System.out.println("0. Não");
         System.out.println("1. Sim");
@@ -202,10 +200,8 @@ public class Software {
 
     /* Altera um atributo escolhido de um produto */
     static void alterar(Produto produto) {
-        if (produto == null) {
-            System.out.println("Falha ao alterar.");
-            return;
-        }
+        if (produto == null) return;
+        
         printSubMenu();
         int caso = sc.nextInt();
         sc.nextLine();
@@ -347,6 +343,17 @@ public class Software {
         else imprimirVenda(venda);
     }
 
+    /* --------------------- MÓDULO ATENDENTE --------------------- */
+
+    /* Adiciona Item no carrinho */
+    static void addCarrinho(Carrinho carrinho, Item item) {
+        if (carrinho == null || item == null) return;
+        if (carrinho.addItem(item)) System.out.println("Item inserido com sucesso.");
+        else System.out.println("Falha ao inserir item no carrinho");
+    }
+
+    /* ------------------------------------------------------------ */
+
     /* Cria um novo produto pelo terminal */
     static Produto lerNovoProduto() {
         String nome;
@@ -382,7 +389,9 @@ public class Software {
 
         System.out.println();
 
-        return Produto.getInstance(nome, marca, preco, quantidade);
+        Produto p = Produto.getInstance(nome, marca, preco, quantidade);
+        if (p == null) System.out.println("Falha ao criar produto.");
+        return p;
     }
     /* Lê um produto existente pelo terminal */
     static Produto lerProdutoExistente() {
@@ -391,7 +400,19 @@ public class Software {
         int codigo = sc.nextInt();
         System.out.println();
         Produto produto = Sistema.getInstance().buscar(codigo);
+        if (produto == null) System.out.println("Falha na leitura do produto.");
         return produto;
+    }
+    /* Cria um novo item pelo terminal */
+    static Item lerItem() {
+        Produto p = lerProdutoExistente();
+        if (p == null) return null;
+        System.out.print("Digite a quantidade que deseja inserir: ");
+        int qtd = sc.nextInt();
+        System.out.println();
+        Item item = Item.getInstance(p, qtd);
+        if (item == null) System.out.println("Falha ao criar item.");
+        return item;
     }
 
     /* Imprime tabela com os produtos */
