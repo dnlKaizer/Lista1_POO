@@ -13,24 +13,26 @@ public class Software {
 
     static void login() throws InterruptedException {
         int comando;
-        printLoginMenu();
-        comando = sc.nextInt();
-        switch (comando) {
-            case 0: 
-                System.out.println("\nPrograma finalizado.");
-                break;
-            case 1:
-                admin();
-                Thread.sleep(1000);
-                break;
-            case 2:
-                atendente();
-                Thread.sleep(1000);
-                break;
-            default:
-                System.out.println("\nComando inválido.");
-                Thread.sleep(500);
-                break;
+        while (true) {
+            printLoginMenu();
+            comando = sc.nextInt();
+            switch (comando) {
+                case 0: 
+                    System.out.println("\nPrograma finalizado.");
+                    return;
+                case 1:
+                    admin();
+                    Thread.sleep(1000);
+                    break;
+                case 2:
+                    atendente();
+                    Thread.sleep(1000);
+                    break;
+                default:
+                    System.out.println("\nComando inválido.");
+                    Thread.sleep(500);
+                    break;
+            }
         }
     }
     static void printLoginMenu() {
@@ -50,7 +52,7 @@ public class Software {
             comando = sc.nextInt();
             switch (comando) {
                 case 0: 
-                    System.out.println("\nPrograma finalizado.");
+                    System.out.println("\nMódulo encerrado.");
                     break Menu;
                 case 1:
                     cadastrar(lerNovoProduto());
@@ -111,7 +113,7 @@ public class Software {
             comando = sc.nextInt();
             switch (comando) {
                 case 0: 
-                    System.out.println("\nPrograma finalizado.");
+                    System.out.println("\nMódulo encerrado.");
                     break Menu;
                 case 1:
                     addCarrinho(carrinho, lerItem());
@@ -119,7 +121,8 @@ public class Software {
                     break;
 
                 case 2:
-                    
+                    sc.nextLine();
+                    efetuarVenda(carrinho, lerData(), lerNomeCliente());
                     Thread.sleep(1000);
                     carrinho = new Carrinho();
                     break;
@@ -352,6 +355,13 @@ public class Software {
         else System.out.println("Falha ao inserir item no carrinho");
     }
 
+    /* Finaliza uma venda */
+    static void efetuarVenda(Carrinho carrinho, Data data, String nome) {
+        if (carrinho == null) return;
+        if (Sistema.getInstance().gerarVenda(carrinho, data, nome)) System.out.println("\nVenda realizada com sucesso.");
+        else System.out.println("\nFalha ao efetuar venda.");
+    }
+
     /* ------------------------------------------------------------ */
 
     /* Cria um novo produto pelo terminal */
@@ -413,6 +423,19 @@ public class Software {
         Item item = Item.getInstance(p, qtd);
         if (item == null) System.out.println("Falha ao criar item.");
         return item;
+    }
+    /* Lê a data pelo terminal */
+    static Data lerData() {
+        System.out.print("\nDigite a data: ");
+        Data data = Data.getInstance(sc.nextLine());
+        if (data == null) System.out.println("\nData inválida");
+        return data;
+    }
+    /* Lê o nome do cliente pelo terminal */
+    static String lerNomeCliente() {
+        System.out.print("\nDigite seu nome: ");
+        String str = sc.nextLine();
+        return str;
     }
 
     /* Imprime tabela com os produtos */
