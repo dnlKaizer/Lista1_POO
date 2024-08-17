@@ -20,6 +20,9 @@ public class Item {
     public int getCdProduto() {
         return produto.getCdProduto();
     }
+    public String getNmProduto() {
+        return produto.getNome();
+    }
     public float getPreco() {
         return preco;
     }
