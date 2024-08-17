@@ -170,6 +170,10 @@ public class Software {
 
     /* Cadastrar produto */
     static void cadastrar(Produto produto) {
+        if (produto == null) {
+            System.out.println("Falha ao cadastrar.");
+            return;
+        }
         if (Sistema.getInstance().inserir(produto)) {
             System.out.println(produto.getNome() + " cadastrado com sucesso.");
         } else {
@@ -179,6 +183,10 @@ public class Software {
 
     /* Excluir produto */
     static void excluir(Produto produto) {
+        if (produto == null) {
+            System.out.println("Falha ao excluir.");
+            return;
+        }
         System.out.println("Tem certeza que deseja excluir " + produto.getNome() + "?\n");
         System.out.println("0. Não");
         System.out.println("1. Sim");
@@ -196,6 +204,10 @@ public class Software {
 
     /* Altera um atributo escolhido de um produto */
     static void alterar(Produto produto) {
+        if (produto == null) {
+            System.out.println("Falha ao alterar.");
+            return;
+        }
         printSubMenu();
         int caso = sc.nextInt();
         sc.nextLine();
