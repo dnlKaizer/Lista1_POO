@@ -373,11 +373,13 @@ public class Software {
         }
     }
 
+    /* Detalha uma única venda */
     static void detalharVenda() {
         System.out.print("\nDigite o código da venda: ");
         int codigo = sc.nextInt();
         Venda venda = Sistema.getInstance().listarVendaPorCd(codigo);
-        imprimirVenda(venda);
+        if (venda == null) System.out.println("\nCódigo inválido.");
+        else imprimirVenda(venda);
     }
 
     static void listarVendas() {
