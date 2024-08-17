@@ -163,8 +163,8 @@ public class Sistema {
         return vetAux;
     }
 
-    public boolean gerarVenda(Carrinho carrinho, Data data) {
-        Venda venda = Venda.getInstance(carrinho, data);
+    public boolean gerarVenda(Carrinho carrinho, Data data, String nmCliente) {
+        Venda venda = Venda.getInstance(carrinho, data, nmCliente);
         if (venda == null) return false;
         if (!verificarVenda(venda)) return false;
         for (int i = 0; i < venda.getNItens(); i++) {

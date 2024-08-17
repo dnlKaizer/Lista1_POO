@@ -157,13 +157,14 @@ public class Software {
     static void initVendas() {
         int[][] codigos = {{1,2,3}, {2,4}};
         int[][] quantidades = {{3,4,5}, {2,7}};
+        String[] nmClientes = {"José","Maria"};
 
         for (int i = 0; i < 2; i++) {
             Carrinho carrinho = new Carrinho();
             for (int j = 0; j < codigos[i].length; j++) {
                 carrinho.addItem(Item.getInstance(Sistema.getInstance().buscar(codigos[i][j]), quantidades[i][j]));
             }
-            Sistema.getInstance().gerarVenda(carrinho, Data.getInstance("5/3/2020"));
+            Sistema.getInstance().gerarVenda(carrinho, Data.getInstance("5/3/2020"), nmClientes[i]);
         }
     }
 
