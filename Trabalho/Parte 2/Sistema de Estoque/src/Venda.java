@@ -31,6 +31,9 @@ public class Venda {
     public Data getData() {
         return data.copy();
     }
+    public String getNmCliente() {
+        return nmCliente;
+    }
 
     public Item buscarItem(int pos) {
         return this.carrinho.buscarItem(pos);
