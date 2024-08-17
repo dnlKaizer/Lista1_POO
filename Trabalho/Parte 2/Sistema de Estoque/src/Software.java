@@ -406,14 +406,14 @@ public class Software {
 
         System.out.println();
         System.out.println(linhaMenu);
-        System.out.printf("|  %-" + tamColuna[0] + "s  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s   |", 
+        System.out.printf("|  %-" + tamColuna[0] + "s  |  %-" + tamColuna[1] + "s  |  %-" + tamColuna[2] + "s     |", 
             "CÓDIGO", "DATA", "VALOR");
         System.out.println();
         System.out.println(linhaMenu);
             
         for (int i = 0; i < nProdutos; i++) {
             System.out.printf(
-                "|  %-" + tamColuna[0] + "d  |  %-" + tamColuna[1] + "s  |R$ %" + tamColuna[2] + "s  |",
+                "|  %-" + tamColuna[0] + "d  |  %-" + tamColuna[1] + "s  |  R$ %" + tamColuna[2] + "s  |",
                 vendas[i].getCdVenda(), vendas[i].getData().toString(), moeda.format(vendas[i].getPrecoTotal()));
             System.out.println();
         }
@@ -481,7 +481,7 @@ public class Software {
                 tamColuna[2] = moeda.format(vendas[i].getPrecoTotal()).length();
             }
         }
-        tamColuna[3] = tamColuna[0] + tamColuna[1] + tamColuna[2] + 17;
+        tamColuna[3] = tamColuna[0] + tamColuna[1] + tamColuna[2] + 19;
         return tamColuna;
     }
 }
