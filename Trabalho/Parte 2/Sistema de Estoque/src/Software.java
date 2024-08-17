@@ -77,7 +77,7 @@ public class Software {
                     Thread.sleep(2000);
                     break;
                 case 7:
-                    // detalharVenda();
+                    detalharVenda();
                     Thread.sleep(1000);
                     break;
                 default:
@@ -373,6 +373,13 @@ public class Software {
         }
     }
 
+    static void detalharVenda() {
+        System.out.print("\nDigite o código da venda: ");
+        int codigo = sc.nextInt();
+        Venda venda = Sistema.getInstance().listarVendaPorCd(codigo);
+        imprimirVenda(venda);
+    }
+
     static void listarVendas() {
         System.out.println();
         System.out.println("1. Listar Todas");
@@ -419,6 +426,34 @@ public class Software {
         }
         System.out.println(linhaMenu);
     }
+
+    static void imprimirVenda(Venda venda) {
+        // int[] tamColuna = acharTamanhoColuna(venda);
+        // String linhaMenu = gerarLinha(tamColuna[3]);
+        String linhaMenu = gerarLinha(32);
+        int col = 10;
+
+        DecimalFormat moeda = new DecimalFormat("R$ #,##0.00");
+
+        System.out.println();
+        System.out.printf(
+            linhaMenu +
+            "\n|  %-11s  |  %-" + col + "d  |\n" +
+            linhaMenu +
+            "\n|  %-11s  |  %-" + col + "s  |\n" +
+            linhaMenu +
+            "\n|  %-11s  |  %-" + col + "s  |\n" +
+            linhaMenu +
+            "\n|  %-11s  |  %-" + col + "s  |\n" +
+            linhaMenu, 
+            
+            "CÓDIGO", venda.getCdVenda(),
+            "DATA", venda.getData().toString(),
+            "CLIENTE", venda.getNmCliente(),
+            "VALOR TOTAL", moeda.format(venda.getPrecoTotal()));
+
+            // Falta o resto
+        }
 
     static String gerarLinha(int n) {
         String linha = "";
