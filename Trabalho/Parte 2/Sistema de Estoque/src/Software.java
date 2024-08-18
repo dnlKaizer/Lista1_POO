@@ -83,6 +83,10 @@ public class Software {
                     detalharVenda();
                     Thread.sleep(1000);
                     break;
+                case 8:
+                    config();
+                    Thread.sleep(500);
+                    break;
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
                     Thread.sleep(500);
@@ -100,6 +104,7 @@ public class Software {
         System.out.println("5. Detalhar produto");
         System.out.println("6. Listar vendas");
         System.out.println("7. Detalhar venda");
+        System.out.println("8. Configurar tabelas");
         System.out.print("\nDigite o comando: ");
     }
     
@@ -344,6 +349,97 @@ public class Software {
         Venda venda = Sistema.getInstance().listarVendaPorCd(codigo);
         if (venda == null) System.out.println("\nCódigo inválido.");
         else imprimirVenda(venda);
+    }
+
+    /* Configura a largura das colunas das tabelas */
+    static void config() {
+        System.out.println();
+        System.out.println("Qual tabela deseja alterar?\n");
+        System.out.println("1. Produtos");
+        System.out.println("2. Vendas");
+        System.out.print("\nDigite o comando: ");
+        int comando = sc.nextInt();
+        System.out.println();
+
+        switch (comando) {
+            case 1:
+                configProdutos();
+                break;
+            case 2:
+                configVendas();
+                break;
+        
+            default:
+                System.out.println("Comando inválido.");
+                break;
+        }
+    }
+    static void configProdutos() {
+        System.out.println();
+        System.out.println("Qual coluna deseja alterar?\n");
+        System.out.println("0. Cancelar");
+        System.out.println("1. Código");
+        System.out.println("2. Nome");
+        System.out.println("3. Marca");
+        System.out.println("4. Preço");
+        System.out.println("5. Quantidade");
+        System.out.print("\nDigite o comando: ");
+        int comando = sc.nextInt();
+        System.out.println();
+
+        switch (comando) {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                
+                break;
+            case 4:
+                
+                break;
+            case 5:
+                
+                break;
+            default:
+                System.out.println("Comando inválido.");
+                break;
+
+        }
+    }
+    static void configVendas() {
+        System.out.println();
+        System.out.println("Qual coluna deseja alterar?\n");
+        System.out.println("0. Cancelar");
+        System.out.println("1. Código");
+        System.out.println("2. Data");
+        System.out.println("3. Valor");
+        System.out.print("\nDigite o comando: ");
+        int comando = sc.nextInt();
+        System.out.println();
+
+        switch (comando) {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                
+                break;
+            default:
+                System.out.println("Comando inválido.");
+                break;
+        }
     }
 
     /* --------------------- MÓDULO ATENDENTE --------------------- */
