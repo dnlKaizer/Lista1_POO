@@ -45,6 +45,7 @@ public class Software {
 
     /* Módulo de administrador */
     static void admin() throws InterruptedException {
+        int[][] tamColuna = {{6,4,5,5,10}, {6,10,7}, {7,10,5,5}};
         int comando;
         Menu:
         while (true) {
@@ -59,28 +60,28 @@ public class Software {
                     Thread.sleep(1000);
                     break;
                 case 2:
-                    excluir(lerProdutoExistente());
+                    excluir(lerProdutoExistente(tamColuna[0]));
                     Thread.sleep(1000);
                     break;
                     
                 case 3:
-                    alterar(lerProdutoExistente());
+                    alterar(lerProdutoExistente(tamColuna[0]));
                     Thread.sleep(1000);
                     break;
                 case 4:
-                    listar();
+                    listar(tamColuna[0]);
                     Thread.sleep(2000);
                     break;
                 case 5:
-                    detalhar();
+                    detalhar(tamColuna[0]);
                     Thread.sleep(1000);
                     break;
                 case 6:
-                    listarVendas();
+                    listarVendas(tamColuna[1]);
                     Thread.sleep(2000);
                     break;
                 case 7:
-                    detalharVenda();
+                    detalharVenda(tamColuna[2]);
                     Thread.sleep(1000);
                     break;
                 case 8:
@@ -258,7 +259,7 @@ public class Software {
     }
 
     /* Listar todos os produtos cadatrados */
-    static void listar() {
+    static void listar(int[] tamColuna) {
         System.out.println();
         System.out.println("1. Por Código");
         System.out.println("2. Alfabética");
@@ -268,11 +269,11 @@ public class Software {
         switch (comando) {
             /* Ordem por código (código, nome, preço e quantidade) */
             case 1:
-                imprimirProdutos(Sistema.getInstance().listarTodos());
+                imprimirProdutos(Sistema.getInstance().listarTodos(), tamColuna);
                 break;
             /* Ordem alfabética (nome, código, preço) */
             case 2:
-                imprimirProdutos(Sistema.getInstance().listarPorNome());
+                imprimirProdutos(Sistema.getInstance().listarPorNome(), tamColuna);
                 break;
             default:
                 System.out.println("\nComando inválido.\n");
@@ -280,7 +281,7 @@ public class Software {
     }
 
     /* Detalha um único produto */
-    static void detalhar() {
+    static void detalhar(int[] tamColuna) {
         System.out.println("\nComo deseja detalhar?\n");
         System.out.println("1. Por Código");
         System.out.println("2. Por Nome");
@@ -311,14 +312,14 @@ public class Software {
 
         if (produto != null) {
             vetAux[0] = produto;
-            imprimirProdutos(vetAux);
+            imprimirProdutos(vetAux, tamColuna);
         } else {
             System.out.println("\nProduto não encontrado.");
         }
     }
 
     /* Listar todas as vendas realizadas */
-    static void listarVendas() {
+    static void listarVendas(int[] tamColuna) {
         System.out.println();
         System.out.println("1. Listar Todas");
         System.out.println("2. Listar por Data");
@@ -328,14 +329,14 @@ public class Software {
 
         switch (comando) {
             case 1:
-                imprimirVendas(Sistema.getInstance().listarVendas());
+                imprimirVendas(Sistema.getInstance().listarVendas(), tamColuna);
                 break;
             case 2:
                 System.out.println();
                 System.out.print("\nDigite a data: ");
                 Data data = Data.getInstance(sc.nextLine());
                 if (data == null) System.out.println("\nData inválida.\n");
-                else imprimirVendas(Sistema.getInstance().listarVendasPorData(data));
+                else imprimirVendas(Sistema.getInstance().listarVendasPorData(data), tamColuna);
                 break;
             default:
                 System.out.println("\nComando inválido.\n");
@@ -343,12 +344,12 @@ public class Software {
     }
 
     /* Detalha uma única venda */
-    static void detalharVenda() {
+    static void detalharVenda(int[] tamColuna) {
         System.out.print("\nDigite o código da venda: ");
         int codigo = sc.nextInt();
         Venda venda = Sistema.getInstance().listarVendaPorCd(codigo);
         if (venda == null) System.out.println("\nCódigo inválido.");
-        else imprimirVenda(venda);
+        else imprimirVenda(venda, tamColuna);
     }
 
     /* Configura a largura das colunas das tabelas */
@@ -387,30 +388,15 @@ public class Software {
         int comando = sc.nextInt();
         System.out.println();
 
-        switch (comando) {
-            case 0:
-                
-                break;
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 4:
-                
-                break;
-            case 5:
-                
-                break;
-            default:
-                System.out.println("Comando inválido.");
-                break;
-
+        if (comando == 0) return;
+        if (comando < 0 || comando > 5) {
+            System.out.println("Comando inválido.");
+            return;
         }
+
+        System.out.print("\nDigite o novo tamanho da coluna: ");
+        int tam = sc.nextInt();
+
     }
     static void configVendas() {
         System.out.println();
@@ -423,23 +409,15 @@ public class Software {
         int comando = sc.nextInt();
         System.out.println();
 
-        switch (comando) {
-            case 0:
-                
-                break;
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            default:
-                System.out.println("Comando inválido.");
-                break;
+        if (comando == 0) return;
+        if (comando < 0 || comando > 3) {
+            System.out.println("Comando inválido.");
+            return;
         }
+
+        System.out.print("\nDigite o novo tamanho da coluna: ");
+        int tam = sc.nextInt();
+
     }
 
     /* --------------------- MÓDULO ATENDENTE --------------------- */
@@ -500,8 +478,8 @@ public class Software {
         return p;
     }
     /* Lê um produto existente pelo terminal */
-    static Produto lerProdutoExistente() {
-        imprimirProdutos(Sistema.getInstance().listarTodos());
+    static Produto lerProdutoExistente(int[] tamColuna) {
+        imprimirProdutos(Sistema.getInstance().listarTodos(), tamColuna);
         System.out.print("\nDigite o código do produto: ");
         int codigo = sc.nextInt();
         System.out.println();
@@ -511,7 +489,8 @@ public class Software {
     }
     /* Cria um novo item pelo terminal */
     static Item lerItem() {
-        Produto p = lerProdutoExistente();
+        int[] tamColuna = {6,4,5,5,10};
+        Produto p = lerProdutoExistente(tamColuna);
         if (p == null) return null;
         System.out.print("Digite a quantidade que deseja inserir: ");
         int qtd = sc.nextInt();
@@ -535,8 +514,8 @@ public class Software {
     }
 
     /* Imprime tabela com os produtos */
-    static void imprimirProdutos(Produto[] produtos) {
-        int[] tamColuna = acharTamanhoColuna(produtos);
+    static void imprimirProdutos(Produto[] produtos, int[] tamColuna) {
+        tamColuna = acharTamanhoColuna(produtos, tamColuna);
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         int nProdutos = produtos.length;
@@ -559,8 +538,8 @@ public class Software {
         System.out.println(linhaMenu);
     }
     /* Imprime tabela com as vendas */
-    static void imprimirVendas(Venda[] vendas) {
-        int[] tamColuna = acharTamanhoColuna(vendas);
+    static void imprimirVendas(Venda[] vendas, int[] tamColuna) {
+        tamColuna = acharTamanhoColuna(vendas, tamColuna);
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         int nProdutos = vendas.length;
@@ -582,8 +561,8 @@ public class Software {
         System.out.println(linhaMenu);
     }
     /* Imprime tabela com uma única venda detalhada */
-    static void imprimirVenda(Venda venda) {
-        int[] tamColuna = acharTamanhoColuna(venda);
+    static void imprimirVenda(Venda venda, int[] tamColuna) {
+        tamColuna = acharTamanhoColuna(venda, tamColuna);
         String linhaMenu = gerarLinha(tamColuna[4]);
         int col = tamColuna[4] - 22;
 
@@ -632,14 +611,7 @@ public class Software {
     }
 
     /* Algoritmo que encontra o tamanho necessário para cada coluna da tabela */
-    static int[] acharTamanhoColuna(Produto[] produtos) {
-        int[] tamColuna = new int[6];
-        tamColuna[0] = 6;
-        tamColuna[1] = 4;
-        tamColuna[2] = 5;
-        tamColuna[3] = 5;
-        tamColuna[4] = 10;
-
+    static int[] acharTamanhoColuna(Produto[] produtos, int[] tamColuna) {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         
         if ((produtos[produtos.length - 1].getCdProduto() + "").length() > tamColuna[0]) {
@@ -661,15 +633,14 @@ public class Software {
             }
         }
 
-        tamColuna[5] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + tamColuna[4] + 29;
-        return tamColuna;
+        int[] tamColunaAux = new int[6];
+        for (int i = 0; i < 5; i++) {
+            tamColunaAux[i] = tamColuna[i];
+        }
+        tamColunaAux[5] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + tamColuna[4] + 29;
+        return tamColunaAux;
     }
-    static int[] acharTamanhoColuna(Venda[] vendas) {
-        int[] tamColuna = new int[4];
-        tamColuna[0] = 6;
-        tamColuna[1] = 10;
-        tamColuna[2] = 5;
-
+    static int[] acharTamanhoColuna(Venda[] vendas, int[] tamColuna) {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         
         if ((vendas[vendas.length - 1].getCdVenda() + "").length() > tamColuna[0]) {
@@ -684,16 +655,14 @@ public class Software {
                 tamColuna[2] = moeda.format(vendas[i].getPrecoTotal()).length();
             }
         }
-        tamColuna[3] = tamColuna[0] + tamColuna[1] + tamColuna[2] + 19;
-        return tamColuna;
+        int[] tamColunaAux = new int[4];
+        for (int i = 0; i < 3; i++) {
+            tamColunaAux[i] = tamColuna[i];
+        }
+        tamColunaAux[3] = tamColuna[0] + tamColuna[1] + tamColuna[2] + 19;
+        return tamColunaAux;
     }
-    static int[] acharTamanhoColuna(Venda venda) {
-        int[] tamColuna = new int[5];
-        tamColuna[0] = 7;
-        tamColuna[1] = 10;
-        tamColuna[2] = 5;
-        tamColuna[3] = 5;
-
+    static int[] acharTamanhoColuna(Venda venda, int[] tamColuna) {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         for (int i = 0; i < venda.getNItens(); i++) {
             int tamNmProduto = venda.buscarItem(i).getNmProduto().length();
@@ -709,7 +678,11 @@ public class Software {
             if (tamTotal > tamColuna[3]) tamColuna[3] = tamTotal;
         }
         
-        tamColuna[4] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + 27;
-        return tamColuna;
+        int[] tamColunaAux = new int[5];
+        for (int i = 0; i < 4; i++) {
+            tamColunaAux[i] = tamColuna[i];
+        }
+        tamColunaAux[4] = tamColuna[0] + tamColuna[1] + tamColuna[2] + tamColuna[3] + 27;
+        return tamColunaAux;
     }
 }
