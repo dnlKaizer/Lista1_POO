@@ -85,8 +85,11 @@ public class Software {
                     Thread.sleep(1000);
                     break;
                 case 8:
-                    config();
+                    int[] tamColConfig = config();
                     Thread.sleep(500);
+                    if (tamColConfig != null) {
+                        tamColuna[tamColConfig[0]][tamColConfig[1]] = tamColConfig[2];
+                    }
                     break;
                 default:
                     System.out.println("\nComando inválido. Tente novamente.");
@@ -353,29 +356,29 @@ public class Software {
     }
 
     /* Configura a largura das colunas das tabelas */
-    static void config() {
+    static int[] config() {
         System.out.println();
         System.out.println("Qual tabela deseja alterar?\n");
         System.out.println("1. Produtos");
         System.out.println("2. Vendas");
+        System.out.println("3. Venda detalhada");
         System.out.print("\nDigite o comando: ");
         int comando = sc.nextInt();
         System.out.println();
 
         switch (comando) {
             case 1:
-                configProdutos();
-                break;
+                return configProdutos();
             case 2:
-                configVendas();
-                break;
-        
+                return configVendas();
+            case 3:
+                return configVenda();
             default:
                 System.out.println("Comando inválido.");
-                break;
+                return null;
         }
     }
-    static void configProdutos() {
+    static int[] configProdutos() {
         System.out.println();
         System.out.println("Qual coluna deseja alterar?\n");
         System.out.println("0. Cancelar");
@@ -388,17 +391,18 @@ public class Software {
         int comando = sc.nextInt();
         System.out.println();
 
-        if (comando == 0) return;
+        if (comando == 0) return null;
         if (comando < 0 || comando > 5) {
             System.out.println("Comando inválido.");
-            return;
+            return null;
         }
 
         System.out.print("\nDigite o novo tamanho da coluna: ");
         int tam = sc.nextInt();
-
+        int[] tamColuna = {0, comando - 1, tam};
+        return tamColuna;
     }
-    static void configVendas() {
+    static int[] configVendas() {
         System.out.println();
         System.out.println("Qual coluna deseja alterar?\n");
         System.out.println("0. Cancelar");
@@ -409,15 +413,39 @@ public class Software {
         int comando = sc.nextInt();
         System.out.println();
 
-        if (comando == 0) return;
+        if (comando == 0) return null;
         if (comando < 0 || comando > 3) {
             System.out.println("Comando inválido.");
-            return;
+            return null;
         }
 
         System.out.print("\nDigite o novo tamanho da coluna: ");
         int tam = sc.nextInt();
+        int[] tamColuna = {1, comando - 1, tam};
+        return tamColuna;
+    }
+    static int[] configVenda() {
+        System.out.println();
+        System.out.println("Qual coluna deseja alterar?\n");
+        System.out.println("0. Cancelar");
+        System.out.println("1. Produto");
+        System.out.println("2. Quantidade");
+        System.out.println("3. Valor");
+        System.out.println("4. Total");
+        System.out.print("\nDigite o comando: ");
+        int comando = sc.nextInt();
+        System.out.println();
 
+        if (comando == 0) return null;
+        if (comando < 0 || comando > 4) {
+            System.out.println("Comando inválido.");
+            return null;
+        }
+
+        System.out.print("\nDigite o novo tamanho da coluna: ");
+        int tam = sc.nextInt();
+        int[] tamColuna = {2, comando - 1, tam};
+        return tamColuna;
     }
 
     /* --------------------- MÓDULO ATENDENTE --------------------- */
