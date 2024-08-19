@@ -655,10 +655,10 @@ public class Software {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
         
         if (tamColuna[0] < 6) tamColuna[0] = 6;
-        if (tamColuna[1] < 4) tamColuna[0] = 4;
-        if (tamColuna[2] < 5) tamColuna[0] = 5;
-        if (tamColuna[3] < 5) tamColuna[0] = 5;
-        if (tamColuna[4] < 10) tamColuna[0] = 10;
+        if (tamColuna[1] < 4) tamColuna[1] = 4;
+        if (tamColuna[2] < 5) tamColuna[2] = 5;
+        if (tamColuna[3] < 5) tamColuna[3] = 5;
+        if (tamColuna[4] < 10) tamColuna[4] = 10;
 
         if ((produtos[produtos.length - 1].getCdProduto() + "").length() > tamColuna[0]) {
             tamColuna[0] = (produtos[produtos.length - 1].getCdProduto() + "").length();
@@ -690,8 +690,8 @@ public class Software {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
 
         if (tamColuna[0] < 6) tamColuna[0] = 6;
-        if (tamColuna[1] < 4) tamColuna[0] = 4;
-        if (tamColuna[2] < 5) tamColuna[0] = 5;
+        if (tamColuna[1] < 4) tamColuna[1] = 4;
+        if (tamColuna[2] < 5) tamColuna[2] = 5;
         
         if ((vendas[vendas.length - 1].getCdVenda() + "").length() > tamColuna[0]) {
             tamColuna[0] = (vendas[vendas.length - 1].getCdVenda() + "").length();
@@ -716,9 +716,9 @@ public class Software {
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
 
         if (tamColuna[0] < 6) tamColuna[0] = 7;
-        if (tamColuna[1] < 4) tamColuna[0] = 10;
-        if (tamColuna[2] < 5) tamColuna[0] = 5;
-        if (tamColuna[3] < 5) tamColuna[0] = 5;
+        if (tamColuna[1] < 4) tamColuna[1] = 10;
+        if (tamColuna[2] < 5) tamColuna[2] = 5;
+        if (tamColuna[3] < 5) tamColuna[3] = 5;
 
         for (int i = 0; i < venda.getNItens(); i++) {
             int tamNmProduto = venda.buscarItem(i).getNmProduto().length();
