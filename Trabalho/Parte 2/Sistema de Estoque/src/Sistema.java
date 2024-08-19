@@ -103,9 +103,12 @@ public class Sistema {
         }
         if (tam == 0) return null;
         Venda[] vendas = new Venda[tam];
-        for (int i = 0; i < tam; i++) {
-            if (this.vendas[i].getData().compare(data)) 
-            vendas[i] = this.vendas[i].copy();
+        int n = 0;
+        for (int i = 0; i < this.nVendas; i++) {
+            if (this.vendas[i].getData().compare(data)) {
+                vendas[n] = this.vendas[i].copy();
+                n++;
+            }
         }
         return vendas;
     }

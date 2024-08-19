@@ -543,6 +543,10 @@ public class Software {
 
     /* Imprime tabela com os produtos */
     static void imprimirProdutos(Produto[] produtos, int[] tamColuna) {
+        if (produtos == null || produtos.length == 0) {
+            System.out.println("\nNão foram encontrados produtos.");
+            return;
+        }
         tamColuna = acharTamanhoColuna(produtos, tamColuna);
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
@@ -567,6 +571,10 @@ public class Software {
     }
     /* Imprime tabela com as vendas */
     static void imprimirVendas(Venda[] vendas, int[] tamColuna) {
+        if (vendas == null || vendas.length == 0) {
+            System.out.println("\nNão foram encontradas vendas.");
+            return;
+        }
         tamColuna = acharTamanhoColuna(vendas, tamColuna);
 
         DecimalFormat moeda = new DecimalFormat("#,##0.00");
@@ -590,6 +598,10 @@ public class Software {
     }
     /* Imprime tabela com uma única venda detalhada */
     static void imprimirVenda(Venda venda, int[] tamColuna) {
+        if (venda == null) {
+            System.out.println("\nVenda não foi encontrada.");
+            return;
+        }
         tamColuna = acharTamanhoColuna(venda, tamColuna);
         String linhaMenu = gerarLinha(tamColuna[4]);
         int col = tamColuna[4] - 22;
